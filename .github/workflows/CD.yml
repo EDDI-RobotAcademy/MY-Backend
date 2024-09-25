@@ -82,7 +82,7 @@ jobs:
         password: ${{ secrets.GHCR_TOKEN }}
 
     - name: Deploy to Production
-      uses: appleboy/ssh-action@v0.1.10
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST_IP }}
         username: ec2-user
