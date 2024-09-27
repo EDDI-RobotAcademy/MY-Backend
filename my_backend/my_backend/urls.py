@@ -24,4 +24,5 @@ urlpatterns = [
 
     # 'board' 앱의 URL 설정
     path('board/', include('board.urls')),
+    path('account/', include('account.urls'))
 ]
