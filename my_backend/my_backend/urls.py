@@ -21,8 +21,8 @@ from django.urls import path, include
 urlpatterns = [
     # Django 관리자 사이트에 대한 URL
     path("admin/", admin.site.urls),
-
     path('board/', include('board.urls')),
     path('account/', include('account.urls')),
     path('oauth/', include('oauth.urls')),
+    path('survey/', include('survey.urls')),
 ]
