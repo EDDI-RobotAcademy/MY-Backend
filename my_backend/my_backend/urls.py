@@ -22,7 +22,7 @@ urlpatterns = [
     # Django 관리자 사이트에 대한 URL
     path("admin/", admin.site.urls),
 
-    # 'board' 앱의 URL 설정
     path('board/', include('board.urls')),
     path('account/', include('account.urls'))
+    path('oauth/', include('oauth.urls')),
 ]
