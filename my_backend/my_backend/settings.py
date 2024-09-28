@@ -18,7 +18,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -63,7 +62,8 @@ GOOGLE = {
     'CLIENT_ID': os.getenv('GOOGLE_CLIENT_ID'),
     'CLIENT_SECRET': os.getenv('GOOGLE_CLIENT_SECRET'),
     'REDIRECT_URI': os.getenv('GOOGLE_REDIRECT_URI'),
-    'TOKEN_REQUEST_URI': os.getenv('GOOGLE_TOKEN_REQUEST_URI')
+    'TOKEN_REQUEST_URI': os.getenv('GOOGLE_TOKEN_REQUEST_URI'),
+    'USERINFO_REQUEST_URI': os.getenv('GOOGLE_USERINFO_REQUEST_URI'),
 }
 
 KAKAO = {
@@ -120,7 +120,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "my_backend.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -169,7 +168,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -180,7 +178,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
