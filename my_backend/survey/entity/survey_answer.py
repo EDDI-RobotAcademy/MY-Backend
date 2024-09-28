@@ -7,7 +7,7 @@ from survey.entity.fixed_five_score_selection import FixedFiveScoreSelection
 from survey.entity.fixed_boolean_selection import FixedBooleanSelection
 
 class SurveyAnswer(models.Model):
-    survey_id = models.ForeignKey(Survey, related_name='answers', on_delete=models.CASCADE)
+    survey = models.ForeignKey(Survey, related_name='answers', on_delete=models.CASCADE)
     question = models.ForeignKey(SurveyQuestion, related_name='answers', on_delete=models.CASCADE)
     answer_text = models.TextField(blank=True, null=True)
     five_score_selection = models.ForeignKey(FixedFiveScoreSelection, blank=True, null=True, on_delete=models.SET_NULL)

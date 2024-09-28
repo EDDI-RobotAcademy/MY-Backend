@@ -1,3 +1,4 @@
+from survey.repository.survey_question_repository_impl import SurveyQuestionRepositoryImpl
 from survey.repository.survey_repository_impl import SurveyRepositoryImpl
 from survey.service.survey_service import SurveyService
 
@@ -8,10 +9,10 @@ class SurveyServiceImpl(SurveyService):
     def __new__(cls):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-
             cls.__instance.__surveyRepository = SurveyRepositoryImpl.getInstance()
+        cls.__instance.__surveyQuestionRepository = SurveyQuestionRepositoryImpl.getInstance()
 
-            return cls.__instance
+        return cls.__instance
 
     @classmethod
     def getInstance(cls):
@@ -27,5 +28,13 @@ class SurveyServiceImpl(SurveyService):
         except Exception as e:
             print('Error creating order:', e)
             raise e
+
+    def createSurveyQuestion(self, survey_id, question_text, survey_type):
+        survey = self.__surveyRepository.findById(survey_id)
+        if survey is None:
+            raise ValueError("Survey not found")
+
+        return self.__surveyQuestionRepository.create(survey, question_text, survey_type)
+
 
 
