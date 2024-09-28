@@ -6,7 +6,8 @@ from survey.entity.survey_type import SurveyType
 
 class SurveyQuestion(models.Model):
     id = models.AutoField(primary_key=True)
-    survey_id = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)
+    # survey_id = survey 객체를 의미
+    survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)
     question_text = models.TextField()
     survey_type = models.IntegerField(
         choices=SurveyType.choices,
