@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 
 from survey.entity.survey import Survey
@@ -32,3 +33,14 @@ class SurveyQuestionRepositoryImpl(SurveyQuestionRepository):
 
         except IntegrityError as e:
             raise IntegrityError(f"Error creating survey question: {e}")
+
+
+    def findSurveyQuestionListBySurveyId(self, survey_id):
+        return SurveyQuestion.objects.filter(survey_id=survey_id)
+
+
+    def findById(self, survey_question_id):
+        try:
+            return SurveyQuestion.objects.get(id=survey_question_id)
+        except ObjectDoesNotExist:
+            return None
