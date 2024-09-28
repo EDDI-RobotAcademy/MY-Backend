@@ -23,6 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('board/', include('board.urls')),
     path('account/', include('account.urls')),
-    path('oauth/', include('oauth.urls')),
+    path('kakao_oauth/', include('kakao_oauth.urls')),
     path('survey/', include('survey.urls')),
 ]

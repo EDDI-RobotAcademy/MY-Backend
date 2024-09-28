@@ -1,7 +1,7 @@
 import redis
 from django.conf import settings
 
-from oauth.service.redis_service import RedisService
+from kakao_oauth.service.redis_service import RedisService
 
 class RedisServiceImpl(RedisService):
     __instance = None
