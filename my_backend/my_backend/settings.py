@@ -61,7 +61,9 @@ MIDDLEWARE = [
 GOOGLE = {
     'LOGIN_URL': os.getenv('GOOGLE_LOGIN_URL'),
     'CLIENT_ID': os.getenv('GOOGLE_CLIENT_ID'),
+    'CLIENT_SECRET': os.getenv('GOOGLE_CLIENT_SECRET'),
     'REDIRECT_URI': os.getenv('GOOGLE_REDIRECT_URI'),
+    'TOKEN_REQUEST_URI': os.getenv('GOOGLE_TOKEN_REQUEST_URI')
 }
 
 KAKAO = {

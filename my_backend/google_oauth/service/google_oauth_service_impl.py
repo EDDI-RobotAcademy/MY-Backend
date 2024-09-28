@@ -9,6 +9,8 @@ class GoogleOauthServiceImpl(GoogleOauthService):
             cls.__instance.loginUrl = settings.GOOGLE['LOGIN_URL']
             cls.__instance.clientId = settings.GOOGLE['CLIENT_ID']
             cls.__instance.redirectUri = settings.GOOGLE['REDIRECT_URI']
+            cls.__instance.clientSecret = settings.GOOGLE['CLIENT_SECRET']
+            cls.__instance.tokenRequestUri = settings.GOOGLE['TOKEN_REQUEST_URI']
         return cls.__instance
     @classmethod
     def getInstance(cls):
@@ -20,3 +22,20 @@ class GoogleOauthServiceImpl(GoogleOauthService):
         return (f"{self.loginUrl}/oauth2/v2/auth?"
                 f"client_id={self.clientId}&redirect_uri={self.redirectUri}"
                 f"&response_type=code&scope=email")
+
+    def requestAccessToken(self, googleAuthCode):
+        print("requestAccessToken()")
+        print("googleAuthCode:",googleAuthCode)
+        print("clientId:",self.clientId)
+        print("redirectUri:",self.redirectUri)
+        print("클라이언트 시크릿!!!:",self.clientSecret)
+
+        accessTokenRequestForm = {
+            'grant_type': 'authorization_code',
+            'client_id': self.clientId,
+            'redirect_uri': self.redirectUri,
+            'code': googleAuthCode,
+            'client_secret': self.clientSecret
+        }
+        response = requests.post(self.tokenRequestUri, data=accessTokenRequestForm)
+        return response.json()
