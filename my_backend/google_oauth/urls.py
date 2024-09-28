@@ -6,4 +6,6 @@ router.register(r'google_oauth', GoogleOauthView, basename='google_oauth')
 urlpatterns = [
     path('', include(router.urls)),
     path('google', GoogleOauthView.as_view({'get': 'googleOauthURI'}), name='get-google-oauth-uri'),
+    path('google/access-token', GoogleOauthView.as_view({'post': 'googleAccessTokenURI'}),
+         name='get-google-access-token-uri'),
 ]
