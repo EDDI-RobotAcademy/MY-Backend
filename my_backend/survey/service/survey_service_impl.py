@@ -1,5 +1,6 @@
 from survey.repository.survey_question_repository_impl import SurveyQuestionRepositoryImpl
 from survey.repository.survey_repository_impl import SurveyRepositoryImpl
+from survey.repository.survey_selection_repository_impl import SurveySelectionRepositoryImpl
 from survey.service.survey_service import SurveyService
 
 
@@ -11,6 +12,7 @@ class SurveyServiceImpl(SurveyService):
             cls.__instance = super().__new__(cls)
             cls.__instance.__surveyRepository = SurveyRepositoryImpl.getInstance()
         cls.__instance.__surveyQuestionRepository = SurveyQuestionRepositoryImpl.getInstance()
+        cls.__instance.__surveySelectionRepository = SurveySelectionRepositoryImpl.getInstance()
 
         return cls.__instance
 
@@ -36,5 +38,20 @@ class SurveyServiceImpl(SurveyService):
 
         return self.__surveyQuestionRepository.create(survey, question_text, survey_type)
 
+    def createSurveySelection(self, question_id, selection_text):
+        try:
+            question = self.__surveyQuestionRepository.findById(question_id)
+            if question is None:
+                raise ValueError("Survey Question not found")
+
+            return self.__surveySelectionRepository.createSurveySelection(question, selection_text)
+
+        except ValueError as e:
+            print(f"Error: {str(e)}")
+            raise e
+
+        except Exception as e:
+            print(f"Unexpected error while creating selection: {str(e)}")
+            raise e
 
 

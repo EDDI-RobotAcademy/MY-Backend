@@ -10,5 +10,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('create', SurveyView.as_view({'post': 'createSurvey'}), name='create-survey'),
     path('create-question', SurveyView.as_view({'post': 'createSurveyQuestion'}), name='create-survey-question'),
-
+    path('create-selection', SurveyView.as_view({'post': 'createSurveySelection'}), name='create-survey-selection'),
 ]
