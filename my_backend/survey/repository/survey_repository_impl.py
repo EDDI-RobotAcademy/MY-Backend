@@ -26,3 +26,9 @@ class SurveyRepositoryImpl(SurveyRepository):
         survey.save()
 
         return survey
+
+    def findById(self, survey_id):
+        try:
+            return Survey.objects.get(id=survey_id)
+        except Survey.DoesNotExist:
+            return None
