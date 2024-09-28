@@ -24,5 +24,6 @@ urlpatterns = [
     path('board/', include('board.urls')),
     path('account/', include('account.urls')),
     path('kakao_oauth/', include('kakao_oauth.urls')),
+    path('google_oauth/', include('google_oauth.urls')),
     path('survey/', include('survey.urls')),
 ]

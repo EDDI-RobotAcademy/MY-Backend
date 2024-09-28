@@ -58,6 +58,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+GOOGLE = {
+    'LOGIN_URL': os.getenv('GOOGLE_LOGIN_URL'),
+    'CLIENT_ID': os.getenv('GOOGLE_CLIENT_ID'),
+    'REDIRECT_URI': os.getenv('GOOGLE_REDIRECT_URI'),
+}
+
 KAKAO = {
     'LOGIN_URL': os.getenv('KAKAO_LOGIN_URL'),
     'CLIENT_ID': os.getenv('KAKAO_CLIENT_ID'),
