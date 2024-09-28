@@ -1,9 +1,9 @@
 from my_backend import settings
-from oauth.service.oauth_service import OauthService
+from kakao_oauth.service.kakao_oauth_service import KakaoOauthService
 
 import requests
 
-class OauthServiceImpl(OauthService):
+class KakaoOauthServiceImpl(KakaoOauthService):
     __instance = None
 
     def __new__(cls):
