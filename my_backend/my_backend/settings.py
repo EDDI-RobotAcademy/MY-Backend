@@ -74,6 +74,12 @@ KAKAO = {
     'USERINFO_REQUEST_URI': os.getenv('KAKAO_USERINFO_REQUEST_URI'),
 }
 
+NAVER = {
+    'LOGIN_URL': os.getenv('NAVER_LOGIN_URL'),
+    'CLIENT_ID': os.getenv('NAVER_CLIENT_ID'),
+    'REDIRECT_URI': os.getenv('NAVER_REDIRECT_URL'),
+}
+
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
 
