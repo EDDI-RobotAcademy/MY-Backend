@@ -1,13 +1,11 @@
 from abc import ABC, abstractmethod
-
-
-class OauthService(ABC):
+class GoogleOauthService(ABC):
     @abstractmethod
-    def kakaoLoginAddress(self):
+    def googleLoginAddress(self):
         pass
 
     @abstractmethod
-    def requestAccessToken(self, kakaoAuthCode):
+    def requestAccessToken(self, googleAuthCode):
         pass
 
     @abstractmethod
