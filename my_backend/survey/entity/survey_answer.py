@@ -16,6 +16,8 @@ class SurveyAnswer(models.Model):
     custom_selection = models.ForeignKey(CustomSelection, blank=True, null=True, on_delete=models.SET_NULL)
     account = models.ForeignKey(Account, related_name='answers', on_delete=models.CASCADE, null=True, default=None)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return f"Answer to {self.question.question_text}"
 
