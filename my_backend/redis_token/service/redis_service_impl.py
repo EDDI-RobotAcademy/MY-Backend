@@ -1,4 +1,4 @@
-from att_project import settings
+from my_backend import settings
 import redis_token
 from redis_token.service.redis_service import RedisService
 class RedisServiceImpl(RedisService):

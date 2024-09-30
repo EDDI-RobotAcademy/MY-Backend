@@ -7,5 +7,5 @@ router.register(r'redis_token', RedisTokenView, basename='redis_token')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('redis-access-token', RedisTokenView.as_view({'post': 'redisAccessToken'}),name='redis-access-token'),
+    path('redis-access-token', RedisTokenView.as_view({'post': 'redisAccessToken'}), name='redis-access-token'),
 ]
