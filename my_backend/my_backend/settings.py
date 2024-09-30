@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'board',
     'account',
     'survey',
+    'redis_token',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,8 @@ NAVER = {
     'LOGIN_URL': os.getenv('NAVER_LOGIN_URL'),
     'CLIENT_ID': os.getenv('NAVER_CLIENT_ID'),
     'REDIRECT_URI': os.getenv('NAVER_REDIRECT_URL'),
+    'TOKEN_REQUEST_URI': os.getenv('NAVER_TOKEN_REQUEST_URI'),
+    'USERINFO_REQUEST_URI': os.getenv('NAVER_USERINFO_REQUEST_URI')
 }
 
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
