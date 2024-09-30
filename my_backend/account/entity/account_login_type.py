@@ -5,6 +5,7 @@ class AccountLoginType(models.Model):
     class LoginType(models.TextChoices):
         KAKAO = 'KAKAO', 'Kakao'
         GOOGLE = 'GOOGLE', 'Google'
+        NAVER = 'NAVER', 'Naver'
 
     loginType = models.CharField(max_length=10, choices=LoginType.choices)
 
