@@ -58,20 +58,20 @@ class SurveyServiceImpl(SurveyService):
             print(f"Unexpected error while creating selection: {str(e)}")
             raise e
 
-    # def saveAnswer(self, answers, account_id):
-    #     try:
-    #         for answer in answers:
-    #
-    #             question_id = answer.get('question_id')
-    #             question = self.__surveyQuestionRepository.findById(question_id)
-    #             survey_id = question.survey_id
-    #             answer_data = answer.get('answer_data')
-    #
-    #
-    #             self.__surveyAnswerRepository.saveAnswer(survey_id, question_id, answer_data, account_id)
-    #
-    #     except Exception as e:
-    #         print('답변 저장중 오류 발생: ', {e})
+    def saveAnswer(self, answers, account_id):
+        try:
+            for answer in answers:
+
+                question_id = answer.get('question_id')
+                question = self.__surveyQuestionRepository.findById(question_id)
+                survey_id = question.survey_id
+                answer_data = answer.get('answer_data')
+
+
+                self.__surveyAnswerRepository.saveAnswer(survey_id, question_id, answer_data, account_id)
+
+        except Exception as e:
+            print('답변 저장중 오류 발생: ', {e})
 
 
 
