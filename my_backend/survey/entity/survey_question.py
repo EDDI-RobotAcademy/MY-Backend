@@ -15,7 +15,7 @@ class SurveyQuestion(models.Model):
     )
 
     def __str__(self):
-        return f"{self.question_text} ({self.get_survey_type_display()})"
+        return f"question_text: {self.question_text}, survey_type: {self.get_survey_type_display()}, survey_id: {self.survey.id}"
 
     class Meta:
         db_table = 'survey_question'
