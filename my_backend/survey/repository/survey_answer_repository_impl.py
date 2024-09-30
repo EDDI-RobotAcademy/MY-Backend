@@ -1,3 +1,4 @@
+
 from account.entity.account import Account
 from survey.entity.custom_selection import CustomSelection
 from survey.entity.fixed_boolean_selection import FixedBooleanSelection
@@ -31,6 +32,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
 
         return cls.__instance
 
+
     def saveAnswer(self, survey_id, question_id, answer_data, account_id):
         # if not isinstance(question_id, SurveyQuestion):
         #     raise ValueError("Question must be an instance of SurveyQuestion")
@@ -47,14 +49,15 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                     answer_text=answer_data,
                     account=account
                 )
+      
             elif question.survey_type == 2: # Five Score
                 five_score_selection = FixedFiveScoreSelection.objects.get(score=answer_data)
                 answer = SurveyAnswer(
                     survey=survey,
                     question=question,
                     five_score_selection=five_score_selection,
-                    account=account
                 )
+        
             elif question.survey_type == 3: # Boolean
                 boolean_selection = FixedBooleanSelection.objects.get(is_true=answer_data)
                 answer = SurveyAnswer(
@@ -63,6 +66,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                     boolean_selection=boolean_selection,
                     account=account
                 )
+                
             elif question.survey_type == 4:  # Custom
                 custom_selection = CustomSelection.objects.get(custom_text=answer_data)
                 answer = SurveyAnswer(
@@ -71,6 +75,8 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                     custom_selection=custom_selection,
                     account=account
                 )
+
+
             answer.save()
             return answer
 
