@@ -21,7 +21,10 @@ from django.urls import path, include
 urlpatterns = [
     # Django 관리자 사이트에 대한 URL
     path("admin/", admin.site.urls),
-
-    # 'board' 앱의 URL 설정
     path('board/', include('board.urls')),
+    path('account/', include('account.urls')),
+    path('kakao_oauth/', include('kakao_oauth.urls')),
+    path('google_oauth/', include('google_oauth.urls')),
+    path('naver_oauth/', include('naver_oauth.urls')),
+    path('survey/', include('survey.urls')),
 ]
