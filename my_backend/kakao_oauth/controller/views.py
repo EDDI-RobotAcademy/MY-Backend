@@ -9,7 +9,7 @@ from account.service.account_service_impl import AccountServiceImpl
 from kakao_oauth.serializer.kakao_oauth_access_token_serializer import KakaoOauthAccessTokenSerializer
 from kakao_oauth.serializer.kakao_oauth_url_serializer import KakaoOauthUrlSerializer
 from kakao_oauth.service.kakao_oauth_service_impl import KakaoOauthServiceImpl
-from kakao_oauth.service.redis_service_impl import RedisServiceImpl
+from redis_token.service.redis_service_impl import RedisServiceImpl
 
 class KakaoOauthView(viewsets.ViewSet):
     kakao_oauthService = KakaoOauthServiceImpl.getInstance()
