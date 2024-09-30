@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 
 from survey.entity.survey_question import SurveyQuestion
-from survey.entity.survey_selection import SurveySelection
+from survey.entity.custom_selection import CustomSelection
 
 
 class SurveySelectionRepository(ABC):
 
     @abstractmethod
-    def createSurveySelection(self, question: SurveyQuestion, selection_text: str) -> SurveySelection:
+    def createCustomSelection(self, question: SurveyQuestion, custom_text: str) -> CustomSelection:
         pass

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'board',
     'account',
     'survey',
+    'redis_token',
 ]
 
 MIDDLEWARE = [
