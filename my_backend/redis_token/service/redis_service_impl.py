@@ -1,12 +1,12 @@
 from my_backend import settings
-import redis_token
+import redis
 from redis_token.service.redis_service import RedisService
 class RedisServiceImpl(RedisService):
     __instance = None
     def __new__(cls):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-            cls.__instance.redis_client = redis_token.StrictRedis(
+            cls.__instance.redis_client = redis.StrictRedis(
                 host=settings.REDIS_HOST,
                 port=settings.REDIS_PORT,
                 password=settings.REDIS_PASSWORD,
