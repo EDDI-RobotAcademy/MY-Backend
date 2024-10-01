@@ -16,7 +16,20 @@ class SurveyAnswer(models.Model):
     custom_selection = models.ForeignKey(CustomSelection, blank=True, null=True, on_delete=models.SET_NULL)
     account = models.ForeignKey(Account, related_name='answers', on_delete=models.CASCADE, null=True, default=None)
 
+    response_order = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if self.account and self.survey and self.question and self.response_order is None:
+            last_order = SurveyAnswer.objects.filter(
+                account=self.account,
+                survey=self.survey,
+                question=self.question
+            ).aggregate(models.Max('response_order'))['response_order__max']
+
+            self.response_order = (last_order or 0) + 1
+
+        super(SurveyAnswer, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"Answer to {self.question.question_text}"
