@@ -79,6 +79,7 @@ NAVER = {
     'LOGIN_URL': os.getenv('NAVER_LOGIN_URL'),
     'CLIENT_ID': os.getenv('NAVER_CLIENT_ID'),
     'REDIRECT_URI': os.getenv('NAVER_REDIRECT_URL'),
+    'CLIENT_SECRET': os.getenv('NAVER_CLIENT_SECRET'),
     'TOKEN_REQUEST_URI': os.getenv('NAVER_TOKEN_REQUEST_URI'),
     'USERINFO_REQUEST_URI': os.getenv('NAVER_USERINFO_REQUEST_URI')
 }
@@ -182,7 +183,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
