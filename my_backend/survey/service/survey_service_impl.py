@@ -73,5 +73,14 @@ class SurveyServiceImpl(SurveyService):
         except Exception as e:
             print('답변 저장중 오류 발생: ', {e})
 
+    def listAnswer(self, type, survey_id=None,question_id=None, account_id=None):
+        if type == "survey":
+            listedAnswer = self.__surveyAnswerRepository.summarizeAnswerBySurveyId(survey_id)
+        elif type == "account":
+            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerByAccountId(account_id)
+        elif type == "question":
+            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerByQuestionId(question_id)
+        elif type == "survey and question":
+            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerBySurveyIdandAccountId(survey_id, question_id)
 
-
+        return listedAnswer
