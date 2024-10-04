@@ -80,7 +80,7 @@ class SurveyServiceImpl(SurveyService):
             listedAnswer = self.__surveyAnswerRepository.summerizeAnswerByAccountId(account_id)
         elif type == "question":
             listedAnswer = self.__surveyAnswerRepository.summerizeAnswerByQuestionId(question_id)
-        elif type == "survey and question":
-            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerBySurveyIdandAccountId(survey_id, question_id)
+        elif type == "survey and account":
+            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerBySurveyIdandAccountId(survey_id, account_id)
 
         return listedAnswer
