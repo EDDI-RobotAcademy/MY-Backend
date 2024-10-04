@@ -90,3 +90,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
     def summerizeAnswerByQuestionId(self, question_id):
         summerizedAnswer = SurveyAnswer.objects.filter(question_id=question_id)
         return summerizedAnswer
+
+    def summerizeAnswerByAccountId(self, account_id):
+        summerizedAnswer = SurveyAnswer.objects.filter(account_id=account_id)
+        return summerizedAnswer
