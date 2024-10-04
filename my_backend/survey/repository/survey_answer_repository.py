@@ -18,4 +18,7 @@ class SurveyAnswerRepository(ABC):
     def summerizeAnswerByAccountId(self, account_id):
         pass
 
+    @abstractmethod
+    def summerizeAnswerBySurveyIdandAccountId(self, survey_id, account_id):
+        pass
 
