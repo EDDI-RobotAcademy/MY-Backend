@@ -86,3 +86,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
     def summarizeAnswerBySurveyId(self, survey_id):
         summerizedAnswer = SurveyAnswer.objects.filter(survey_id=survey_id)
         return summerizedAnswer
+
+    def summerizeAnswerByQuestionId(self, question_id):
+        summerizedAnswer = SurveyAnswer.objects.filter(question_id=question_id)
+        return summerizedAnswer

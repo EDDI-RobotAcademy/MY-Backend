@@ -10,5 +10,8 @@ class SurveyAnswerRepository(ABC):
     def summarizeAnswerBySurveyId(self, survey_id):
         pass
 
+    @abstractmethod
+    def summerizeAnswerByQuestionId(self, question_id):
+        pass
 
 
