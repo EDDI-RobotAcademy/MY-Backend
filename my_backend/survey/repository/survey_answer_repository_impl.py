@@ -83,3 +83,6 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
         except IntegrityError as e:
             raise IntegrityError(f"Error saving survey answer: {e}")
 
+    def summarizeAnswerBySurveyId(self, survey_id):
+        summerizedAnswer = SurveyAnswer.objects.filter(survey_id=survey_id)
+        return summerizedAnswer
