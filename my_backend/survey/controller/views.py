@@ -88,7 +88,7 @@ class SurveyView(viewsets.ViewSet):
             questionId = request.data.get("question_Id")
             accountId = request.data.get("account_Id")
 
-            print(f"type: {filter}, surveyId: {surveyId}, questionId: {questionId}, accountId: {accountId}")
+            print(f"filter: {filter}, surveyId: {surveyId}, questionId: {questionId}, accountId: {accountId}")
 
             listedAnswer = self.surveyService.listAnswer(filter, surveyId, questionId, accountId)
 
