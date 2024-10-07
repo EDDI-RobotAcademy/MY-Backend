@@ -40,6 +40,10 @@ class ProfileRepositoryImpl(ProfileRepository):
             print(f"error occurred during nickname duplicate check: {e}")
             return None
 
+    def findByAccountId(self, accountId):
+        profile = Profile.objects.get(account=accountId)
+        return profile
+
     def create(self, nickname, email, account):
         profile = Profile.objects.create(nickname=nickname, email=email, account=account)
         return profile
