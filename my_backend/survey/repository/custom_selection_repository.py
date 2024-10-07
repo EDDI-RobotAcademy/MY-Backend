@@ -9,3 +9,7 @@ class SurveySelectionRepository(ABC):
     @abstractmethod
     def createCustomSelection(self, question: SurveyQuestion, custom_text: str) -> CustomSelection:
         pass
+
+    @abstractmethod
+    def findCustomSelectionListByQuestionId(self, question_id):
+        pass

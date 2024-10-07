@@ -33,5 +33,8 @@ class CustomSelectionRepositoryImpl(SurveySelectionRepository):
         except IntegrityError as e:
             raise IntegrityError(f"Error creating survey selection: {e}")
 
+    def findCustomSelectionListByQuestionId(self, question_id):
+        return CustomSelection.objects.filter(question_id=question_id)
+
 
 
