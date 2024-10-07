@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-w4e=!6=#0&j$40w=sp=-9vxe*^5d3)vn*2vm8f-a#%e!8lx#x0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # True in local test
+DEBUG = True # True in local test
 
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'), 'mycooing.com', 'localhost', '127.0.0.1'] # ip 털림 방지를 위해 이렇게 설정
 
