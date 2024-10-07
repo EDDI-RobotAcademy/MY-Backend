@@ -83,14 +83,14 @@ class SurveyView(viewsets.ViewSet):
 
     def listSurveyAnswer(self, request):
         try:
-            type = request.data.get('type')
+            filter = request.data.get('filter')
             surveyId = request.data.get("survey_Id")
             questionId = request.data.get("question_Id")
             accountId = request.data.get("account_Id")
 
-            print(f"type: {type}, surveyId: {surveyId}, questionId: {questionId}, accountId: {accountId}")
+            print(f"type: {filter}, surveyId: {surveyId}, questionId: {questionId}, accountId: {accountId}")
 
-            listedAnswer = self.surveyService.listAnswer(type, surveyId, questionId, accountId)
+            listedAnswer = self.surveyService.listAnswer(filter, surveyId, questionId, accountId)
 
             serializer = SurveyAnswerSerializer(listedAnswer, many=True)
 
