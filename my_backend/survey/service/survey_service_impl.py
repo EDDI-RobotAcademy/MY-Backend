@@ -84,3 +84,8 @@ class SurveyServiceImpl(SurveyService):
             listedAnswer = self.__surveyAnswerRepository.summerizeAnswerBySurveyIdandAccountId(survey_id, account_id)
 
         return listedAnswer
+
+    def listQuestions(self, survey_id):
+        questions = self.__surveyQuestionRepository.findSurveyQuestionListBySurveyId(survey_id)
+        return questions
+

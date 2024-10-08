@@ -99,6 +99,22 @@ class SurveyView(viewsets.ViewSet):
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
+    def listSurveyQuestion(self, request):
+        try:
+            surveyId = request.data.get('survey_Id')
+
+            print(f"surveyId: {surveyId}")
+
+            listedQuestions = self.surveyService.listQuestions(surveyId)
+            return Response(listedQuestions.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    
+
+
+
 
 
 
