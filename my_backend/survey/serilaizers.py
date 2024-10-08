@@ -4,6 +4,7 @@ from account.serilaizers import ProfileSerializer
 from survey.entity.custom_selection import CustomSelection
 from survey.entity.fixed_boolean_selection import FixedBooleanSelection
 from survey.entity.fixed_five_score_selection import FixedFiveScoreSelection
+from survey.entity.survey import Survey
 from survey.entity.survey_answer import SurveyAnswer
 from survey.entity.survey_question import SurveyQuestion
 
@@ -49,3 +50,7 @@ class CustomSelectionSerializer(serializers.ModelSerializer):
         model = CustomSelection
         fields = ('id', 'custom_text', 'question_id')
 
+class SurveySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Survey
+        fields = ['id', 'title', 'description']

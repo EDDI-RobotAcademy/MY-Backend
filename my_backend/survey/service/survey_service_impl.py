@@ -104,3 +104,6 @@ class SurveyServiceImpl(SurveyService):
             selections = self.__surveySelectionRepository.findCustomSelectionListByQuestionId(question.id)
 
         return selections
+
+    def listSurvey(self):
+        return self.__surveyRepository.list()
