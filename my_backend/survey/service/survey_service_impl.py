@@ -42,13 +42,13 @@ class SurveyServiceImpl(SurveyService):
 
         return self.__surveyQuestionRepository.create(survey, question_text, survey_type)
 
-    def createSurveySelection(self, question_id, selection_text):
+    def createSurveySelection(self, question_id, custom_text):
         try:
             question = self.__surveyQuestionRepository.findById(question_id)
             if question is None:
                 raise ValueError("Survey Question not found")
 
-            return self.__surveySelectionRepository.createCustomSelection(question, selection_text)
+            return self.__surveySelectionRepository.createCustomSelection(question, custom_text)
 
         except ValueError as e:
             print(f"Error: {str(e)}")
