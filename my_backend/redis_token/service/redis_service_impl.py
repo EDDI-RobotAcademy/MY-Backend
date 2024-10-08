@@ -1,11 +1,8 @@
+from my_backend import settings
 import redis
-from django.conf import settings
-
-from kakao_oauth.service.redis_service import RedisService
-
+from redis_token.service.redis_service import RedisService
 class RedisServiceImpl(RedisService):
     __instance = None
-
     def __new__(cls):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
@@ -15,16 +12,14 @@ class RedisServiceImpl(RedisService):
                 password=settings.REDIS_PASSWORD,
                 decode_responses=True
             )
-
         return cls.__instance
-
     @classmethod
     def getInstance(cls):
         if cls.__instance is None:
             cls.__instance = cls()
         return cls.__instance
 
-    def store_access_token(self, account_id, userToken):
+    def storeAccessToken(self, account_id, userToken):
         try:
             self.redis_client.set(userToken, account_id)
         except Exception as e:
@@ -35,7 +30,7 @@ class RedisServiceImpl(RedisService):
         try:
             return self.redis_client.get(key)
         except Exception as e:
-            print("redis key로 value 찾는 중 에러 발생:", e)
+            print("redis_token key로 value 찾는 중 에러 발생:", e)
             raise e
 
     def deleteKey(self, key):
@@ -44,11 +39,7 @@ class RedisServiceImpl(RedisService):
             if result == 1:
                 print(f"유저 토큰 삭제 성공: {key}")
                 return True
-
             return False
         except Exception as e:
             print("redis key 삭제 중 에러 발생:", e)
             raise e
-
-
-

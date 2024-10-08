@@ -9,6 +9,7 @@ class NaverOauthServiceImpl(NaverOauthService):
             cls.__instance.loginUrl = settings.NAVER['LOGIN_URL']
             cls.__instance.clientId = settings.NAVER['CLIENT_ID']
             cls.__instance.redirectUri = settings.NAVER['REDIRECT_URI']
+            cls.__instance.clientSecret = settings.NAVER['CLIENT_SECRET']
             cls.__instance.tokenRequestUri = settings.NAVER['TOKEN_REQUEST_URI']
             cls.__instance.userinfoRequestUri = settings.NAVER['USERINFO_REQUEST_URI']
         return cls.__instance
@@ -21,3 +22,20 @@ class NaverOauthServiceImpl(NaverOauthService):
         print("naverLoginAddress()")
         return (f"{self.loginUrl}/oauth2.0/authorize?"
                 f"client_id={self.clientId}&&response_type=code&redirect_uri={self.redirectUri}")
+
+    def requestAccessToken(self, naverAuthCode):
+        print("request Naver AccessToken()")
+        accessTokenRequestForm = {
+            'grant_type': 'authorization_code',
+            'client_id': self.clientId,
+            'client_secret': self.clientSecret,
+            'redirect_uri': self.redirectUri,
+            'code': naverAuthCode,
+        }
+        response = requests.post(self.tokenRequestUri, data=accessTokenRequestForm)
+        return response.json()
+
+    def requestUserInfo(self, accessToken):
+        headers = {'Authorization': f'Bearer {accessToken}'}
+        response = requests.post(self.userinfoRequestUri, headers=headers)
+        return response.json()

@@ -3,7 +3,6 @@ from survey.entity.survey_question import SurveyQuestion
 
 class FixedBooleanSelection(models.Model):
     id = models.AutoField(primary_key=True)
-    question_id = models.ForeignKey(SurveyQuestion, related_name='boolean_selection', on_delete=models.CASCADE)
     is_true = models.BooleanField()
 
     def __str__(self):

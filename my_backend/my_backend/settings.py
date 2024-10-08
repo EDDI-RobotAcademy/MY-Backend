@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-w4e=!6=#0&j$40w=sp=-9vxe*^5d3)vn*2vm8f-a#%e!8lx#x0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # True in local test
 
-ALLOWED_HOSTS = ['192.168.0.26', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'), 'mycooing.com', 'localhost', '127.0.0.1'] # ip 털림 방지를 위해 이렇게 설정
 
 # Application definition
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'board',
     'account',
     'survey',
+    'redis_token',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,7 @@ NAVER = {
     'LOGIN_URL': os.getenv('NAVER_LOGIN_URL'),
     'CLIENT_ID': os.getenv('NAVER_CLIENT_ID'),
     'REDIRECT_URI': os.getenv('NAVER_REDIRECT_URL'),
+    'CLIENT_SECRET': os.getenv('NAVER_CLIENT_SECRET'),
     'TOKEN_REQUEST_URI': os.getenv('NAVER_TOKEN_REQUEST_URI'),
     'USERINFO_REQUEST_URI': os.getenv('NAVER_USERINFO_REQUEST_URI')
 }
@@ -181,7 +183,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 

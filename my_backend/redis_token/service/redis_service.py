@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
 
-
 class RedisService(ABC):
     @abstractmethod
-    def store_access_token(self, account_id, userToken):
+    def storeAccessToken(self, account_id, access_token):
         pass
 
     @abstractmethod
@@ -13,5 +12,3 @@ class RedisService(ABC):
     @abstractmethod
     def deleteKey(self, key):
         pass
-
-
