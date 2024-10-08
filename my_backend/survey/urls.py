@@ -14,5 +14,5 @@ urlpatterns = [
     path('submit-answer', SurveyView.as_view({'post': 'submitSurveyAnswer'}), name='submit-survey-answer'),
     path('list-answer', SurveyView.as_view({'post': 'listSurveyAnswer'}), name='list-survey-answer'),
     path('list-question', SurveyView.as_view({'post': 'listSurveyQuestion'}), name='list-survey-question'),
-
+    path('list-selection', SurveyView.as_view({'post': 'listSurveySelection'}), name='list-survey-selection'),
 ]

@@ -89,3 +89,16 @@ class SurveyServiceImpl(SurveyService):
         questions = self.__surveyQuestionRepository.findSurveyQuestionListBySurveyId(survey_id)
         return questions
 
+    def listSelections(self, question_id):
+        question = self.__surveyQuestionRepository.findById(question_id)
+
+        if question.survey_type == 1:
+            selections = None
+        elif question.survey_type == 2:
+            selections = [1, 2, 3, 4, 5]
+        elif question.survey_type == 3:
+            selections = [True, False]
+        elif question.survey_type == 4:
+            selections = self.__surveySelectionRepository.findCustomSelectionListByQuestionId(question.id)
+
+        return selections
