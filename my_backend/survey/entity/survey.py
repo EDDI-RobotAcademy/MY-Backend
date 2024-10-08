@@ -8,7 +8,7 @@ class Survey(models.Model):
 
 
     def __str__(self):
-        return self.title
+        return str(self.id)
 
     class Meta:
         db_table = 'survey'

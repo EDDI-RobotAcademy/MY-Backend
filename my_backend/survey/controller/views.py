@@ -39,8 +39,8 @@ class SurveyView(viewsets.ViewSet):
             return Response({"error": "설문 ID와 질문 내용이 필요합니다"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            self.surveyService.createSurveyQuestion(survey_id, question_text, survey_type)
-            return Response({"success": "질문이 추가되었습니다"}, status=status.HTTP_200_OK)
+            question = self.surveyService.createSurveyQuestion(survey_id, question_text, survey_type)
+            return Response({"success": "질문이 추가되었습니다", "questionId": f"{question.id}"}, status=status.HTTP_200_OK)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_404_NOT_FOUND)
 
@@ -48,14 +48,14 @@ class SurveyView(viewsets.ViewSet):
         try:
             data = request.data
             question_id = data.get('question_id')
-            selection_text = data.get('selection_text')
-            print(f"question_id: {question_id}, selection_text: {selection_text}")
+            custom_text = data.get('custom_text')
+            print(f"question_id: {question_id}, selection_text: {custom_text}")
 
-            if not question_id or not selection_text:
+            if not question_id or not custom_text:
                 return Response({"error": "Question ID and selection text are required."},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-            selection = self.surveyService.createSurveySelection(question_id, selection_text)
+            selection = self.surveyService.createSurveySelection(question_id, custom_text)
 
             return Response({"message": "Selection created successfully", "selection_id": selection.id},
                             status=status.HTTP_201_CREATED)
