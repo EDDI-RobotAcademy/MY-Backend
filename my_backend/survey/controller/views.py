@@ -11,7 +11,7 @@ from survey.entity.survey_question_image import SurveyQuestionImage
 from survey.entity.custom_selection import CustomSelection
 from survey.entity.custom_selection_image import CustomSelectionImage
 from survey.entity.survey_type import SurveyType
-from survey.serilaizers import SurveyAnswerSerializer
+from survey.serilaizers import SurveyAnswerSerializer, SurveyQuestionSerializer
 from survey.service.survey_service_impl import SurveyServiceImpl
 
 class SurveyView(viewsets.ViewSet):
@@ -99,6 +99,21 @@ class SurveyView(viewsets.ViewSet):
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
+    def listSurveyQuestion(self, request):
+        try:
+            surveyId = request.data.get('survey_Id')
+
+            print(f"surveyId: {surveyId}")
+
+            listedQuestions = self.surveyService.listQuestions(surveyId)
+
+            serializer = SurveyQuestionSerializer(listedQuestions, many=True)
+            print(serializer)
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
 
 
 
