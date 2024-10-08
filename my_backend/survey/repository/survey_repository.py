@@ -9,3 +9,7 @@ class SurveyRepository(ABC):
     @abstractmethod
     def findById(self, survey_id):
         pass
+
+    @abstractmethod
+    def list(self):
+        pass
