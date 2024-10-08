@@ -6,7 +6,7 @@ class FixedFiveScoreSelection(models.Model):
     score = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
 
     def __str__(self):
-        return f"{self.question.question_text} - {self.score}"
+        return str(self.score)
 
     class Meta:
         db_table = 'fixed_five_score_selection'

@@ -1,4 +1,6 @@
 from account.repository.account_repository_impl import AccountRepositoryImpl
+from survey.entity.fixed_boolean_selection import FixedBooleanSelection
+from survey.entity.fixed_five_score_selection import FixedFiveScoreSelection
 from survey.repository.survey_answer_repository_impl import SurveyAnswerRepositoryImpl
 from survey.repository.survey_question_repository_impl import SurveyQuestionRepositoryImpl
 from survey.repository.survey_repository_impl import SurveyRepositoryImpl
@@ -88,3 +90,17 @@ class SurveyServiceImpl(SurveyService):
     def listQuestions(self, survey_id):
         questions = self.__surveyQuestionRepository.findSurveyQuestionListBySurveyId(survey_id)
         return questions
+
+    def listSelections(self, question_id):
+        question = self.__surveyQuestionRepository.findById(question_id)
+
+        if question.survey_type == 1:
+            return None
+        elif question.survey_type == 2:
+            selections = FixedFiveScoreSelection.objects.all()
+        elif question.survey_type == 3:
+            selections = FixedBooleanSelection.objects.all()
+        elif question.survey_type == 4:
+            selections = self.__surveySelectionRepository.findCustomSelectionListByQuestionId(question.id)
+
+        return selections
