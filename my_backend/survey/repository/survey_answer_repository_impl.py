@@ -56,6 +56,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                     survey=survey,
                     question=question,
                     five_score_selection=five_score_selection,
+                    account=account
                 )
         
             elif question.survey_type == 3: # Boolean
