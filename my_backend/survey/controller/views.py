@@ -11,11 +11,14 @@ from survey.entity.survey_question_image import SurveyQuestionImage
 from survey.entity.custom_selection import CustomSelection
 from survey.entity.custom_selection_image import CustomSelectionImage
 from survey.entity.survey_type import SurveyType
-from survey.serilaizers import SurveyAnswerSerializer
+from survey.repository.survey_question_repository_impl import SurveyQuestionRepositoryImpl
+from survey.serilaizers import SurveyAnswerSerializer, SurveyQuestionSerializer, CustomSelectionSerializer, \
+    FixedBooleanSelectionSerializer, FixedFiveScoreSelectionSerializer
 from survey.service.survey_service_impl import SurveyServiceImpl
 
 class SurveyView(viewsets.ViewSet):
     surveyService = SurveyServiceImpl.getInstance()
+    surveyQuestionRepository = SurveyQuestionRepositoryImpl.getInstance()
 
     def createSurvey(self, request):
         data = request.data
@@ -99,7 +102,49 @@ class SurveyView(viewsets.ViewSet):
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
+    def listSurveyQuestion(self, request):
+        try:
+            surveyId = request.data.get('survey_Id')
 
+            print(f"surveyId: {surveyId}")
+
+            listedQuestions = self.surveyService.listQuestions(surveyId)
+
+            serializer = SurveyQuestionSerializer(listedQuestions, many=True)
+            print(serializer)
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listSurveySelection(self, request):
+        try:
+            questionId = request.data.get('question_Id')
+            print(f"questionId: {questionId}")
+
+            listedSelections = self.surveyService.listSelections(questionId)
+            print(f"listedSelections: {listedSelections}")
+
+            question = self.surveyQuestionRepository.findById(questionId)
+            print(question.survey_type)
+            if question.survey_type == 1:
+                return Response({"message": "This is a descriptive question, no choices available."},
+                                status=status.HTTP_200_OK)
+
+            if question.survey_type == 2:
+                serializer = FixedFiveScoreSelectionSerializer(listedSelections, many=True)
+            elif question.survey_type == 3:
+                serializer = FixedBooleanSelectionSerializer(listedSelections, many=True)
+            elif question.survey_type == 4:
+                serializer = CustomSelectionSerializer(listedSelections, many=True)
+            else:
+                return Response({"error": "Invalid survey type"}, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
 
 
 
