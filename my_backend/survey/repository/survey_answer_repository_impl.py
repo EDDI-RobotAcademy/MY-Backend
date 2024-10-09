@@ -1,12 +1,10 @@
-
 from account.entity.account import Account
-from survey.entity.custom_selection import CustomSelection
-from survey.entity.fixed_boolean_selection import FixedBooleanSelection
-from survey.entity.fixed_five_score_selection import FixedFiveScoreSelection
+from survey.entity.survey_fixed_boolean_selection import SurveyFixedBooleanSelection
+from survey.entity.survey_fixed_five_score_selection import SurveyFixedFiveScoreSelection
 from survey.entity.survey import Survey
 from survey.entity.survey_answer import SurveyAnswer
 from survey.entity.survey_question import SurveyQuestion
-from survey.entity.custom_selection import CustomSelection
+from survey.entity.survey_custom_selection import SurveyCustomSelection
 from survey.repository.survey_question_repository_impl import SurveyQuestionRepositoryImpl
 from survey.repository.survey_answer_repository import SurveyAnswerRepository
 from django.db import IntegrityError
@@ -51,7 +49,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                 )
       
             elif question.survey_type == 2: # Five Score
-                five_score_selection = FixedFiveScoreSelection.objects.get(score=answer_data)
+                five_score_selection = SurveyFixedFiveScoreSelection.objects.get(score=answer_data)
                 answer = SurveyAnswer(
                     survey=survey,
                     question=question,
@@ -60,7 +58,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                 )
         
             elif question.survey_type == 3: # Boolean
-                boolean_selection = FixedBooleanSelection.objects.get(is_true=answer_data)
+                boolean_selection = SurveyFixedBooleanSelection.objects.get(is_true=answer_data)
                 answer = SurveyAnswer(
                     survey=survey,
                     question=question,
@@ -69,7 +67,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                 )
                 
             elif question.survey_type == 4:  # Custom
-                custom_selection = CustomSelection.objects.get(custom_text=answer_data)
+                custom_selection = SurveyCustomSelection.objects.get(custom_text=answer_data)
                 answer = SurveyAnswer(
                     survey=survey,
                     question=question,
