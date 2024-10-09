@@ -1,11 +1,11 @@
 from django.db import IntegrityError
 
 from survey.entity.survey_question import SurveyQuestion
-from survey.entity.custom_selection import CustomSelection
-from survey.repository.custom_selection_repository import SurveySelectionRepository
+from survey.entity.survey_custom_selection import SurveyCustomSelection
+from survey.repository.survey_custom_selection_repository import SurveyCustomSelectionRepository
 
 
-class CustomSelectionRepositoryImpl(SurveySelectionRepository):
+class SurveyCustomSelectionRepositoryImpl(SurveyCustomSelectionRepository):
     __instance = None
 
     def __new__(cls):
@@ -21,20 +21,20 @@ class CustomSelectionRepositoryImpl(SurveySelectionRepository):
 
         return cls.__instance
 
-    def createCustomSelection(self, question, custom_text):
+    def createSurveyCustomSelection(self, question, custom_text):
         if not isinstance(question, SurveyQuestion):
             raise ValueError("Question must be an instance of SurveyQuestion")
 
         try:
-            selection = CustomSelection(question=question, custom_text=custom_text)
+            selection = SurveyCustomSelection(question=question, custom_text=custom_text)
             selection.save()
             return selection
 
         except IntegrityError as e:
             raise IntegrityError(f"Error creating survey selection: {e}")
 
-    def findCustomSelectionListByQuestionId(self, question_id):
-        return CustomSelection.objects.filter(question_id=question_id)
+    def findSurveyCustomSelectionListByQuestionId(self, question_id):
+        return SurveyCustomSelection.objects.filter(question_id=question_id)
 
 
 

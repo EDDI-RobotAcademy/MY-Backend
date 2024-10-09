@@ -2,18 +2,18 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from survey.entity.fixed_boolean_selection import FixedBooleanSelection
-from survey.entity.fixed_five_score_selection import FixedFiveScoreSelection
+from survey.entity.survey_fixed_boolean_selection import SurveyFixedBooleanSelection
+from survey.entity.survey_fixed_five_score_selection import SurveyFixedFiveScoreSelection
 from survey.entity.survey import Survey
 from survey.entity.survey_answer import SurveyAnswer
 from survey.entity.survey_question import SurveyQuestion
 from survey.entity.survey_question_image import SurveyQuestionImage
-from survey.entity.custom_selection import CustomSelection
-from survey.entity.custom_selection_image import CustomSelectionImage
+from survey.entity.survey_custom_selection import SurveyCustomSelection
+from survey.entity.survey_custom_selection_image import SurveyCustomSelectionImage
 from survey.entity.survey_type import SurveyType
 from survey.repository.survey_question_repository_impl import SurveyQuestionRepositoryImpl
-from survey.serilaizers import SurveyAnswerSerializer, SurveyQuestionSerializer, CustomSelectionSerializer, \
-    FixedBooleanSelectionSerializer, FixedFiveScoreSelectionSerializer, SurveySerializer
+from survey.serilaizers import SurveyAnswerSerializer, SurveyQuestionSerializer, SurveyCustomSelectionSerializer, \
+    SurveyFixedBooleanSelectionSerializer, SurveyFixedFiveScoreSelectionSerializer, SurveySerializer
 from survey.service.survey_service_impl import SurveyServiceImpl
 
 class SurveyView(viewsets.ViewSet):
@@ -47,18 +47,18 @@ class SurveyView(viewsets.ViewSet):
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_404_NOT_FOUND)
 
-    def createCustomSelection(self, request):
+    def createSurveyCustomSelection(self, request):
         try:
             data = request.data
             question_id = data.get('question_id')
             custom_text = data.get('custom_text')
-            print(f"question_id: {question_id}, selection_text: {custom_text}")
+            print(f"question_id: {question_id}, custom_text: {custom_text}")
 
             if not question_id or not custom_text:
                 return Response({"error": "Question ID and selection text are required."},
                                 status=status.HTTP_400_BAD_REQUEST)
 
-            selection = self.surveyService.createSurveySelection(question_id, custom_text)
+            selection = self.surveyService.createSurveyCustomSelection(question_id, custom_text)
 
             return Response({"message": "Selection created successfully", "selection_id": selection.id},
                             status=status.HTTP_201_CREATED)
@@ -94,7 +94,7 @@ class SurveyView(viewsets.ViewSet):
             print(f"filter: {filter}, surveyId: {surveyId}, questionId: {questionId}, accountId: {accountId}")
 
             listedAnswer = self.surveyService.listAnswer(filter, surveyId, questionId, accountId)
-
+            print(listedAnswer)
             serializer = SurveyAnswerSerializer(listedAnswer, many=True)
 
             return Response(serializer.data, status.HTTP_200_OK)
@@ -133,11 +133,11 @@ class SurveyView(viewsets.ViewSet):
                                 status=status.HTTP_200_OK)
 
             if question.survey_type == 2:
-                serializer = FixedFiveScoreSelectionSerializer(listedSelections, many=True)
+                serializer = SurveyFixedFiveScoreSelectionSerializer(listedSelections, many=True)
             elif question.survey_type == 3:
-                serializer = FixedBooleanSelectionSerializer(listedSelections, many=True)
+                serializer = SurveyFixedBooleanSelectionSerializer(listedSelections, many=True)
             elif question.survey_type == 4:
-                serializer = CustomSelectionSerializer(listedSelections, many=True)
+                serializer = SurveyCustomSelectionSerializer(listedSelections, many=True)
             else:
                 return Response({"error": "Invalid survey type"}, status=status.HTTP_400_BAD_REQUEST)
 

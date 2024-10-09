@@ -1,7 +1,7 @@
 from django.db import models
 from survey.entity.survey_question import SurveyQuestion
 
-class FixedBooleanSelection(models.Model):
+class SurveyFixedBooleanSelection(models.Model):
     id = models.AutoField(primary_key=True)
     is_true = models.BooleanField()
 
@@ -9,5 +9,5 @@ class FixedBooleanSelection(models.Model):
         return str(self.is_true)
 
     class Meta:
-        db_table = 'fixed_boolean_selection'
+        db_table = 'survey_fixed_boolean_selection'
         app_label = 'survey'
