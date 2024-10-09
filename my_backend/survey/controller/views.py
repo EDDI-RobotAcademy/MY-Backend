@@ -12,7 +12,7 @@ from survey.entity.survey_custom_selection import SurveyCustomSelection
 from survey.entity.survey_custom_selection_image import SurveyCustomSelectionImage
 from survey.entity.survey_type import SurveyType
 from survey.repository.survey_question_repository_impl import SurveyQuestionRepositoryImpl
-from survey.serilaizers import SurveyAnswerSerializer, SurveyQuestionSerializer, SurveyCustomSelectionSerializer, \
+from survey.serializers import SurveyAnswerSerializer, SurveyQuestionSerializer, SurveyCustomSelectionSerializer, \
     SurveyFixedBooleanSelectionSerializer, SurveyFixedFiveScoreSelectionSerializer, SurveySerializer
 from survey.service.survey_service_impl import SurveyServiceImpl
 

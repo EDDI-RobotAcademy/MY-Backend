@@ -15,7 +15,7 @@ class UserAnalysisAnswer(models.Model):
     five_score_selection = models.ForeignKey(UserAnalysisFixedFiveScoreSelection, blank=True, null=True, on_delete=models.SET_NULL)
     boolean_selection = models.ForeignKey(UserAnalysisFixedBooleanSelection, blank=True, null=True, on_delete=models.SET_NULL)
     custom_selection = models.ForeignKey(UserAnalysisCustomSelection, blank=True, null=True, on_delete=models.SET_NULL)
-    account = models.ForeignKey(Account, related_name='answers', on_delete=models.CASCADE, null=True, default=None)
+    account = models.ForeignKey(Account, related_name='user_analysis_answers', on_delete=models.CASCADE, null=True, default=None)
 
     response_order = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
