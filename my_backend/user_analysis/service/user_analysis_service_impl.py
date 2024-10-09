@@ -1,4 +1,7 @@
 from account.repository.account_repository_impl import AccountRepositoryImpl
+from user_analysis.repository.user_analysis_custom_selection_repository_impl import \
+    UserAnalysisCustomSelectionRepositoryImpl
+from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
 from user_analysis.repository.user_analysis_repository_impl import UserAnalysisRepositoryImpl
 from user_analysis.service.user_analysis_service import UserAnalysisService
 
@@ -10,6 +13,8 @@ class UserAnalysisServiceImpl(UserAnalysisService):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
             cls.__instance.__userAnalysisRepository = UserAnalysisRepositoryImpl.getInstance()
+        cls.__instance.__userAnalysisQuestionRepository = UserAnalysisQuestionRepositoryImpl.getInstance()
+        cls.__instance.__userAnalysisCustomSelectionRepository = UserAnalysisCustomSelectionRepositoryImpl.getInstance()
 
         return cls.__instance
 
@@ -26,4 +31,27 @@ class UserAnalysisServiceImpl(UserAnalysisService):
 
         except Exception as e:
             print('Error creating order:', e)
+            raise e
+
+    def createUserAnalysisQuestion(self, user_analysis_id, question_text, user_analysis_type):
+        user_analysis = self.__userAnalysisRepository.findById(user_analysis_id)
+        if user_analysis is None:
+            raise ValueError("UserAnalysis not found")
+
+        return self.__userAnalysisQuestionRepository.create(user_analysis, question_text, user_analysis_type)
+
+    def createUserAnalysisCustomSelection(self, question_id, custom_text):
+        try:
+            question = self.__userAnalysisQuestionRepository.findById(question_id)
+            if question is None:
+                raise ValueError("Survey Question not found")
+
+            return self.__userAnalysisCustomSelectionRepository.createUserAnalysisCustomSelection(question, custom_text)
+
+        except ValueError as e:
+            print(f"Error: {str(e)}")
+            raise e
+
+        except Exception as e:
+            print(f"Unexpected error while creating selection: {str(e)}")
             raise e
