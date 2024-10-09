@@ -22,5 +22,13 @@ class SurveyService(ABC):
         pass
 
     @abstractmethod
+    def listQuestions(self, survey_id):
+        pass
+
+    @abstractmethod
+    def listSelections(self, question_id):
+        pass
+
+    @abstractmethod
     def listSurvey(self):
         pass
