@@ -10,6 +10,10 @@ class SurveyService(ABC):
         pass
 
     @abstractmethod
+    def createSurveyCustomSelection(self, question_id, custom_text):
+        pass
+
+    @abstractmethod
     def saveAnswer(self, answers, account_Id):
         pass
 
