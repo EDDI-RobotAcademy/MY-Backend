@@ -26,3 +26,9 @@ class UserAnalysisRepositoryImpl(UserAnalysisRepository):
         user_analysis.save()
 
         return user_analysis
+
+    def findById(self, user_analysis_id):
+        try:
+            return UserAnalysis.objects.get(id=user_analysis_id)
+        except UserAnalysis.DoesNotExist:
+            return None
