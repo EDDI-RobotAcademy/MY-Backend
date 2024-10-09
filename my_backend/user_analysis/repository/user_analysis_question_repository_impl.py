@@ -29,3 +29,9 @@ class UserAnalysisQuestionRepositoryImpl(UserAnalysisQuestionRepository):
 
         except IntegrityError as e:
             raise IntegrityError(f"Error creating survey question: {e}")
+
+    def findById(self, user_analysis_question_id):
+        try:
+            return UserAnalysisQuestion.objects.get(id=user_analysis_question_id)
+        except ObjectDoesNotExist:
+            return None
