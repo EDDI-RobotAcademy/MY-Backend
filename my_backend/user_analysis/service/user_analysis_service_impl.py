@@ -104,3 +104,6 @@ class UserAnalysisServiceImpl(UserAnalysisService):
             selections = self.__userAnalysisCustomSelectionRepository.findUserAnalysisCustomSelectionListByQuestionId(question.id)
 
         return selections
+
+    def listUserAnalysis(self):
+        return self.__userAnalysisRepository.list()

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
 from user_analysis.serializers import UserAnalysisAnswerSerializer, UserAnalysisQuestionSerializer, \
     UserAnalysisFixedFiveScoreSelectionSerializer, UserAnalysisFixedBooleanSelectionSerializer, \
-    UserAnalysisCustomSelectionSerializer
+    UserAnalysisCustomSelectionSerializer, UserAnalysisSerializer
 from user_analysis.service.user_analysis_service_impl import UserAnalysisServiceImpl
 
 
@@ -136,3 +136,8 @@ class UserAnalysisView(viewsets.ViewSet):
 
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listUserAnalysis(self, request):
+        userAnalysisList = self.userAnalysisService.listUserAnalysis()
+        serializer = UserAnalysisSerializer(userAnalysisList, many=True)
+        return Response(serializer.data)

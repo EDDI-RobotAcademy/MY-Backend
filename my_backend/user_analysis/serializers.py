@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from user_analysis.entity.user_analysis import UserAnalysis
 from user_analysis.entity.user_analysis_answer import UserAnalysisAnswer
 from user_analysis.entity.user_analysis_custom_selection import UserAnalysisCustomSelection
 from user_analysis.entity.user_analysis_fixed_boolean_selection import UserAnalysisFixedBooleanSelection
@@ -46,3 +47,8 @@ class UserAnalysisCustomSelectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAnalysisCustomSelection
         fields = ('id', 'custom_text', 'question_id')
+
+class UserAnalysisSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAnalysis
+        fields = ['id', 'title', 'description']

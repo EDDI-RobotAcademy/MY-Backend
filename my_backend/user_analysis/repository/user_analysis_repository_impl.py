@@ -32,3 +32,6 @@ class UserAnalysisRepositoryImpl(UserAnalysisRepository):
             return UserAnalysis.objects.get(id=user_analysis_id)
         except UserAnalysis.DoesNotExist:
             return None
+
+    def list(self):
+        return UserAnalysis.objects.all()
