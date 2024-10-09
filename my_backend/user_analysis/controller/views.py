@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from user_analysis.serializers import UserAnalysisAnswerSerializer
+from user_analysis.serializers import UserAnalysisAnswerSerializer, UserAnalysisQuestionSerializer
 from user_analysis.service.user_analysis_service_impl import UserAnalysisServiceImpl
 
 
@@ -84,6 +84,21 @@ class UserAnalysisView(viewsets.ViewSet):
             listedAnswer = self.userAnalysisService.listAnswer(filter, userAnalysisId, questionId, accountId)
             print(listedAnswer)
             serializer = UserAnalysisAnswerSerializer(listedAnswer, many=True)
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listUserAnalysisQuestion(self, request):
+        try:
+            userAnalysisId = request.data.get('user_analysis_Id')
+
+            print(f"userAnalysisId: {userAnalysisId}")
+
+            listedQuestions = self.userAnalysisService.listQuestions(userAnalysisId)
+
+            serializer = UserAnalysisQuestionSerializer(listedQuestions, many=True)
 
             return Response(serializer.data, status.HTTP_200_OK)
 

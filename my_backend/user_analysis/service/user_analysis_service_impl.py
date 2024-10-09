@@ -84,3 +84,7 @@ class UserAnalysisServiceImpl(UserAnalysisService):
             listedAnswer = self.__userAnalysisAnswerRepository.summerizeAnswerByUserAnalysisIdandAccountId(user_analysis_id, account_id)
 
         return listedAnswer
+
+    def listQuestions(self, user_analysis_id):
+        questions = self.__userAnalysisQuestionRepository.findUserAnalysisQuestionListByUserAnalysisId(user_analysis_id)
+        return questions

@@ -6,5 +6,9 @@ class UserAnalysisQuestionRepository(ABC):
         pass
 
     @abstractmethod
+    def findUserAnalysisQuestionListByUserAnalysisId(self, user_analysis_id):
+        pass
+
+    @abstractmethod
     def findById(self, user_analysis_question_id):
         pass

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from user_analysis.entity.user_analysis_answer import UserAnalysisAnswer
+from user_analysis.entity.user_analysis_question import UserAnalysisQuestion
 
 
 class UserAnalysisAnswerSerializer(serializers.ModelSerializer):
@@ -21,3 +22,9 @@ class UserAnalysisAnswerSerializer(serializers.ModelSerializer):
 
         # None 값을 가진 필드를 제외
         return {k: v for k, v in data.items() if v is not None}
+
+class UserAnalysisQuestionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserAnalysisQuestion
+        fields = ('id', 'question_text', 'user_analysis_type')

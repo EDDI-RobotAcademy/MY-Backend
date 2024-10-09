@@ -20,3 +20,7 @@ class UserAnalysisService(ABC):
     @abstractmethod
     def listAnswer(self, filter, user_analysis_id=None, question_id=None, account_id=None):
         pass
+
+    @abstractmethod
+    def listQuestions(self, user_analysis_id):
+        pass

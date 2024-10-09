@@ -30,6 +30,9 @@ class UserAnalysisQuestionRepositoryImpl(UserAnalysisQuestionRepository):
         except IntegrityError as e:
             raise IntegrityError(f"Error creating survey question: {e}")
 
+    def findUserAnalysisQuestionListByUserAnalysisId(self, user_analysis_id):
+        return UserAnalysisQuestion.objects.filter(user_analysis_id=user_analysis_id)
+
     def findById(self, user_analysis_question_id):
         try:
             return UserAnalysisQuestion.objects.get(id=user_analysis_question_id)
