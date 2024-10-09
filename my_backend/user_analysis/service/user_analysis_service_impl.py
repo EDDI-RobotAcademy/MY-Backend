@@ -72,3 +72,15 @@ class UserAnalysisServiceImpl(UserAnalysisService):
 
         except Exception as e:
             print('답변 저장중 오류 발생: ', {e})
+
+    def listAnswer(self, filter, user_analysis_id=None, question_id=None, account_id=None):
+        if filter == "user_analysis":
+            listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByUserAnalysisId(user_analysis_id)
+        elif filter == "account":
+            listedAnswer = self.__userAnalysisAnswerRepository.summerizeAnswerByAccountId(account_id)
+        elif filter == "question":
+            listedAnswer = self.__userAnalysisAnswerRepository.summerizeAnswerByQuestionId(question_id)
+        elif filter == "user_analysis and account":
+            listedAnswer = self.__userAnalysisAnswerRepository.summerizeAnswerByUserAnalysisIdandAccountId(user_analysis_id, account_id)
+
+        return listedAnswer

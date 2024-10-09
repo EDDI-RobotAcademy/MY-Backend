@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from user_analysis.serializers import UserAnalysisAnswerSerializer
 from user_analysis.service.user_analysis_service_impl import UserAnalysisServiceImpl
 
 
@@ -67,6 +68,24 @@ class UserAnalysisView(viewsets.ViewSet):
             self.userAnalysisService.saveAnswer(answers, accountId)
 
             return Response(True, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listUserAnalysisAnswer(self, request):
+        try:
+            filter = request.data.get('filter')
+            userAnalysisId = request.data.get("user_analysis_Id")
+            questionId = request.data.get("question_Id")
+            accountId = request.data.get("account_Id")
+
+            print(f"filter: {filter}, userAnalysisId: {userAnalysisId}, questionId: {questionId}, accountId: {accountId}")
+
+            listedAnswer = self.userAnalysisService.listAnswer(filter, userAnalysisId, questionId, accountId)
+            print(listedAnswer)
+            serializer = UserAnalysisAnswerSerializer(listedAnswer, many=True)
+
+            return Response(serializer.data, status.HTTP_200_OK)
 
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
