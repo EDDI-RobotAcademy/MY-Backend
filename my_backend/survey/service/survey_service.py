@@ -18,7 +18,7 @@ class SurveyService(ABC):
         pass
 
     @abstractmethod
-    def listAnswer(self, type, survey_id=None, question_id=None, account_id=None):
+    def listAnswer(self, filter, survey_id=None, question_id=None, account_id=None):
         pass
 
     @abstractmethod
