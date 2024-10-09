@@ -27,5 +27,6 @@ urlpatterns = [
     path('google_oauth/', include('google_oauth.urls')),
     path('naver_oauth/', include('naver_oauth.urls')),
     path('survey/', include('survey.urls')),
+    path('user_analysis', include('user_analysis.urls')),
     path('redis_token/', include('redis_token.urls')),
 ]
