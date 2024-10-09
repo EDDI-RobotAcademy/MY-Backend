@@ -32,3 +32,6 @@ class UserAnalysisCustomSelectionRepositoryImpl(UserAnalysisCustomSelectionRepos
 
         except IntegrityError as e:
             raise IntegrityError(f"Error creating survey selection: {e}")
+
+    def findUserAnalysisCustomSelectionListByQuestionId(self, question_id):
+        return UserAnalysisCustomSelection.objects.filter(question_id=question_id)

@@ -9,3 +9,7 @@ class UserAnalysisCustomSelectionRepository(ABC):
     @abstractmethod
     def createUserAnalysisCustomSelection(self, question: UserAnalysisQuestion, custom_text: str) -> UserAnalysisCustomSelection:
         pass
+
+    @abstractmethod
+    def findUserAnalysisCustomSelectionListByQuestionId(self, question_id):
+        pass

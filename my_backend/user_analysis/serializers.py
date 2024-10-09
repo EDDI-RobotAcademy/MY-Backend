@@ -1,6 +1,9 @@
 from rest_framework import serializers
 
 from user_analysis.entity.user_analysis_answer import UserAnalysisAnswer
+from user_analysis.entity.user_analysis_custom_selection import UserAnalysisCustomSelection
+from user_analysis.entity.user_analysis_fixed_boolean_selection import UserAnalysisFixedBooleanSelection
+from user_analysis.entity.user_analysis_fixed_five_score_selection import UserAnalysisFixedFiveScoreSelection
 from user_analysis.entity.user_analysis_question import UserAnalysisQuestion
 
 
@@ -28,3 +31,18 @@ class UserAnalysisQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAnalysisQuestion
         fields = ('id', 'question_text', 'user_analysis_type')
+
+class UserAnalysisFixedFiveScoreSelectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAnalysisFixedFiveScoreSelection
+        fields = ['id', 'score']
+
+class UserAnalysisFixedBooleanSelectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAnalysisFixedBooleanSelection
+        fields = ['id', 'is_true']
+
+class UserAnalysisCustomSelectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAnalysisCustomSelection
+        fields = ('id', 'custom_text', 'question_id')

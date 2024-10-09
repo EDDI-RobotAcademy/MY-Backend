@@ -24,3 +24,7 @@ class UserAnalysisService(ABC):
     @abstractmethod
     def listQuestions(self, user_analysis_id):
         pass
+
+    @abstractmethod
+    def listSelections(self, question_id):
+        pass

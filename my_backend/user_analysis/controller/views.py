@@ -1,12 +1,16 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from user_analysis.serializers import UserAnalysisAnswerSerializer, UserAnalysisQuestionSerializer
+from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
+from user_analysis.serializers import UserAnalysisAnswerSerializer, UserAnalysisQuestionSerializer, \
+    UserAnalysisFixedFiveScoreSelectionSerializer, UserAnalysisFixedBooleanSelectionSerializer, \
+    UserAnalysisCustomSelectionSerializer
 from user_analysis.service.user_analysis_service_impl import UserAnalysisServiceImpl
 
 
 class UserAnalysisView(viewsets.ViewSet):
     userAnalysisService = UserAnalysisServiceImpl.getInstance()
+    userAnalysisQuestionRepository = UserAnalysisQuestionRepositoryImpl.getInstance()
 
     def createUserAnalysis(self, request):
         data = request.data
@@ -99,6 +103,34 @@ class UserAnalysisView(viewsets.ViewSet):
             listedQuestions = self.userAnalysisService.listQuestions(userAnalysisId)
 
             serializer = UserAnalysisQuestionSerializer(listedQuestions, many=True)
+
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listUserAnalysisSelection(self, request):
+        try:
+            questionId = request.data.get('question_Id')
+            print(f"questionId: {questionId}")
+
+            listedSelections = self.userAnalysisService.listSelections(questionId)
+            print(f"listedSelections: {listedSelections}")
+
+            question = self.userAnalysisQuestionRepository.findById(questionId)
+            print(question.user_analysis_type)
+            if question.user_analysis_type == 1:
+                return Response({"message": "This is a descriptive question, no choices available."},
+                                status=status.HTTP_200_OK)
+
+            if question.user_analysis_type == 2:
+                serializer = UserAnalysisFixedFiveScoreSelectionSerializer(listedSelections, many=True)
+            elif question.user_analysis_type == 3:
+                serializer = UserAnalysisFixedBooleanSelectionSerializer(listedSelections, many=True)
+            elif question.user_analysis_type == 4:
+                serializer = UserAnalysisCustomSelectionSerializer(listedSelections, many=True)
+            else:
+                return Response({"error": "Invalid survey type"}, status=status.HTTP_400_BAD_REQUEST)
 
             return Response(serializer.data, status.HTTP_200_OK)
 

@@ -1,4 +1,6 @@
 from account.repository.account_repository_impl import AccountRepositoryImpl
+from user_analysis.entity.user_analysis_fixed_boolean_selection import UserAnalysisFixedBooleanSelection
+from user_analysis.entity.user_analysis_fixed_five_score_selection import UserAnalysisFixedFiveScoreSelection
 from user_analysis.repository.user_analysis_answer_repository_impl import UserAnalysisAnswerRepositoryImpl
 from user_analysis.repository.user_analysis_custom_selection_repository_impl import \
     UserAnalysisCustomSelectionRepositoryImpl
@@ -88,3 +90,17 @@ class UserAnalysisServiceImpl(UserAnalysisService):
     def listQuestions(self, user_analysis_id):
         questions = self.__userAnalysisQuestionRepository.findUserAnalysisQuestionListByUserAnalysisId(user_analysis_id)
         return questions
+
+    def listSelections(self, question_id):
+        question = self.__userAnalysisQuestionRepository.findById(question_id)
+
+        if question.user_analysis_type == 1:
+            return None
+        elif question.user_analysis_type == 2:
+            selections = UserAnalysisFixedFiveScoreSelection.objects.all()
+        elif question.user_analysis_type == 3:
+            selections = UserAnalysisFixedBooleanSelection.objects.all()
+        elif question.user_analysis_type == 4:
+            selections = self.__userAnalysisCustomSelectionRepository.findUserAnalysisCustomSelectionListByQuestionId(question.id)
+
+        return selections
