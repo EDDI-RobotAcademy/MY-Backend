@@ -14,7 +14,7 @@ class SurveyAnswer(models.Model):
     five_score_selection = models.ForeignKey(SurveyFixedFiveScoreSelection, blank=True, null=True, on_delete=models.SET_NULL)
     boolean_selection = models.ForeignKey(SurveyFixedBooleanSelection, blank=True, null=True, on_delete=models.SET_NULL)
     custom_selection = models.ForeignKey(SurveyCustomSelection, blank=True, null=True, on_delete=models.SET_NULL)
-    account = models.ForeignKey(Account, related_name='answers', on_delete=models.CASCADE, null=True, default=None)
+    account = models.ForeignKey(Account, related_name='survey_answers', on_delete=models.CASCADE, null=True, default=None)
 
     response_order = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
