@@ -57,3 +57,16 @@ class UserAnalysisView(viewsets.ViewSet):
         except Exception as e:
             return Response({"error": "Something went wrong while creating the selection."},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def submitUserAnalysisAnswer(self, request):
+        try:
+            answers = request.data.get('user_analysis_answer')
+            accountId = request.data.get('account_id')
+            print(f"answers: {answers}, accountId : {accountId}")
+
+            self.userAnalysisService.saveAnswer(answers, accountId)
+
+            return Response(True, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)

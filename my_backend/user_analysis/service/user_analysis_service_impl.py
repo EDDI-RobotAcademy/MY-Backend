@@ -1,4 +1,5 @@
 from account.repository.account_repository_impl import AccountRepositoryImpl
+from user_analysis.repository.user_analysis_answer_repository_impl import UserAnalysisAnswerRepositoryImpl
 from user_analysis.repository.user_analysis_custom_selection_repository_impl import \
     UserAnalysisCustomSelectionRepositoryImpl
 from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
@@ -15,6 +16,7 @@ class UserAnalysisServiceImpl(UserAnalysisService):
             cls.__instance.__userAnalysisRepository = UserAnalysisRepositoryImpl.getInstance()
         cls.__instance.__userAnalysisQuestionRepository = UserAnalysisQuestionRepositoryImpl.getInstance()
         cls.__instance.__userAnalysisCustomSelectionRepository = UserAnalysisCustomSelectionRepositoryImpl.getInstance()
+        cls.__instance.__userAnalysisAnswerRepository = UserAnalysisAnswerRepositoryImpl.getInstance()
 
         return cls.__instance
 
@@ -55,3 +57,18 @@ class UserAnalysisServiceImpl(UserAnalysisService):
         except Exception as e:
             print(f"Unexpected error while creating selection: {str(e)}")
             raise e
+
+    def saveAnswer(self, answers, account_id):
+        try:
+            for answer in answers:
+
+                question_id = answer.get('question_id')
+                question = self.__userAnalysisQuestionRepository.findById(question_id)
+                user_analysis_id = question.user_analysis_id
+                answer_data = answer.get('answer_data')
+
+
+                self.__userAnalysisAnswerRepository.saveAnswer(user_analysis_id, question_id, answer_data, account_id)
+
+        except Exception as e:
+            print('답변 저장중 오류 발생: ', {e})

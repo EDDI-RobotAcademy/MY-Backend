@@ -12,3 +12,7 @@ class UserAnalysisService(ABC):
     @abstractmethod
     def createUserAnalysisCustomSelection(self, question_id, custom_text):
         pass
+
+    @abstractmethod
+    def saveAnswer(self, answers, account_Id):
+        pass

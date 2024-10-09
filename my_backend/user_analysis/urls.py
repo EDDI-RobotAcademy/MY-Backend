@@ -11,5 +11,5 @@ urlpatterns = [
     path('create', UserAnalysisView.as_view({'post': 'createUserAnalysis'}), name='create-user-analysis'),
     path('create-question', UserAnalysisView.as_view({'post': 'createUserAnalysisQuestion'}), name='create-user-analysis-question'),
     path('create-user-analysis-selection', UserAnalysisView.as_view({'post': 'createUserAnalysisCustomSelection'}), name='create-user-ananlysis-custom-selection'),
-
+    path('submit-answer', UserAnalysisView.as_view({'post': 'submitUserAnalysisAnswer'}), name='submit-user-analysis-answer'),
 ]
