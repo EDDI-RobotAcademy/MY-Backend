@@ -38,7 +38,10 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
             question = self.__surveyQuestionRepository.findById(question_id)
 
             survey = Survey.objects.get(id = survey_id)
-            account = Account.objects.get(id=account_id)
+            if account_id == True:
+                account = Account.objects.get(id=account_id)
+            else:
+                account = account_id
 
             if question.survey_type == 1: # General
                 answer = SurveyAnswer(

@@ -36,7 +36,10 @@ class UserAnalysisAnswerRepositoryImpl(UserAnalysisAnswerRepository):
             question = self.__userAnalysisQuestionRepository.findById(question_id)
 
             user_analysis = UserAnalysis.objects.get(id=user_analysis_id)
-            account = Account.objects.get(id=account_id)
+            if account_id == True:
+                account = Account.objects.get(id=account_id)
+            else:
+                account = account_id
 
             if question.user_analysis_type == 1:  # General
                 answer = UserAnalysisAnswer(
