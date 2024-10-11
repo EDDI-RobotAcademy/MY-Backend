@@ -9,3 +9,7 @@ class SubscriptionRepository(ABC):
     @abstractmethod
     def list(self):
         pass
+
+    @abstractmethod
+    def findById(self, subscriptionId):
+        pass

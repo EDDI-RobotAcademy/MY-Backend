@@ -31,3 +31,10 @@ class SubscriptionView(viewsets.ViewSet):
         except Exception as e:
             print('구독권 등록 과정 중 문제 발생:', e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def readSubscription(self, request):
+        data = request.data
+        id = data.get("subscription_id")
+        subscription = self.subscriptionService.read(id)
+        serializer = SubscriptionSerializer(subscription)
+        return Response(serializer.data)

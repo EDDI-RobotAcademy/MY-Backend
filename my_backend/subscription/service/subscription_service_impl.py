@@ -24,3 +24,6 @@ class SubscriptionServiceImpl(SubscriptionService):
 
     def create(self, name, type, price):
         return self.__subscriptionRepository.create(name, type, price)
+
+    def read(self, subscriptionId):
+        return self.__subscriptionRepository.findById(subscriptionId)
