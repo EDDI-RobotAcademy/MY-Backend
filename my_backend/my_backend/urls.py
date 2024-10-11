@@ -28,5 +28,6 @@ urlpatterns = [
     path('naver_oauth/', include('naver_oauth.urls')),
     path('survey/', include('survey.urls')),
     path('user_analysis/', include('user_analysis.urls')),
+    path('subscription/', include('subscription.urls')),
     path('redis_token/', include('redis_token.urls')),
 ]
