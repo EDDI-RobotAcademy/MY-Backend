@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'account',
     'survey',
     'user_analysis',
+    'subscription',
     'redis_token',
 ]
 
