@@ -8,5 +8,6 @@ router.register(r'subscription', SubscriptionView, basename='subscription')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('list', SubscriptionView.as_view({'get': 'listSubscription'}), name='list-subscription'),
     path('create', SubscriptionView.as_view({'post': 'createSubscription'}), name='create-subscription'),
 ]

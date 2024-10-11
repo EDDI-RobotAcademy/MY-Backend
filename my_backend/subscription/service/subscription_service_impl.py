@@ -19,5 +19,8 @@ class SubscriptionServiceImpl(SubscriptionService):
 
         return cls.__instance
 
+    def list(self):
+        return self.__subscriptionRepository.list()
+
     def create(self, name, type, price):
         return self.__subscriptionRepository.create(name, type, price)

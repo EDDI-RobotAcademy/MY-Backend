@@ -18,6 +18,9 @@ class SubscriptionRepositoryImpl(SubscriptionRepository):
 
         return cls.__instance
 
+    def list(self):
+        return Subscription.objects.all()
+
     def create(self, name, type, price):
         subscription = Subscription(
             name = name,

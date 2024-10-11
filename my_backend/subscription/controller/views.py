@@ -1,11 +1,17 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from subscription.serializers import SubscriptionSerializer
 from subscription.service.subscription_service_impl import SubscriptionServiceImpl
 
 
 class SubscriptionView(viewsets.ViewSet):
     subscriptionService = SubscriptionServiceImpl.getInstance()
+
+    def listSubscription(self, request):
+        subscriptionList = self.subscriptionService.list()
+        serializer = SubscriptionSerializer(subscriptionList, many=True)
+        return Response(serializer.data)
 
     def createSubscription(self, request):
         try:
