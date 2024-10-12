@@ -10,4 +10,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('list', SubscriptionView.as_view({'get': 'listSubscription'}), name='list-subscription'),
     path('create', SubscriptionView.as_view({'post': 'createSubscription'}), name='create-subscription'),
+    path('read', SubscriptionView.as_view({'post': 'readSubscription'}), name='read-subscription'),
 ]

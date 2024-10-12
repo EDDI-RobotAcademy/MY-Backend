@@ -29,3 +29,9 @@ class SubscriptionRepositoryImpl(SubscriptionRepository):
         )
         subscription.save()
         return subscription
+
+    def findById(self, subscriptionId):
+        try:
+            return Subscription.objects.get(id = subscriptionId)
+        except Subscription.DoesNotExist:
+            return None
