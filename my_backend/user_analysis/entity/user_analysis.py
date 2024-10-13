@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Survey(models.Model):
+class UserAnalysis(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -11,5 +11,5 @@ class Survey(models.Model):
         return str(self.id)
 
     class Meta:
-        db_table = 'survey'
-        app_label = 'survey'
+        db_table = 'user_analysis'
+        app_label = 'user_analysis'

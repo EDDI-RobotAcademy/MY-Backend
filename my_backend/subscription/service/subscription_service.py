@@ -1,15 +1,16 @@
 from abc import ABC, abstractmethod
 
 
-class SurveyRepository(ABC):
-    @abstractmethod
-    def create(self, title, description):
-        pass
-
-    @abstractmethod
-    def findById(self, survey_id):
-        pass
+class SubscriptionService(ABC):
 
     @abstractmethod
     def list(self):
+        pass
+
+    @abstractmethod
+    def create(self, name, type, price):
+        pass
+
+    @abstractmethod
+    def read(self, subscriptionId):
         pass

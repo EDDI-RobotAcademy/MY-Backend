@@ -3,6 +3,9 @@ from django.db import IntegrityError
 
 from survey.entity.survey import Survey
 from survey.entity.survey_question import SurveyQuestion
+from survey.repository.survey_fixed_boolean_selection_repository_impl import SurveyFixedBooleanSelectionRepositoryImpl
+from survey.repository.survey_fixed_five_score_selection_repository_impl import \
+    SurveyFixedFiveScoreSelectionRepositoryImpl
 from survey.repository.survey_question_repository import SurveyQuestionRepository
 
 
@@ -19,6 +22,8 @@ class SurveyQuestionRepositoryImpl(SurveyQuestionRepository):
     def getInstance(cls):
         if cls.__instance is None:
             cls.__instance = cls()
+            cls.__instance.__surveyFixedFiveScoreSelectionRepository = SurveyFixedFiveScoreSelectionRepositoryImpl.getInstance()
+            cls.__instance.__surveyFixedBooleanSelectionRepository = SurveyFixedBooleanSelectionRepositoryImpl.getInstance()
 
         return cls.__instance
 
@@ -28,6 +33,10 @@ class SurveyQuestionRepositoryImpl(SurveyQuestionRepository):
 
         try:
             question = SurveyQuestion(survey=survey, question_text=question_text, survey_type=survey_type)
+            if question.survey_type == 2:
+                self.__surveyFixedFiveScoreSelectionRepository.create()
+            elif question.survey_type == 3:
+                self.__surveyFixedBooleanSelectionRepository.create()
             question.save()
             return question
 

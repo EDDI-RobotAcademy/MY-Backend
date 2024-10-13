@@ -32,3 +32,6 @@ class SurveyRepositoryImpl(SurveyRepository):
             return Survey.objects.get(id=survey_id)
         except Survey.DoesNotExist:
             return None
+
+    def list(self):
+        return Survey.objects.all()
