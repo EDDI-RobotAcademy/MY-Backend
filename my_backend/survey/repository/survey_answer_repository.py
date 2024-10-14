@@ -11,14 +11,14 @@ class SurveyAnswerRepository(ABC):
         pass
 
     @abstractmethod
-    def summerizeAnswerByQuestionId(self, question_id):
+    def summarizeAnswerByQuestionId(self, question_id):
         pass
 
     @abstractmethod
-    def summerizeAnswerByAccountId(self, account_id):
+    def summarizeAnswerByAccountId(self, account_id):
         pass
 
     @abstractmethod
-    def summerizeAnswerBySurveyIdandAccountId(self, survey_id, account_id):
+    def summarizeAnswerBySurveyIdandAccountId(self, survey_id, account_id):
         pass
 

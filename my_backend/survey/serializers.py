@@ -13,7 +13,7 @@ class SurveyAnswerSerializer(serializers.ModelSerializer):
     survey_title = serializers.CharField(source='survey.title', read_only=True)
     profile_nickname = serializers.CharField(source='account.profile.nickname', read_only=True)
     question_text = serializers.CharField(source='question.question_text', read_only=True)
-    survey_custom_selection_text = serializers.CharField(source='survey_custom_selection.custom_text', read_only=True,
+    survey_custom_selection_text = serializers.CharField(source='custom_selection.custom_text', read_only=True,
                                                   default=None)
 
     class Meta:
