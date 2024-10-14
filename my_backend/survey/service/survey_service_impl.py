@@ -37,12 +37,12 @@ class SurveyServiceImpl(SurveyService):
             print('Error creating order:', e)
             raise e
 
-    def createSurveyQuestion(self, survey_id, question_text, survey_type):
+    def createSurveyQuestion(self, survey_id, question_text, survey_type, is_essential):
         survey = self.__surveyRepository.findById(survey_id)
         if survey is None:
             raise ValueError("Survey not found")
 
-        return self.__surveyQuestionRepository.create(survey, question_text, survey_type)
+        return self.__surveyQuestionRepository.create(survey, question_text, survey_type, is_essential)
 
     def createSurveyCustomSelection(self, question_id, custom_text):
         try:

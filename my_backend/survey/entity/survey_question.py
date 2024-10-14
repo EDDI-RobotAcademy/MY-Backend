@@ -13,6 +13,7 @@ class SurveyQuestion(models.Model):
         choices=SurveyType.choices,
         default=SurveyType.GENERAL
     )
+    is_essential = models.BooleanField(default=True)
 
     def __str__(self):
         return f"question_text: {self.question_text}, survey_type: {self.get_survey_type_display()}, survey_id: {self.survey.id}"
