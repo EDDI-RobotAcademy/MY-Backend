@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from redis_token.service.redis_service_impl import RedisServiceImpl
 from survey.entity.survey_fixed_boolean_selection import SurveyFixedBooleanSelection
 from survey.entity.survey_fixed_five_score_selection import SurveyFixedFiveScoreSelection
 from survey.entity.survey import Survey
@@ -19,6 +20,7 @@ from survey.service.survey_service_impl import SurveyServiceImpl
 class SurveyView(viewsets.ViewSet):
     surveyService = SurveyServiceImpl.getInstance()
     surveyQuestionRepository = SurveyQuestionRepositoryImpl.getInstance()
+    redisService = RedisServiceImpl.getInstance()
 
     def createSurvey(self, request):
         data = request.data
@@ -73,8 +75,13 @@ class SurveyView(viewsets.ViewSet):
     def submitSurveyAnswer(self, request):
         try:
             answers = request.data.get('survey_answer')
-            accountId = request.data.get('account_id')
-            print(f"answers: {answers}, accountId : {accountId}")
+            print(f"answers: {answers}")
+            userToken = request.data.get('userToken')
+            print(f"userToken: {userToken}")
+            if userToken:
+                accountId = self.redisService.getValueByKey(userToken)
+            else:
+                accountId = None
 
             self.surveyService.saveAnswer(answers, accountId)
 
