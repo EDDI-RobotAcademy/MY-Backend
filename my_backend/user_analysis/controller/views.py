@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from redis_token.service.redis_service_impl import RedisServiceImpl
 from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
 from user_analysis.serializers import UserAnalysisAnswerSerializer, UserAnalysisQuestionSerializer, \
     UserAnalysisFixedFiveScoreSelectionSerializer, UserAnalysisFixedBooleanSelectionSerializer, \
@@ -11,6 +12,7 @@ from user_analysis.service.user_analysis_service_impl import UserAnalysisService
 class UserAnalysisView(viewsets.ViewSet):
     userAnalysisService = UserAnalysisServiceImpl.getInstance()
     userAnalysisQuestionRepository = UserAnalysisQuestionRepositoryImpl.getInstance()
+    redisService = RedisServiceImpl.getInstance()
 
     def createUserAnalysis(self, request):
         data = request.data
@@ -66,8 +68,13 @@ class UserAnalysisView(viewsets.ViewSet):
     def submitUserAnalysisAnswer(self, request):
         try:
             answers = request.data.get('user_analysis_answer')
-            accountId = request.data.get('account_id')
-            print(f"answers: {answers}, accountId : {accountId}")
+            print(f"answers: {answers}")
+            userToken = request.data.get('userToken')
+            print(f"userToken: {userToken}")
+            if userToken:
+                accountId = self.redisService.getValueByKey(userToken)
+            else:
+                accountId = None
 
             self.userAnalysisService.saveAnswer(answers, accountId)
 
