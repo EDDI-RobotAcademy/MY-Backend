@@ -86,14 +86,14 @@ class UserAnalysisAnswerRepositoryImpl(UserAnalysisAnswerRepository):
         summerizedAnswer = UserAnalysisAnswer.objects.filter(user_analysis_id=user_analysis_id)
         return summerizedAnswer
 
-    def summerizeAnswerByQuestionId(self, question_id):
+    def summarizeAnswerByQuestionId(self, question_id):
         summerizedAnswer = UserAnalysisAnswer.objects.filter(question_id=question_id)
         return summerizedAnswer
 
-    def summerizeAnswerByAccountId(self, account_id):
+    def summarizeAnswerByAccountId(self, account_id):
         summerizedAnswer = UserAnalysisAnswer.objects.filter(account_id=account_id)
         return summerizedAnswer
 
-    def summerizeAnswerByUserAnalysisIdandAccountId(self, user_analysis_id, account_id):
+    def summarizeAnswerByUserAnalysisIdandAccountId(self, user_analysis_id, account_id):
         summerizedAnswer = UserAnalysisAnswer.objects.filter(user_analysis_id=user_analysis_id, account_id=account_id)
         return summerizedAnswer

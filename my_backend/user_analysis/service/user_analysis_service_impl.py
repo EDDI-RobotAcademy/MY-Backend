@@ -79,11 +79,11 @@ class UserAnalysisServiceImpl(UserAnalysisService):
         if filter == "user_analysis":
             listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByUserAnalysisId(user_analysis_id)
         elif filter == "account":
-            listedAnswer = self.__userAnalysisAnswerRepository.summerizeAnswerByAccountId(account_id)
+            listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByAccountId(account_id)
         elif filter == "question":
-            listedAnswer = self.__userAnalysisAnswerRepository.summerizeAnswerByQuestionId(question_id)
+            listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByQuestionId(question_id)
         elif filter == "user_analysis and account":
-            listedAnswer = self.__userAnalysisAnswerRepository.summerizeAnswerByUserAnalysisIdandAccountId(user_analysis_id, account_id)
+            listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByUserAnalysisIdandAccountId(user_analysis_id, account_id)
 
         return listedAnswer
 

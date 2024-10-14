@@ -12,7 +12,7 @@ class UserAnalysisAnswerSerializer(serializers.ModelSerializer):
     user_analysis_title = serializers.CharField(source='user_analysis.title', read_only=True)
     profile_nickname = serializers.CharField(source='account.profile.nickname', read_only=True)
     question_text = serializers.CharField(source='question.question_text', read_only=True)
-    user_analysis_custom_selection_text = serializers.CharField(source='user_analysis_custom_selection.custom_text', read_only=True,
+    user_analysis_custom_selection_text = serializers.CharField(source='custom_selection.custom_text', read_only=True,
                                                   default=None)
 
     class Meta:
