@@ -73,7 +73,11 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                 )
                 
             elif question.survey_type == 4:  # Custom
-                custom_selection = SurveyCustomSelection.objects.get(custom_text=answer_data)
+                if answer_data:
+                    custom_selection = SurveyCustomSelection.objects.get(custom_text=answer_data)
+                else:
+                    custom_selection = None
+
                 answer = SurveyAnswer(
                     survey=survey,
                     question=question,
