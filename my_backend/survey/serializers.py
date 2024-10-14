@@ -32,7 +32,7 @@ class SurveyQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SurveyQuestion
-        fields = ('id', 'question_text', 'survey_type')
+        fields = ('id', 'question_text', 'survey_type', 'is_essential')
 
 class SurveyFixedFiveScoreSelectionSerializer(serializers.ModelSerializer):
     class Meta:

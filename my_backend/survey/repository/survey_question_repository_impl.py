@@ -27,12 +27,12 @@ class SurveyQuestionRepositoryImpl(SurveyQuestionRepository):
 
         return cls.__instance
 
-    def create(self, survey, question_text, survey_type):
+    def create(self, survey, question_text, survey_type, is_essential):
         # if not isinstance(survey, Survey):
         #     raise ValueError("Survey must be an instance of Survey")
 
         try:
-            question = SurveyQuestion(survey=survey, question_text=question_text, survey_type=survey_type)
+            question = SurveyQuestion(survey=survey, question_text=question_text, survey_type=survey_type, is_essential=is_essential)
             if question.survey_type == 2:
                 self.__surveyFixedFiveScoreSelectionRepository.create()
             elif question.survey_type == 3:

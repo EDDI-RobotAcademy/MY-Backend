@@ -39,12 +39,13 @@ class SurveyView(viewsets.ViewSet):
         survey_id = data.get('survey')
         question_text = data.get('question')
         survey_type = data.get('survey_type')
+        is_essential = data.get('is_essential')
 
         if not survey_id or not question_text:
             return Response({"error": "설문 ID와 질문 내용이 필요합니다"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            question = self.surveyService.createSurveyQuestion(survey_id, question_text, survey_type)
+            question = self.surveyService.createSurveyQuestion(survey_id, question_text, survey_type, is_essential)
             return Response({"success": "질문이 추가되었습니다", "questionId": f"{question.id}"}, status=status.HTTP_200_OK)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_404_NOT_FOUND)
