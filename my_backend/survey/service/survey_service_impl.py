@@ -79,11 +79,11 @@ class SurveyServiceImpl(SurveyService):
         if filter == "survey":
             listedAnswer = self.__surveyAnswerRepository.summarizeAnswerBySurveyId(survey_id)
         elif filter == "account":
-            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerByAccountId(account_id)
+            listedAnswer = self.__surveyAnswerRepository.summarizeAnswerByAccountId(account_id)
         elif filter == "question":
-            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerByQuestionId(question_id)
+            listedAnswer = self.__surveyAnswerRepository.summarizeAnswerByQuestionId(question_id)
         elif filter == "survey and account":
-            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerBySurveyIdandAccountId(survey_id, account_id)
+            listedAnswer = self.__surveyAnswerRepository.summarizeAnswerBySurveyIdandAccountId(survey_id, account_id)
 
         return listedAnswer
 
