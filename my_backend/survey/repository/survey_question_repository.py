@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class SurveyQuestionRepository(ABC):
     @abstractmethod
-    def create(self, survey, question_text, survey_type):
+    def create(self, survey, question_text, survey_type, is_essential):
         pass
 
     @abstractmethod
