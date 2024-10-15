@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from account.serilaizers import ProfileSerializer
+from user_profile.serializers import UserProfileSerializer
 from survey.entity.survey_custom_selection import SurveyCustomSelection
 from survey.entity.survey_fixed_boolean_selection import SurveyFixedBooleanSelection
 from survey.entity.survey_fixed_five_score_selection import SurveyFixedFiveScoreSelection

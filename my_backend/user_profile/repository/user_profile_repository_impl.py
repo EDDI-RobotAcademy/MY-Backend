@@ -1,8 +1,8 @@
-from account.entity.profile import Profile
-from account.repository.profile_repository import ProfileRepository
+from user_profile.entity.user_profile import UserProfile
+from user_profile.repository.user_profile_repository import UserProfileRepository
 
 
-class ProfileRepositoryImpl(ProfileRepository):
+class UserProfileRepositoryImpl(UserProfileRepository):
     __instance = None
 
     def __new__(cls):
@@ -20,9 +20,9 @@ class ProfileRepositoryImpl(ProfileRepository):
 
     def findByEmail(self, email):
         try:
-            profile = Profile.objects.get(email=email)
+            profile = UserProfile.objects.get(email=email)
             return profile
-        except Profile.DoesNotExist:
+        except UserProfile.DoesNotExist:
             print(f"email로 profile을 찾을 수 없습니다.: {email}")
             return None
         except Exception as e:
@@ -31,9 +31,9 @@ class ProfileRepositoryImpl(ProfileRepository):
 
     def findByNickname(self, nickname):
         try:
-            profile = Profile.objects.get(nickname=nickname)
+            profile = UserProfile.objects.get(nickname=nickname)
             return profile
-        except Profile.DoesNotExist:
+        except UserProfile.DoesNotExist:
             print(f"nickname으로 profile을 찾을 수 없습니다.: {nickname}")
             return None
         except Exception as e:
@@ -41,11 +41,11 @@ class ProfileRepositoryImpl(ProfileRepository):
             return None
 
     def findByAccountId(self, accountId):
-        profile = Profile.objects.get(account=accountId)
+        profile = UserProfile.objects.get(account=accountId)
         return profile
 
     def create(self, nickname, email, account):
-        profile = Profile.objects.create(nickname=nickname, email=email, account=account)
+        profile = UserProfile.objects.create(nickname=nickname, email=email, account=account)
         return profile
 
 
