@@ -30,4 +30,5 @@ urlpatterns = [
     path('user_analysis/', include('user_analysis.urls')),
     path('subscription/', include('subscription.urls')),
     path('redis_token/', include('redis_token.urls')),
+    path('user_profile/', include('user_profile.urls')),
 ]

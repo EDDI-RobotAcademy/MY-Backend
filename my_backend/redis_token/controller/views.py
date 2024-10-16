@@ -2,12 +2,12 @@ import uuid
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from account.service.account_service_impl import AccountServiceImpl
 from redis_token.service.redis_service_impl import RedisServiceImpl
+from user_profile.service.user_profile_service_impl import UserProfileServiceImpl
 
 
 class RedisTokenView(viewsets.ViewSet):
-    accountService = AccountServiceImpl.getInstance()
+    userProfileService = UserProfileServiceImpl.getInstance()
     redisService = RedisServiceImpl.getInstance()
 
     def redisAccessToken(self, request):
@@ -15,7 +15,7 @@ class RedisTokenView(viewsets.ViewSet):
             email = request.data.get('email')
             print(f"redisAccessToken -> email: {email}")
 
-            account = self.accountService.findAccountByEmail(email)
+            account = self.userProfileService.findAccountByEmail(email)
             if not account:
                return Response({'error': 'Account not found'}, status=status.HTTP_404_NOT_FOUND)
 

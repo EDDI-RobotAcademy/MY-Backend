@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'user_analysis',
     'subscription',
     'redis_token',
+    'user_profile',
 ]
 
 MIDDLEWARE = [
