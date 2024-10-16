@@ -17,4 +17,7 @@ urlpatterns = [
     path('register',
          AccountView.as_view({'post': 'registerAccount'}),
          name='register-account'),
+    path('roletype-check',
+         AccountView.as_view({'get': 'checkAccountRoletype'}),
+         name='account-roletype-check'),
 ]
