@@ -19,11 +19,18 @@ class BoardView(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
+        print("Received data:", request.data)
         serializer = BoardSerializer(data=request.data)
         if serializer.is_valid():
-            board = self.boardService.createBoard(serializer.validated_data)
-            return Response(BoardSerializer(board).data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            try:
+                board = serializer.save()
+                return Response(BoardSerializer(board).data, status=status.HTTP_201_CREATED)
+            except Exception as e:
+                print("Error in createBoard:", str(e))
+                return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            print("Serializer errors:", serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def createCategory(self, request):
         serializer = BoardCategorySerializer(data=request.data)
