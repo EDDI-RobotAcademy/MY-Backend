@@ -1,8 +1,17 @@
 from rest_framework import serializers
-from board.entity.models import Board
-class BoardSerializer(serializers.ModelSerializer):
 
+from board.entity.BoardCategory import BoardCategory
+from board.entity.models import Board
+
+
+class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
-        fields = ['boardId', 'title', 'writer', 'content', 'regDate', 'updDate'] # 문자 틀리면 에러남
+        fields = ['boardId', 'title', 'writer', 'content', 'regDate', 'updDate']
         read_only_fields = ['regDate', 'updDate']
+
+
+class BoardCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BoardCategory
+        fields = ['categoryId', 'name']
