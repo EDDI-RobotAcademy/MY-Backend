@@ -21,3 +21,6 @@ class BoardServiceImpl(BoardService):
 
     def createBoard(self, boardData):
         return self.__boardRepository.create(boardData)
+
+    def get_all_categories(self):
+        return list(self.__boardRepository.get_all_categories())
