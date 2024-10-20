@@ -1,3 +1,4 @@
+from board.entity.BoardCategory import BoardCategory
 from board.entity.models import Board
 from board.repository.board_repository import BoardRepository
 
@@ -25,3 +26,6 @@ class BoardRepositoryImpl(BoardRepository):
         board = Board(**boardData) # 테이블에 들어가야 하기때문에 request에 담긴 순수데이터만 뽑겠다. [] {} ""
         board.save() # baord => 현재 table 상태입니다.
         return board
+
+    def get_all_categories(self):
+        return BoardCategory.objects.all().order_by('categoryId').values('categoryId', 'name')

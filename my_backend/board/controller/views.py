@@ -1,9 +1,10 @@
+from django.http import JsonResponse
 from rest_framework import viewsets, status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db import IntegrityError
 from board.entity.models import Board
 from board.serializers import BoardSerializer, BoardCategorySerializer
+from board.service.board_service import BoardService
 from board.service.board_service_impl import BoardServiceImpl
 
 
@@ -36,3 +37,8 @@ class BoardView(viewsets.ViewSet):
                 return Response({"message": "카테고리 추가 중 오류가 발생했습니다."}, status=status.HTTP_403_FORBIDDEN)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def getCategories(self, request):
+        service = BoardServiceImpl()
+        categories = service.get_all_categories()
+        return Response(categories)

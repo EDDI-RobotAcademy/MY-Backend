@@ -7,3 +7,7 @@ class BoardService(ABC):
     @abstractmethod
     def createBoard(self, boardData):
         pass
+
+    @abstractmethod
+    def get_all_categories(self):
+        pass
