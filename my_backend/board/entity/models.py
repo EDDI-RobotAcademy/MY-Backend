@@ -2,9 +2,10 @@ from django.db import models
 
 from board.entity.BoardCategory import BoardCategory
 
+
 class Board(models.Model):
     boardId = models.AutoField(primary_key=True)
-    category = models.ForeignKey(BoardCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(BoardCategory, on_delete=models.CASCADE, related_name='boards')
     categoryBoardId = models.PositiveIntegerField()
     title = models.CharField(max_length=128, null=False)
     writer = models.CharField(max_length=32, null=False)
@@ -21,6 +22,7 @@ class Board(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.categoryBoardId:
-            max_id = Board.objects.filter(category=self.category).aggregate(models.Max('categoryBoardId'))['categoryBoardId__max']
+            max_id = Board.objects.filter(category=self.category).aggregate(models.Max('categoryBoardId'))[
+                'categoryBoardId__max']
             self.categoryBoardId = (max_id or 0) + 1
         super().save(*args, **kwargs)
