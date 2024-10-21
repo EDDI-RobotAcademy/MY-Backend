@@ -5,6 +5,10 @@ class BoardService(ABC):
         pass
 
     @abstractmethod
+    def createCategory(self, name):
+        pass
+
+    @abstractmethod
     def createBoard(self, boardData):
         pass
 
