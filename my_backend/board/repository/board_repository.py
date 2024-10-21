@@ -32,3 +32,7 @@ class BoardRepository(ABC):
     @abstractmethod
     def listBoardByCategoryId(self, categoryId):
         pass
+
+    @abstractmethod
+    def listBoardByTitle(self, title):
+        pass

@@ -41,3 +41,6 @@ class BoardServiceImpl(BoardService):
     def listByCategoryId(self, categoryId):
         return self.__boardRepository.listBoardByCategoryId(categoryId)
 
+    def listByTitle(self, title):
+        return self.__boardRepository.listBoardByTitle(title)
+

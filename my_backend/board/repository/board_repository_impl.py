@@ -65,4 +65,8 @@ class BoardRepositoryImpl(BoardRepository):
     def listBoardByCategoryId(self, categoryId):
         return Board.objects.filter(category=categoryId)
 
+    def listBoardByTitle(self, title):
+        return Board.objects.filter(title__icontains=title)
+
+
 
