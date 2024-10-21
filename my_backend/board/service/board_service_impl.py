@@ -28,5 +28,8 @@ class BoardServiceImpl(BoardService):
     def readBoard(self, boardId):
         return self.__boardRepository.findByBoardId(boardId)
 
+    def removeBoard(self, boardId):
+        return self.__boardRepository.deleteByBoardId(boardId)
+
     def get_all_categories(self):
         return list(self.__boardRepository.get_all_categories())

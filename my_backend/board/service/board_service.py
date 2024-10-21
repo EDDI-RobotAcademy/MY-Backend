@@ -17,5 +17,9 @@ class BoardService(ABC):
         pass
 
     @abstractmethod
+    def removeBoard(self, boardId):
+        pass
+
+    @abstractmethod
     def get_all_categories(self):
         pass

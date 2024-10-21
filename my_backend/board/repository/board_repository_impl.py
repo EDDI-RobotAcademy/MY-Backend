@@ -48,5 +48,9 @@ class BoardRepositoryImpl(BoardRepository):
     def findByBoardId(self, boardId):
         return Board.objects.get(boardId=boardId)
 
+    def deleteByBoardId(self, boardId):
+        board = Board.objects.get(boardId=boardId)
+        board.delete()
+
     def get_all_categories(self):
         return BoardCategory.objects.all().order_by('categoryId').values('categoryId', 'name')

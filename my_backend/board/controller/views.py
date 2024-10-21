@@ -64,3 +64,7 @@ class BoardView(viewsets.ViewSet):
         board = self.boardService.readBoard(pk)
         serializer = BoardSerializer(board)
         return Response(serializer.data)
+
+    def removeBoard(self, request, pk=None):
+        self.boardService.removeBoard(pk)
+        return Response(status=status.HTTP_204_NO_CONTENT)

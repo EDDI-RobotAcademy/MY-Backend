@@ -18,5 +18,9 @@ class BoardRepository(ABC):
         pass
 
     @abstractmethod
+    def deleteByBoardId(self, boardId):
+        pass
+
+    @abstractmethod
     def get_all_categories(self):
         pass
