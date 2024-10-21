@@ -9,8 +9,9 @@ class Board(models.Model):
     category = models.ForeignKey(BoardCategory, on_delete=models.CASCADE, related_name='boards')
     categoryBoardId = models.PositiveIntegerField()
     title = models.CharField(max_length=128, null=False)
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='board_account')
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='board_account')
     content = models.TextField()
+    contentImage = models.CharField(max_length=100, null=True)
     regDate = models.DateTimeField(auto_now_add=True)
     updDate = models.DateTimeField(auto_now=True)
 
