@@ -22,5 +22,9 @@ class BoardRepository(ABC):
         pass
 
     @abstractmethod
+    def update(self, board, boardData):
+        pass
+
+    @abstractmethod
     def get_all_categories(self):
         pass

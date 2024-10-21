@@ -52,5 +52,12 @@ class BoardRepositoryImpl(BoardRepository):
         board = Board.objects.get(boardId=boardId)
         board.delete()
 
+    def update(self, board, boardData):
+        for key, value in boardData.items():
+            print(f"key: {key}, value: {value}")
+            setattr(board, key, value)
+        board.save()
+        return board
+
     def get_all_categories(self):
         return BoardCategory.objects.all().order_by('categoryId').values('categoryId', 'name')
