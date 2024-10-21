@@ -6,12 +6,14 @@ from board.entity.models import Board
 from board.serializers import BoardSerializer, BoardCategorySerializer
 from board.service.board_service import BoardService
 from board.service.board_service_impl import BoardServiceImpl
+from redis_token.service.redis_service_impl import RedisServiceImpl
 
 
 class BoardView(viewsets.ViewSet):
     queryset = Board.objects.all()
 
     boardService = BoardServiceImpl.getInstance()
+    redisService = RedisServiceImpl.getInstance()
 
     def list(self, request):
         boardList = self.boardService.list()
@@ -19,18 +21,26 @@ class BoardView(viewsets.ViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        print("Received data:", request.data)
-        serializer = BoardSerializer(data=request.data)
-        if serializer.is_valid():
-            try:
-                board = self.boardService.createBoard(serializer.validated_data)
-                return Response(BoardSerializer(board).data, status=status.HTTP_201_CREATED)
-            except Exception as e:
-                print("Error in createBoard:", str(e))
-                return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            print("Serializer errors:", serializer.errors)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            data = request.data
+
+            categoryId = data.get('categoryId')
+            title = data.get('title')
+            userToken = data.get('userToken')
+            if userToken:
+                accountId = self.redisService.getValueByKey(userToken)
+            else:
+                accountId = None
+            content = data.get('content')
+            contentImage = data.get('contentImage')
+
+            print(f"categoryId: {categoryId}, title: {title}, accountId: {accountId}, content: {content}, contentImage: {contentImage}")
+
+            self.boardService.createBoard(categoryId, title, accountId, content, contentImage)
+            return Response(True, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
 
     def createCategory(self, request):
         serializer = BoardCategorySerializer(data=request.data)
