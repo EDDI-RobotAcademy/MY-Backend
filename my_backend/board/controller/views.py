@@ -30,7 +30,7 @@ class BoardView(viewsets.ViewSet):
         try:
             data = request.data
 
-            categoryId = data.get('categoryId')
+            categoryId = data.get('category_id')
             title = data.get('title')
             userToken = data.get('userToken')
             if userToken:
@@ -40,7 +40,8 @@ class BoardView(viewsets.ViewSet):
             content = data.get('content')
             contentImage = data.get('contentImage')
 
-            print(f"categoryId: {categoryId}, title: {title}, accountId: {accountId}, content: {content}, contentImage: {contentImage}")
+            print(
+                f"categoryId: {categoryId}, title: {title}, accountId: {accountId}, content: {content}, contentImage: {contentImage}")
 
             self.boardService.createBoard(categoryId, title, accountId, content, contentImage)
             return Response(True, status.HTTP_200_OK)
