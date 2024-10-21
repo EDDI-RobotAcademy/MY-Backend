@@ -35,3 +35,7 @@ class BoardService(ABC):
     @abstractmethod
     def listByTitle(self, title):
         pass
+
+    @abstractmethod
+    def listByContent(self, content):
+        pass

@@ -44,3 +44,8 @@ class BoardServiceImpl(BoardService):
     def listByTitle(self, title):
         return self.__boardRepository.listBoardByTitle(title)
 
+    def listByContent(self, content):
+        return self.__boardRepository.listBoardByContent((content))
+
+
+

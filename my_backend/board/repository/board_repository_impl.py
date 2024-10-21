@@ -68,5 +68,8 @@ class BoardRepositoryImpl(BoardRepository):
     def listBoardByTitle(self, title):
         return Board.objects.filter(title__icontains=title)
 
+    def listBoardByContent(self, content):
+        return Board.objects.filter(content__icontains=content)
+
 
 
