@@ -40,3 +40,7 @@ class BoardRepository(ABC):
     @abstractmethod
     def listBoardByContent(self, content):
         pass
+
+    @abstractmethod
+    def listBoardByAccount(self, accounts):
+        pass

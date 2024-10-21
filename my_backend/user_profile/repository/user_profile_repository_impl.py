@@ -48,4 +48,16 @@ class UserProfileRepositoryImpl(UserProfileRepository):
         profile = UserProfile.objects.create(nickname=nickname, email=email, account=account)
         return profile
 
+    def findByIncompleteNickname(self, nickname):
+        try:
+            profiles = UserProfile.objects.filter(nickname__icontains=nickname)
+            print(f"profile: {profiles}")
+            return profiles
+        except UserProfile.DoesNotExist:
+            print(f"nickname으로 profile을 찾을 수 없습니다.: {nickname}")
+            return None
+        except Exception as e:
+            print(f"error occurred during nickname duplicate check: {e}")
+            return None
+
 

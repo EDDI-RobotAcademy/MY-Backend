@@ -71,5 +71,5 @@ class BoardRepositoryImpl(BoardRepository):
     def listBoardByContent(self, content):
         return Board.objects.filter(content__icontains=content)
 
-
-
+    def listBoardByAccount(self, account):
+        return Board.objects.filter(account=account)

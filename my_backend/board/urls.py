@@ -12,6 +12,7 @@ urlpatterns = [
     path('list-by-category', BoardView.as_view({'get': 'listByCategory'}), name='list-by-category'),
     path('list-by-title', BoardView.as_view({'get': 'listByTitle'}), name='list-by-title'),
     path('list-by-content', BoardView.as_view({'get': 'listByContent'}), name='list-by-content'),
+    path('list-by-nickname', BoardView.as_view({'get': 'listByNickname'}), name='list-by-nickname'),
     path('register', BoardView.as_view({'post': 'create'}), name='board-register'),
     path('create-category', BoardView.as_view({'post': 'createCategory'}), name='create-category'),
     path('get-categories', BoardView.as_view({'get': 'getCategories'}), name='get-categories'),

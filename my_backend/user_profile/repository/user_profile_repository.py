@@ -18,3 +18,7 @@ class UserProfileRepository(ABC):
     def create(self, nickname, email, account):
         pass
 
+    @abstractmethod
+    def findByIncompleteNickname(self, nickname):
+        pass
+

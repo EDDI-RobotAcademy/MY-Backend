@@ -1,5 +1,7 @@
 from board.repository.board_repository_impl import BoardRepositoryImpl
 from board.service.board_service import BoardService
+from user_profile.repository.user_profile_repository_impl import UserProfileRepositoryImpl
+
 
 class BoardServiceImpl(BoardService):
     __instance = None
@@ -8,6 +10,7 @@ class BoardServiceImpl(BoardService):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
             cls.__instance.__boardRepository = BoardRepositoryImpl.getInstance()
+            cls.__instance.__userProfileRepository = UserProfileRepositoryImpl.getInstance()
         return cls.__instance
 
     @classmethod
@@ -46,6 +49,18 @@ class BoardServiceImpl(BoardService):
 
     def listByContent(self, content):
         return self.__boardRepository.listBoardByContent((content))
+
+    def listByNickname(self, nickname):
+        profiles = self.__userProfileRepository.findByIncompleteNickname(nickname)
+        if profiles.exists():
+            boards=[]
+            for profile in profiles:
+                account_boards = self.__boardRepository.listBoardByAccount(profile.account)
+                boards.extend(account_boards)
+
+            return boards
+
+
 
 
 

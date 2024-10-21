@@ -39,3 +39,7 @@ class BoardService(ABC):
     @abstractmethod
     def listByContent(self, content):
         pass
+
+    @abstractmethod
+    def listByNickname(self, nickname):
+        pass
