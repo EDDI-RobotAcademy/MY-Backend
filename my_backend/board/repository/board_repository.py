@@ -5,7 +5,10 @@ class BoardRepository(ABC):
     def list(self):
         pass
 
-    # add
+    @abstractmethod
+    def create_category(self, name):
+        pass
+
     @abstractmethod
     def create(self, boardData):
         pass

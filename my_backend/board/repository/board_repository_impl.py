@@ -1,4 +1,4 @@
-from board.entity.BoardCategory import BoardCategory
+from board.entity.boardcategory import BoardCategory
 from board.entity.models import Board
 from board.repository.board_repository import BoardRepository
 
@@ -21,6 +21,11 @@ class BoardRepositoryImpl(BoardRepository):
 
     def list(self):
         return Board.objects.all().order_by('regDate')
+
+    def create_category(self, name):
+        category = BoardCategory(**name)
+        category.save()
+        return category
 
     def create(self, boardData):
         category_id = boardData.pop('category', None)

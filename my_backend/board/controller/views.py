@@ -23,7 +23,7 @@ class BoardView(viewsets.ViewSet):
         serializer = BoardSerializer(data=request.data)
         if serializer.is_valid():
             try:
-                board = serializer.save()
+                board = self.boardService.createBoard(serializer.validated_data)
                 return Response(BoardSerializer(board).data, status=status.HTTP_201_CREATED)
             except Exception as e:
                 print("Error in createBoard:", str(e))
@@ -36,7 +36,7 @@ class BoardView(viewsets.ViewSet):
         serializer = BoardCategorySerializer(data=request.data)
         if serializer.is_valid():
             try:
-                serializer.save()
+                category = self.boardService.createCategory(serializer.validated_data)
                 return Response({"message": "카테고리 생성 완료"}, status=status.HTTP_201_CREATED)
             except IntegrityError:
                 return Response({"message": "이미 존재하는 카테고리입니다."}, status=status.HTTP_400_BAD_REQUEST)
