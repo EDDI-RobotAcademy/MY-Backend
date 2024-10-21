@@ -6,10 +6,12 @@ from board.entity.models import Board
 
 
 class BoardSerializer(serializers.ModelSerializer):
+    category_name = serializers.CharField(source='category.name')
+    profile_nickname = serializers.CharField(source='account.user_profile.nickname')
 
     class Meta:
         model = Board
-        fields = ['boardId', 'title', 'account', 'content', 'regDate', 'updDate', 'category_id', 'categoryBoardId']
+        fields = ['boardId', 'category_name', 'categoryBoardId', 'profile_nickname', 'title', 'content', 'contentImage', 'regDate', 'updDate']
         read_only_fields = ['boardId', 'regDate', 'updDate', 'categoryBoardId']
 
     def validate_category_id(self, value):
