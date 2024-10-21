@@ -28,3 +28,7 @@ class BoardRepository(ABC):
     @abstractmethod
     def get_all_categories(self):
         pass
+
+    @abstractmethod
+    def listBoardByCategoryId(self, categoryId):
+        pass

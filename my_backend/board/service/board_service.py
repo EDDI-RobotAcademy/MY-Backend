@@ -27,3 +27,7 @@ class BoardService(ABC):
     @abstractmethod
     def get_all_categories(self):
         pass
+
+    @abstractmethod
+    def listByCategoryId(self, categoryId):
+        pass
