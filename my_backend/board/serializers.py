@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from board.entity.boardcategory import BoardCategory
+from board.entity.BoardCategory import BoardCategory
 from board.entity.models import Board
 
 
