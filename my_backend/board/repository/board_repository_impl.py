@@ -1,5 +1,5 @@
 from account.entity.account import Account
-from board.entity.boardcategory import BoardCategory
+from board.entity.BoardCategory import BoardCategory
 from board.entity.models import Board
 from board.repository.board_repository import BoardRepository
 

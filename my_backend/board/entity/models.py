@@ -1,7 +1,7 @@
 from django.db import models
 
 from account.entity.account import Account
-from board.entity.boardcategory import BoardCategory
+from board.entity.BoardCategory import BoardCategory
 
 
 class Board(models.Model):
