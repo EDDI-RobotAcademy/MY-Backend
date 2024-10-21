@@ -6,7 +6,6 @@ from board.entity.models import Board
 
 
 class BoardSerializer(serializers.ModelSerializer):
-    category_id = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = Board
