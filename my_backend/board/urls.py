@@ -8,7 +8,7 @@ router.register(r'board', BoardView)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('list/', BoardView.as_view({'get': 'list'}), name='board-list'),
+    path('get-allcontent', BoardView.as_view({'get': 'list'}), name='board-list'),
     path('list-by-category', BoardView.as_view({'get': 'listByCategory'}), name='list-by-category'),
     path('list-by-title', BoardView.as_view({'get': 'listByTitle'}), name='list-by-title'),
     path('register', BoardView.as_view({'post': 'create'}), name='board-register'),
