@@ -13,5 +13,9 @@ class BoardService(ABC):
         pass
 
     @abstractmethod
+    def readBoard(self, boardId):
+        pass
+
+    @abstractmethod
     def get_all_categories(self):
         pass

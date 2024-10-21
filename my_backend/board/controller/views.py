@@ -59,3 +59,8 @@ class BoardView(viewsets.ViewSet):
         service = BoardServiceImpl()
         categories = service.get_all_categories()
         return Response(categories)
+
+    def readBoard(self, request, pk=None):
+        board = self.boardService.readBoard(pk)
+        serializer = BoardSerializer(board)
+        return Response(serializer.data)

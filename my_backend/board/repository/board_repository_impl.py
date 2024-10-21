@@ -45,5 +45,8 @@ class BoardRepositoryImpl(BoardRepository):
         board.save()
         return board
 
+    def findByBoardId(self, boardId):
+        return Board.objects.get(boardId=boardId)
+
     def get_all_categories(self):
         return BoardCategory.objects.all().order_by('categoryId').values('categoryId', 'name')
