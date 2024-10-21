@@ -1,3 +1,4 @@
+from account.entity.account import Account
 from board.entity.boardcategory import BoardCategory
 from board.entity.models import Board
 from board.repository.board_repository import BoardRepository
@@ -27,13 +28,20 @@ class BoardRepositoryImpl(BoardRepository):
         category.save()
         return category
 
-    def create(self, boardData):
-        category_id = boardData.pop('category', None)
-        if category_id:
-            category = BoardCategory.objects.get(pk=category_id)
-            board = Board(category=category, **boardData)
+    def create(self, categoryId, title, accountId, content, contentImage):
+        if accountId:
+            account = Account.objects.get(id=accountId)
         else:
-            board = Board(**boardData)
+            account = None
+        category = BoardCategory.objects.get(categoryId=categoryId)
+
+        board = Board(
+            category = category,
+            title = title,
+            account = account,
+            content = content,
+            contentImage = contentImage
+        )
         board.save()
         return board
 

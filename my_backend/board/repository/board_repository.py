@@ -10,7 +10,7 @@ class BoardRepository(ABC):
         pass
 
     @abstractmethod
-    def create(self, boardData):
+    def create(self, categoryId, title, accountId, content, contentImage):
         pass
 
     @abstractmethod
