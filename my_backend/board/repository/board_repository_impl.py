@@ -61,3 +61,8 @@ class BoardRepositoryImpl(BoardRepository):
 
     def get_all_categories(self):
         return BoardCategory.objects.all().order_by('categoryId').values('categoryId', 'name')
+
+    def listBoardByCategoryId(self, categoryId):
+        return Board.objects.filter(category=categoryId)
+
+

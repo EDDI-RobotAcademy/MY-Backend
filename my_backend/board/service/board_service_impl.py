@@ -37,3 +37,7 @@ class BoardServiceImpl(BoardService):
 
     def get_all_categories(self):
         return list(self.__boardRepository.get_all_categories())
+
+    def listByCategoryId(self, categoryId):
+        return self.__boardRepository.listBoardByCategoryId(categoryId)
+

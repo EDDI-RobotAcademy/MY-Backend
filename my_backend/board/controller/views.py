@@ -20,6 +20,12 @@ class BoardView(viewsets.ViewSet):
         serializer = BoardSerializer(boardList, many=True)
         return Response(serializer.data)
 
+    def listByCategory(self, request):
+        categoryId = request.data.get('categoryId')
+        boardList = self.boardService.listByCategoryId(categoryId)
+        serializer = BoardSerializer(boardList, many=True)
+        return Response(serializer.data)
+
     def create(self, request):
         try:
             data = request.data
