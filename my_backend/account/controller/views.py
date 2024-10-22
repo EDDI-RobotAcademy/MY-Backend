@@ -6,21 +6,36 @@ from account.serilaizers import AccountSerializer
 from account.service.account_service_impl import AccountServiceImpl
 from redis_token.service.redis_service_impl import RedisServiceImpl
 
+import random
+
+from user_profile.service.user_profile_service_impl import UserProfileServiceImpl
+
 
 class AccountView(viewsets.ViewSet):
     accountService = AccountServiceImpl.getInstance()
     redisService = RedisServiceImpl.getInstance()
+    userProfileService = UserProfileServiceImpl.getInstance()
 
     def registerAccount(self, request):
         try:
             loginType = request.data.get('loginType')
             email = request.data.get('email')
-            nickname = request.data.get('nickname')
+            name = request.data.get('name')
+
+            while True:
+                random_number = random.randint(1000000000, 9999999999)
+                nickname = f"guest{random_number}"
+
+                isDuplicate = self.userProfileService.checkNicknameDuplication(nickname)
+
+                if not isDuplicate:
+                    break
 
             account = self.accountService.registerAccount(
                 loginType=loginType,
                 roleType='NORMAL',
                 email=email,
+                name=name,
                 nickname=nickname
             )
 
