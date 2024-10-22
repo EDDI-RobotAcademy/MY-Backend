@@ -1,7 +1,8 @@
 from purchase.repository.purchase_repository_impl import PurchaseRepositoryImpl
 from purchase.repository.purchase_subscription_repository_impl import PurchaseSubscriptionRepositoryImpl
 from purchase.service.purchase_service import PurchaseService
-
+from datetime import timedelta
+from django.utils import timezone
 
 class PurchaseServiceImpl(PurchaseService):
     __instance = None
@@ -33,3 +34,24 @@ class PurchaseServiceImpl(PurchaseService):
         except Exception as e:
             print('Error creating purchase:', e)
             raise e
+
+    def getRecentPurchaseSubscription(self, accountId):
+        try:
+            recentpurchase = self.__purchaseRepository.findRecentPurchaseByAccountId(accountId)
+
+            if isinstance(recentpurchase, Exception):
+                return {'message': 'No purchase history', 'recent_subscription': None}
+
+            current_time = timezone.now()
+
+            if recentpurchase.created_date >= current_time - timedelta(days=30):
+                recentpurchasedsubscription = self.__purchaseSubscriptionRepository.findByPurchaseId(recentpurchase)
+                return recentpurchasedsubscription
+            else:
+                return {'message': 'More than one month since last purchase', 'recent_subscription': None}
+        except Exception as e:
+            print('구독 기록 확인 중 문제 발생: ', e)
+            return {'error' : str(e)}
+
+
+

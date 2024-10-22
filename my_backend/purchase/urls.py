@@ -9,4 +9,5 @@ router.register(r'purchase', PurchaseView, basename='purchase')
 urlpatterns = [
     path('', include(router.urls)),
     path('create', PurchaseView.as_view({'post': 'createPurchase'}), name='purchase-create'),
+    path('check-is-subscribe', PurchaseView.as_view({'post': 'checkIsSubscribe'}), name='check-is-subscribe'),
 ]

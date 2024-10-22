@@ -20,7 +20,10 @@ class PurchaseSubscriptionRepositoryImpl(PurchaseSubscriptionRepository):
         return cls.__instance
 
     def create(self, purchase, purchase_subscription):
-        print("purchase: ", purchase, "purchase_sub: ", purchase_subscription)
         subscription = Subscription.objects.get(id = purchase_subscription)
         purchase_subscription = PurchaseSubscription(purchase=purchase, subscription=subscription)
         purchase_subscription.save()
+
+    def findByPurchaseId(self, purchaseId):
+        purchase_subscription = PurchaseSubscription.objects.get(purchase = purchaseId)
+        return purchase_subscription
