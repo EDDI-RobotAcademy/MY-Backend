@@ -60,4 +60,7 @@ class UserProfileRepositoryImpl(UserProfileRepository):
             print(f"error occurred during nickname duplicate check: {e}")
             return None
 
-
+    def updateNickname(self, user_profile, new_nickname):
+        user_profile.nickname = new_nickname
+        user_profile.save()
+        return user_profile
