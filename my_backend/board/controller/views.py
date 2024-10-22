@@ -26,6 +26,24 @@ class BoardView(viewsets.ViewSet):
         serializer = BoardSerializer(boardList, many=True)
         return Response(serializer.data)
 
+    def listByTitle(self, request):
+        title = request.data.get('title')
+        boardList = self.boardService.listByTitle(title)
+        serializer = BoardSerializer(boardList, many=True)
+        return Response(serializer.data)
+
+    def listByContent(self, request):
+        content = request.data.get('content')
+        boardList = self.boardService.listByContent(content)
+        serializer = BoardSerializer(boardList, many=True)
+        return Response(serializer.data)
+
+    def listByNickname(self, request):
+        nickname = request.data.get('nickname')
+        boardList = self.boardService.listByNickname(nickname)
+        serializer = BoardSerializer(boardList, many=True)
+        return Response(serializer.data)
+
     def create(self, request):
         try:
             data = request.data

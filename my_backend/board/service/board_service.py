@@ -31,3 +31,15 @@ class BoardService(ABC):
     @abstractmethod
     def listByCategoryId(self, categoryId):
         pass
+
+    @abstractmethod
+    def listByTitle(self, title):
+        pass
+
+    @abstractmethod
+    def listByContent(self, content):
+        pass
+
+    @abstractmethod
+    def listByNickname(self, nickname):
+        pass
