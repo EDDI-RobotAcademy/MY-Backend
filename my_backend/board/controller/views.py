@@ -103,3 +103,21 @@ class BoardView(viewsets.ViewSet):
             return Response(BoardSerializer(updatedBoard).data)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def checkAuthority(self, request, pk=None):
+        userToken = request.data.get('userToken')
+        if userToken:
+            accountId = self.redisService.getValueByKey(userToken)
+            try:
+                accountId = int(accountId)
+            except ValueError:
+                accountId = None
+        else:
+            accountId = None
+
+        board = self.boardService.readBoard(pk)
+
+        is_authorized = board.account.id == accountId
+
+        return Response({'is_authorized': is_authorized}, status=status.HTTP_200_OK)
+
