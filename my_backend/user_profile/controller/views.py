@@ -85,7 +85,7 @@ class UserProfileView(viewsets.ViewSet):
             print("닉네임 조회 중 에러 발생:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    def getUserProfile(self, request):
+    def getUserProfileByAccountId(self, request):
         try:
             userToken = request.data.get('userToken')
             if userToken:
@@ -101,7 +101,6 @@ class UserProfileView(viewsets.ViewSet):
         except Exception as e:
             print("유저 프로필 조회 중 에러 발생:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 
