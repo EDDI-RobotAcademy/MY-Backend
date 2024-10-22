@@ -42,3 +42,6 @@ class UserProfileServiceImpl(UserProfileService):
     def getNicknameByAccountId(self, account_id):
         user_profile = self.__userProfileRepository.findByAccountId(account_id)
         return user_profile.nickname if user_profile else None
+
+    def getUserProfileByAccountId(self, account_id):
+        return self.__userProfileRepository.findByAccountId(account_id)
