@@ -102,6 +102,19 @@ class UserProfileView(viewsets.ViewSet):
             print("유저 프로필 조회 중 에러 발생:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+    def getUserProfileByNickname(self, request):
+        try:
+            nickname = request.data.get('nickname')
+            userProfile = self.userProfileService.getUserProfileByNickname(nickname)
+
+            if userProfile:
+                serializer = UserProfileSerializer(userProfile)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'User Profile not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print("닉네임으로 프로필 조회 중 에러 발생:", e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

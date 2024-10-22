@@ -45,3 +45,6 @@ class UserProfileServiceImpl(UserProfileService):
 
     def getUserProfileByAccountId(self, account_id):
         return self.__userProfileRepository.findByAccountId(account_id)
+
+    def getUserProfileByNickname(self, nickname):
+        return self.__userProfileRepository.findByNickname(nickname)
