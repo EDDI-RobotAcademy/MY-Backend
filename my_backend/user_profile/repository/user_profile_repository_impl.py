@@ -44,8 +44,8 @@ class UserProfileRepositoryImpl(UserProfileRepository):
         profile = UserProfile.objects.get(account=accountId)
         return profile
 
-    def create(self, nickname, email, account):
-        profile = UserProfile.objects.create(nickname=nickname, email=email, account=account)
+    def create(self, name, nickname, email, account):
+        profile = UserProfile.objects.create(name = name, nickname=nickname, email=email, account=account)
         return profile
 
     def findByIncompleteNickname(self, nickname):

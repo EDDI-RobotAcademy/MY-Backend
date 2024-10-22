@@ -3,12 +3,13 @@ from django.db import models
 from account.entity.account import Account
 
 class UserProfile(models.Model):
-    nickname = models.CharField(max_length=64, null=False)
+    name = models.CharField(max_length=64, null=False)
+    nickname = models.CharField(max_length=64, null=False, unique=True)
     email = models.CharField(max_length=64, unique=True)
     account = models.OneToOneField(Account, on_delete=models.CASCADE, related_name='user_profile')
 
     def __str__(self):
-        return f"Profile -> email: {self.email}, nickname: {self.nickname}, account: {self.account}"
+        return f"Profile -> email: {self.email}, name: {self.name}, nickname: {self.nickname}, account: {self.account}"
 
     class Meta:
         db_table = 'user_profile'
