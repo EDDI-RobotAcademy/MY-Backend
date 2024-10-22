@@ -31,4 +31,11 @@ class UserProfileServiceImpl(UserProfileService):
     def findAccountByEmail(self, email):
         return self.__userProfileRepository.findByEmail(email)
 
+    def changeNickname(self, account_id, new_nickname):
+        user_profile = self.__userProfileRepository.findByAccountId(account_id)
+        print(f"찾은 사용자 프로필: {user_profile}")
+
+        updated_nickname = self.__userProfileRepository.updateNickname(user_profile, new_nickname)
+        print(f"닉네임 업데이트 성공: {updated_nickname.nickname}")
+        return updated_nickname
 

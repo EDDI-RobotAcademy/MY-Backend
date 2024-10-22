@@ -22,3 +22,7 @@ class UserProfileRepository(ABC):
     def findByIncompleteNickname(self, nickname):
         pass
 
+    @abstractmethod
+    def updateNickname(self, user_profile, new_nickname):
+        pass
+

@@ -6,4 +6,4 @@ from user_profile.entity.user_profile import UserProfile
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ['email', 'nickname']
+        fields = ['email', 'name', 'nickname']

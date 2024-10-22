@@ -14,3 +14,7 @@ class UserProfileService(ABC):
     @abstractmethod
     def findAccountByEmail(self, email):
         pass
+
+    @abstractmethod
+    def changeNickname(self, account_id, new_nickname):
+        pass
