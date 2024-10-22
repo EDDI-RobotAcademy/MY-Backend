@@ -39,3 +39,6 @@ class UserProfileServiceImpl(UserProfileService):
         print(f"닉네임 업데이트 성공: {updated_nickname.nickname}")
         return updated_nickname
 
+    def getNicknameByAccountId(self, account_id):
+        user_profile = self.__userProfileRepository.findByAccountId(account_id)
+        return user_profile.nickname if user_profile else None

@@ -64,6 +64,24 @@ class UserProfileView(viewsets.ViewSet):
             print("닉네임 변경 중 에러 발생:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+    def getNickname(self, request):
+        try:
+            userToken = request.data.get('userToken')
+            print(f"userToken: {userToken}")
+            if userToken:
+                accountId = self.redisService.getValueByKey(userToken)
+                nickname = self.userProfileService.getNicknameByAccountId(accountId)
+
+                if nickname:
+                    return Response({'nickname': nickname}, status=status.HTTP_200_OK)
+                else:
+                    return Response({'error': 'Nickname not found'}, status=status.HTTP_404_NOT_FOUND)
+            else:
+                return Response({'error': 'No valid token provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            print("닉네임 조회 중 에러 발생:", e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

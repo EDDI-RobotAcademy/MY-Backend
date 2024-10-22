@@ -18,3 +18,7 @@ class UserProfileService(ABC):
     @abstractmethod
     def changeNickname(self, account_id, new_nickname):
         pass
+
+    @abstractmethod
+    def getNicknameByAccountId(self, account_id):
+        pass
