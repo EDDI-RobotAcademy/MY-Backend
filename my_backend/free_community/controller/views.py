@@ -2,46 +2,46 @@ from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.db import IntegrityError
-from board.entity.models import Board
-from board.serializers import BoardSerializer, BoardCategorySerializer
-from board.service.board_service import BoardService
-from board.service.board_service_impl import BoardServiceImpl
+from free_community.entity.models import FreeCommunity
+from free_community.serializers import FreeCommunitySerializer, FreeCommunityCategorySerializer
+from free_community.service.free_community_service import FreeCommunityService
+from free_community.service.free_community_service_impl import FreeCommunityServiceImpl
 from redis_token.service.redis_service_impl import RedisServiceImpl
 
 
-class BoardView(viewsets.ViewSet):
-    queryset = Board.objects.all()
+class FreeCommunityView(viewsets.ViewSet):
+    queryset = FreeCommunity.objects.all()
 
-    boardService = BoardServiceImpl.getInstance()
+    free_communityService = FreeCommunityServiceImpl.getInstance()
     redisService = RedisServiceImpl.getInstance()
 
     def list(self, request):
-        boardList = self.boardService.list()
-        serializer = BoardSerializer(boardList, many=True)
+        free_communityList = self.free_communityService.list()
+        serializer = FreeCommunitySerializer(free_communityList, many=True)
         return Response(serializer.data)
 
     def listByCategory(self, request):
         categoryId = request.data.get('categoryId')
-        boardList = self.boardService.listByCategoryId(categoryId)
-        serializer = BoardSerializer(boardList, many=True)
+        free_communityList = self.free_communityService.listByCategoryId(categoryId)
+        serializer = FreeCommunitySerializer(free_communityList, many=True)
         return Response(serializer.data)
 
     def listByTitle(self, request):
         title = request.data.get('title')
-        boardList = self.boardService.listByTitle(title)
-        serializer = BoardSerializer(boardList, many=True)
+        free_communityList = self.free_communityService.listByTitle(title)
+        serializer = FreeCommunitySerializer(free_communityList, many=True)
         return Response(serializer.data)
 
     def listByContent(self, request):
         content = request.data.get('content')
-        boardList = self.boardService.listByContent(content)
-        serializer = BoardSerializer(boardList, many=True)
+        free_communityList = self.free_communityService.listByContent(content)
+        serializer = FreeCommunitySerializer(free_communityList, many=True)
         return Response(serializer.data)
 
     def listByNickname(self, request):
         nickname = request.data.get('nickname')
-        boardList = self.boardService.listByNickname(nickname)
-        serializer = BoardSerializer(boardList, many=True)
+        free_communityList = self.free_communityService.listByNickname(nickname)
+        serializer = FreeCommunitySerializer(free_communityList, many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -61,17 +61,17 @@ class BoardView(viewsets.ViewSet):
             print(
                 f"categoryId: {categoryId}, title: {title}, accountId: {accountId}, content: {content}, contentImage: {contentImage}")
 
-            self.boardService.createBoard(categoryId, title, accountId, content, contentImage)
+            self.free_communityService.createFreeCommunity(categoryId, title, accountId, content, contentImage)
             return Response(True, status.HTTP_200_OK)
 
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
     def createCategory(self, request):
-        serializer = BoardCategorySerializer(data=request.data)
+        serializer = FreeCommunityCategorySerializer(data=request.data)
         if serializer.is_valid():
             try:
-                category = self.boardService.createCategory(serializer.validated_data)
+                category = self.free_communityService.createCategory(serializer.validated_data)
                 return Response({"message": "카테고리 생성 완료"}, status=status.HTTP_201_CREATED)
             except IntegrityError:
                 return Response({"message": "이미 존재하는 카테고리입니다."}, status=status.HTTP_400_BAD_REQUEST)
@@ -81,26 +81,26 @@ class BoardView(viewsets.ViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def getCategories(self, request):
-        service = BoardServiceImpl()
+        service = FreeCommunityServiceImpl()
         categories = service.get_all_categories()
         return Response(categories)
 
-    def readBoard(self, request, pk=None):
-        board = self.boardService.readBoard(pk)
-        serializer = BoardSerializer(board)
+    def readFreeCommunity(self, request, pk=None):
+        free_community = self.free_communityService.readFreeCommunity(pk)
+        serializer = FreeCommunitySerializer(free_community)
         return Response(serializer.data)
 
-    def removeBoard(self, request, pk=None):
-        self.boardService.removeBoard(pk)
+    def removeFreeCommunity(self, request, pk=None):
+        self.free_communityService.removeFreeCommunity(pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def modifyBoard(self, request, pk=None):
-        board = self.boardService.readBoard(pk)
-        serializer = BoardSerializer(board, data=request.data, partial=True)
+    def modifyFreeCommunity(self, request, pk=None):
+        free_community = self.free_communityService.readFreeCommunity(pk)
+        serializer = FreeCommunitySerializer(free_community, data=request.data, partial=True)
 
         if serializer.is_valid():
-            updatedBoard = self.boardService.updateBoard(pk, serializer.validated_data)
-            return Response(BoardSerializer(updatedBoard).data)
+            updatedFreeCommunity = self.free_communityService.updateFreeCommunity(pk, serializer.validated_data)
+            return Response(FreeCommunitySerializer(updatedFreeCommunity).data)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -115,9 +115,11 @@ class BoardView(viewsets.ViewSet):
         else:
             accountId = None
 
-        board = self.boardService.readBoard(pk)
+        free_community = self.free_communityService.readFreeCommunity(pk)
 
-        is_authorized = board.account.id == accountId
+        is_authorized = free_community.account.id == accountId
+        print("free_community account 2", free_community.account.id)
+        print("accountId 2", accountId)
 
         return Response({'is_authorized': is_authorized}, status=status.HTTP_200_OK)
 

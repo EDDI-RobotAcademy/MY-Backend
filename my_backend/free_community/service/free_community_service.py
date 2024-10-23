@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-class BoardService(ABC):
+class FreeCommunityService(ABC):
     @abstractmethod
     def list(self):
         pass
@@ -9,19 +9,19 @@ class BoardService(ABC):
         pass
 
     @abstractmethod
-    def createBoard(self, categoryId, title, accountId, content, contentImage):
+    def createFreeCommunity(self, categoryId, title, accountId, content, contentImage):
         pass
 
     @abstractmethod
-    def readBoard(self, boardId):
+    def readFreeCommunity(self, free_communityId):
         pass
 
     @abstractmethod
-    def removeBoard(self, boardId):
+    def removeFreeCommunity(self, free_communityId):
         pass
 
     @abstractmethod
-    def updateBoard(self, boardId, boardData):
+    def updateFreeCommunity(self, free_communityId, free_communityData):
         pass
 
     @abstractmethod

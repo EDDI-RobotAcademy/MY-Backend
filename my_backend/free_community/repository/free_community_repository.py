@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-class BoardRepository(ABC):
+class FreeCommunityRepository(ABC):
 
     @abstractmethod
     def list(self):
@@ -14,15 +14,15 @@ class BoardRepository(ABC):
         pass
 
     @abstractmethod
-    def findByBoardId(self, boardId):
+    def findByFreeCommunityId(self, free_communityId):
         pass
 
     @abstractmethod
-    def deleteByBoardId(self, boardId):
+    def deleteByFreeCommunityId(self, free_communityId):
         pass
 
     @abstractmethod
-    def update(self, board, boardData):
+    def update(self, free_community, free_communityData):
         pass
 
     @abstractmethod
@@ -30,17 +30,17 @@ class BoardRepository(ABC):
         pass
 
     @abstractmethod
-    def listBoardByCategoryId(self, categoryId):
+    def listFreeCommunityByCategoryId(self, categoryId):
         pass
 
     @abstractmethod
-    def listBoardByTitle(self, title):
+    def listFreeCommunityByTitle(self, title):
         pass
 
     @abstractmethod
-    def listBoardByContent(self, content):
+    def listFreeCommunityByContent(self, content):
         pass
 
     @abstractmethod
-    def listBoardByAccount(self, accounts):
+    def listFreeCommunityByAccount(self, accounts):
         pass
