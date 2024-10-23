@@ -1,5 +1,5 @@
 from django.db import models
-class BoardCategory(models.Model):
+class FreeCommunityCategory(models.Model):
     categoryId = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
 
@@ -7,4 +7,4 @@ class BoardCategory(models.Model):
         return self.name
 
     class Meta:
-        db_table = 'board_category'
+        db_table = 'free_community_category'
