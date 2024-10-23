@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'redis_token',
     'user_profile',
     'viewCount',
+    'free_community_comment',
 ]
 
 MIDDLEWARE = [
