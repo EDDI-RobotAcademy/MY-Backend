@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'purchase',
     'redis_token',
     'user_profile',
+    'free_community_comment',
 ]
 
 MIDDLEWARE = [
