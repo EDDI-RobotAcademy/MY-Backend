@@ -43,3 +43,6 @@ class FreeCommunityCommentRepositoryImpl(FreeCommunityCommentRepository):
         )
         free_community_comment.save()
         return free_community_comment
+
+    def findByCommentId(self, comment_id):
+        return FreeCommunityComment.objects.get(commentId=comment_id)

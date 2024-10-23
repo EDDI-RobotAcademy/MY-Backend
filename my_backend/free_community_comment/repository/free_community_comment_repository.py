@@ -12,3 +12,7 @@ class FreeCommunityCommentRepository(ABC):
     @abstractmethod
     def create(self, content, free_community_id, account_id, parent_id=None):
         pass
+
+    @abstractmethod
+    def findByCommentId(self, comment_id):
+        pass

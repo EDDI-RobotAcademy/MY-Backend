@@ -12,3 +12,7 @@ class FreeCommunityCommentService(ABC):
     @abstractmethod
     def createComment(self, content, freeCommmunityId, accountId, parentId):
         pass
+
+    @abstractmethod
+    def readComments(self, commentId):
+        pass

@@ -47,4 +47,12 @@ class FreeCommunityCommentView(viewsets.ViewSet):
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
+    def readComments(self, request, pk=None):
+        comments = self.freeCommunityCommentService.readComments(pk)
+        if comments is not None:
+            serializer = FreeCommunityCommentSerializer(comments)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Comment not found."}, status=status.HTTP_204_NO_CONTENT)
+
 
