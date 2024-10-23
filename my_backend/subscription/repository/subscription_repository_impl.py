@@ -41,3 +41,9 @@ class SubscriptionRepositoryImpl(SubscriptionRepository):
         subscription = Subscription.objects.get(id=subscriptionId)
         subscription.delete()
 
+    def update(self, subscription, subscriptionData):
+
+        for key, value in subscriptionData.items():
+            setattr(subscription, key, value)
+        subscription.save()
+        return subscription

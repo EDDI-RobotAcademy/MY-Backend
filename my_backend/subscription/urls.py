@@ -12,5 +12,5 @@ urlpatterns = [
     path('create', SubscriptionView.as_view({'post': 'createSubscription'}), name='create-subscription'),
     path('read/<int:pk>', SubscriptionView.as_view({'get': 'readSubscription'}), name='read-subscription'),
     path('delete/<int:pk>', SubscriptionView.as_view({'delete': 'removeSubscription'}), name='delete-subscription'),
-
+    path('modify/<int:pk>', SubscriptionView.as_view({'put': 'modifySubscription'}), name='modify-subscription'),
 ]

@@ -17,3 +17,7 @@ class SubscriptionRepository(ABC):
     @abstractmethod
     def deleteById(self, subscriptionId):
         pass
+
+    @abstractmethod
+    def update(self, subscriptionId, subscriptionData):
+        pass

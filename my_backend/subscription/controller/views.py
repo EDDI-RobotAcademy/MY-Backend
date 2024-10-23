@@ -40,3 +40,13 @@ class SubscriptionView(viewsets.ViewSet):
     def removeSubscription(self, request, pk=None):
         self.subscriptionService.removeSubscription(pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def modifySubscription(self, request, pk=None):
+        subscription = self.subscriptionService.read(pk)
+        serializer = SubscriptionSerializer(subscription, request.data, partial=True)
+
+        if serializer.is_valid():
+            updatedSubscription = self.subscriptionService.updateSubscription(pk, serializer.validated_data)
+            return Response(SubscriptionSerializer(updatedSubscription).data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

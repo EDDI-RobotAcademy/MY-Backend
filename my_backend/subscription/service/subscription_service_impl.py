@@ -31,4 +31,6 @@ class SubscriptionServiceImpl(SubscriptionService):
     def removeSubscription(self, subscriptionId):
         return self.__subscriptionRepository.deleteById(subscriptionId)
 
-
+    def updateSubscription(self, subscriptionId, subscriptionData):
+        subscription = self.__subscriptionRepository.findById(subscriptionId)
+        return self.__subscriptionRepository.update(subscription, subscriptionData)
