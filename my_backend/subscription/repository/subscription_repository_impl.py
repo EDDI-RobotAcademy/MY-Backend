@@ -21,10 +21,11 @@ class SubscriptionRepositoryImpl(SubscriptionRepository):
     def list(self):
         return Subscription.objects.all()
 
-    def create(self, name, type, price):
+    def create(self, name, type, description, price):
         subscription = Subscription(
             name = name,
             type = type,
+            description = description,
             price = price
         )
         subscription.save()
@@ -35,3 +36,14 @@ class SubscriptionRepositoryImpl(SubscriptionRepository):
             return Subscription.objects.get(id = subscriptionId)
         except Subscription.DoesNotExist:
             return None
+
+    def deleteById(self, subscriptionId):
+        subscription = Subscription.objects.get(id=subscriptionId)
+        subscription.delete()
+
+    def update(self, subscription, subscriptionData):
+
+        for key, value in subscriptionData.items():
+            setattr(subscription, key, value)
+        subscription.save()
+        return subscription
