@@ -8,3 +8,6 @@ class ViewCountCommunityServiceImpl(ViewCountCommunityService):
 
     def increment_community_view_count(self, communityId):
         return self.repository.increment_community_view_count(communityId)
+
+    def get_all_community_view_counts(self):
+        return self.repository.get_all_community_view_counts()
