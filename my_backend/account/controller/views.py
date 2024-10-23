@@ -54,12 +54,8 @@ class AccountView(viewsets.ViewSet):
             else:
                 accountId = None
 
-
             account = self.accountService.findAccountById(accountId)
-            print(f"roleType: {account}")
-
             serializer = AccountSerializer(account)
-            print(f"serializer: {serializer}")
             roleType = serializer.data.get('roleType')
             print(f"roleType: {roleType}")
 
