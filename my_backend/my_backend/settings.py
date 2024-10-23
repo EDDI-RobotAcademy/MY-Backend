@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_extensions',
-    'board',
+    'free_community',
     'account',
     'survey',
     'user_analysis',
