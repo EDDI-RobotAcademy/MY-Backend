@@ -6,4 +6,4 @@ from subscription.entity.subscription import Subscription
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
-        fields = ['name', 'type', 'description', 'price']
+        fields = ['name', 'type', 'brief_description', 'description', 'price']
