@@ -13,3 +13,10 @@ class ViewCountCommunityRepositoryImpl(ViewCountCommunityRepository):
             return view_count.count
         except FreeCommunity.DoesNotExist:
             return None
+
+    def get_all_community_view_counts(self):
+        view_counts = CommunityViewCount.objects.select_related('community').values(
+            'community_id',
+            'count'
+        )
+        return view_counts

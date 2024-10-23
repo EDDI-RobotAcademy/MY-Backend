@@ -15,3 +15,9 @@ class ViewCountView(viewsets.ViewSet):
             return Response({'status': 'success', 'viewCount': new_view_count})
         else:
             return Response({'status': 'error', 'message': 'Community not found'}, status=404)
+
+
+    def get_community_counts(self, request):
+        view_counts = view_count_community_service.get_all_community_view_counts()
+        serializer = ViewCountSerializer(view_counts, many=True)
+        return Response(serializer.data)
