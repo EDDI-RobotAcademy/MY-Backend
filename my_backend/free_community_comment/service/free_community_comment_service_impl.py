@@ -17,5 +17,5 @@ class FreeCommunityCommentServiceImpl(FreeCommunityCommentService):
             cls.__instance = cls()
         return cls.__instance
 
-    def listComment(self, freeCommmunityId):
+    def listComments(self, freeCommmunityId):
         return self.__freeCommunityCommentRepository.list(freeCommmunityId)

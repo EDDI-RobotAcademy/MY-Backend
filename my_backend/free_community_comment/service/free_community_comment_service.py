@@ -2,6 +2,6 @@ from abc import ABC, abstractmethod
 
 class FreeCommunityCommentService(ABC):
     @abstractmethod
-    def listComment(self, freeCommmunityId):
+    def listComments(self, freeCommmunityId):
         pass
 

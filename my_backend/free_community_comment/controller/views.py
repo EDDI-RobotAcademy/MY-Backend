@@ -16,6 +16,7 @@ class FreeCommunityCommentView(viewsets.ViewSet):
 
     def listComments(self, request):
         freeCommmunityId = request.data.get('free_community_id')
-        commentsList = self.freeCommunityCommentService.listComment(freeCommmunityId)
+        commentsList = self.freeCommunityCommentService.listComments(freeCommmunityId)
         serializer = FreeCommunityCommentSerializer(commentsList, many=True)
         return Response(serializer.data)
+
