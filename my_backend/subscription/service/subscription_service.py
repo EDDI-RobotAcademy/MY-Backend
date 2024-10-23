@@ -8,7 +8,7 @@ class SubscriptionService(ABC):
         pass
 
     @abstractmethod
-    def create(self, name, type, description, price):
+    def create(self, name, type, brief_description, description, price):
         pass
 
     @abstractmethod

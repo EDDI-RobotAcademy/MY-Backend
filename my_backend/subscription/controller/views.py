@@ -19,13 +19,14 @@ class SubscriptionView(viewsets.ViewSet):
 
             name = data.get("name")
             type = data.get("type")
+            brief_description = data.get("brief_description")
             description = data.get("description")
             price = data.get("price")
 
-            if not all([name, type, description, price]):
+            if not all([name, type, brief_description, description, price]):
                 return Response({'error': '모든 내용을 채워주세요.'}, status=status.HTTP_400_BAD_REQUEST)
 
-            self.subscriptionService.create(name, type, description, price)
+            self.subscriptionService.create(name, type, brief_description, description, price)
             return Response({"구독권 등록 성공"}, status=status.HTTP_201_CREATED)
 
         except Exception as e:

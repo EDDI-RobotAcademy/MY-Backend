@@ -21,10 +21,11 @@ class SubscriptionRepositoryImpl(SubscriptionRepository):
     def list(self):
         return Subscription.objects.all()
 
-    def create(self, name, type, description, price):
+    def create(self, name, type, brief_description, description, price):
         subscription = Subscription(
             name = name,
             type = type,
+            brief_description = brief_description,
             description = description,
             price = price
         )
