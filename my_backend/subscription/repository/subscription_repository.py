@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class SubscriptionRepository(ABC):
 
     @abstractmethod
-    def create(self, name, type, description, price):
+    def create(self, name, type, brief_description, description, price):
         pass
 
     @abstractmethod
