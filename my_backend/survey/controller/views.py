@@ -102,7 +102,7 @@ class SurveyView(viewsets.ViewSet):
             print(f"filter: {filter}, surveyId: {surveyId}, questionId: {questionId}, accountId: {accountId}")
 
             listedAnswer = self.surveyService.listAnswer(filter, surveyId, questionId, accountId)
-            print(listedAnswer)
+
             serializer = SurveyAnswerSerializer(listedAnswer, many=True)
 
             return Response(serializer.data, status.HTTP_200_OK)
@@ -119,7 +119,6 @@ class SurveyView(viewsets.ViewSet):
             listedQuestions = self.surveyService.listQuestions(surveyId)
 
             serializer = SurveyQuestionSerializer(listedQuestions, many=True)
-            print(serializer)
 
             return Response(serializer.data, status.HTTP_200_OK)
 

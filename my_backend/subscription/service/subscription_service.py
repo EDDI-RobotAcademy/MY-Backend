@@ -8,9 +8,13 @@ class SubscriptionService(ABC):
         pass
 
     @abstractmethod
-    def create(self, name, type, price):
+    def create(self, name, type, description, price):
         pass
 
     @abstractmethod
     def read(self, subscriptionId):
+        pass
+
+    @abstractmethod
+    def removeSubscription(self, subscriptionId):
         pass
