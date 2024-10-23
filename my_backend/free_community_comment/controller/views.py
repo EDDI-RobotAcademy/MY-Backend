@@ -20,6 +20,12 @@ class FreeCommunityCommentView(viewsets.ViewSet):
         serializer = FreeCommunityCommentSerializer(commentsList, many=True)
         return Response(serializer.data)
 
+    def listReplies(self, request):
+        parentId = request.data.get('parent_id')
+        repliesList = self.freeCommunityCommentService.listReplies(parentId)
+        serializer = FreeCommunityCommentSerializer(repliesList, many=True)
+        return Response(serializer.data)
+
     def createComment(self, request):
         try:
             data = request.data

@@ -23,6 +23,9 @@ class FreeCommunityCommentRepositoryImpl(FreeCommunityCommentRepository):
     def list(self, free_community_id):
         return FreeCommunityComment.objects.filter(free_community=free_community_id).order_by('regDate')
 
+    def list_replies(self, parent_id):
+        return FreeCommunityComment.objects.filter(parent=parent_id).order_by('regDate')
+
     def create(self, content, free_community_id, account_id, parent_id=None):
         free_community = FreeCommunity.objects.get(free_communityId=free_community_id)
         if account_id:

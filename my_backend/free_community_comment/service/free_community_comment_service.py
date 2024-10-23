@@ -6,6 +6,9 @@ class FreeCommunityCommentService(ABC):
         pass
 
     @abstractmethod
-    def createComment(self, content, freeCommmunityId, accountId, parentId):
+    def listReplies(self, parentId):
         pass
 
+    @abstractmethod
+    def createComment(self, content, freeCommmunityId, accountId, parentId):
+        pass
