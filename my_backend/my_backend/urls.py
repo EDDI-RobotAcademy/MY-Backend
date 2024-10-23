@@ -32,4 +32,5 @@ urlpatterns = [
     path('purchase/', include('purchase.urls')),
     path('redis_token/', include('redis_token.urls')),
     path('user_profile/', include('user_profile.urls')),
+    path('viewCount/', include('viewCount.urls')),
 ]
