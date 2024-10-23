@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'purchase',
     'redis_token',
     'user_profile',
+    'custom_strategy_history'
     'viewCount',
     'free_community_comment',
 ]
