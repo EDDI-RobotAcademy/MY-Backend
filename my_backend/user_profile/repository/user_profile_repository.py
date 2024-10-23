@@ -26,3 +26,5 @@ class UserProfileRepository(ABC):
     def updateNickname(self, user_profile, new_nickname):
         pass
 
+
+
