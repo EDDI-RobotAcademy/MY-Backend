@@ -19,3 +19,6 @@ class FreeCommunityCommentServiceImpl(FreeCommunityCommentService):
 
     def listComments(self, freeCommmunityId):
         return self.__freeCommunityCommentRepository.list(freeCommmunityId)
+
+    def createComment(self, content, freeCommmunityId, accountId, parentId):
+        return self.__freeCommunityCommentRepository.create(content, freeCommmunityId, accountId, parentId)

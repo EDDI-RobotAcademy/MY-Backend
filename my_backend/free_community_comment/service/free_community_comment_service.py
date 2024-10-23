@@ -5,3 +5,7 @@ class FreeCommunityCommentService(ABC):
     def listComments(self, freeCommmunityId):
         pass
 
+    @abstractmethod
+    def createComment(self, content, freeCommmunityId, accountId, parentId):
+        pass
+
