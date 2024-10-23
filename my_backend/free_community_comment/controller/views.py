@@ -14,8 +14,8 @@ class FreeCommunityCommentView(viewsets.ViewSet):
     freeCommunityCommentService = FreeCommunityCommentServiceImpl.getInstance()
     redisService = RedisServiceImpl.getInstance()
 
-    def listComment(self, request):
+    def listComments(self, request):
         freeCommmunityId = request.data.get('free_community_id')
-        commentList = self.freeCommunityCommentService.listComment(freeCommmunityId)
-        serializer = FreeCommunityCommentSerializer(commentList, many=True)
+        commentsList = self.freeCommunityCommentService.listComment(freeCommmunityId)
+        serializer = FreeCommunityCommentSerializer(commentsList, many=True)
         return Response(serializer.data)

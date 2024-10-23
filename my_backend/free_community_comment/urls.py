@@ -9,5 +9,5 @@ router.register(r'free_community_comment', FreeCommunityCommentView, basename='f
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('list-comment', FreeCommunityCommentView.as_view({'post': 'listComment'}), name='comment-list'),
+    path('list-comment', FreeCommunityCommentView.as_view({'post': 'listComments'}), name='comment-list'),
 ]
