@@ -20,3 +20,7 @@ class FreeCommunityCommentRepository(ABC):
     @abstractmethod
     def deleteByCommentId(self, comment_id):
         pass
+
+    @abstractmethod
+    def update(self, comment, commentData):
+        pass

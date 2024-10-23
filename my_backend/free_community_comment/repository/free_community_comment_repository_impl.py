@@ -50,3 +50,10 @@ class FreeCommunityCommentRepositoryImpl(FreeCommunityCommentRepository):
     def deleteByCommentId(self, comment_id):
         comment = FreeCommunityComment.objects.get(commentId=comment_id)
         comment.delete()
+
+    def update(self, comment, commentData):
+        for key, value in commentData.items():
+            print(f"key: {key}, value: {value}")
+            setattr(comment, key, value)
+        comment.save()
+        return comment

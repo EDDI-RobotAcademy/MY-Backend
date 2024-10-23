@@ -31,3 +31,7 @@ class FreeCommunityCommentServiceImpl(FreeCommunityCommentService):
 
     def removeComment(self, commentId):
         return self.__freeCommunityCommentRepository.deleteByCommentId(commentId)
+
+    def updateComment(self, commentId, commentData):
+        comment = self.__freeCommunityCommentRepository.findByCommentId(commentId)
+        return self.__freeCommunityCommentRepository.update(comment, commentData)

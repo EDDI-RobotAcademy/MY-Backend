@@ -48,9 +48,9 @@ class FreeCommunityCommentView(viewsets.ViewSet):
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
     def readComment(self, request, pk=None):
-        comments = self.freeCommunityCommentService.readComment(pk)
-        if comments is not None:
-            serializer = FreeCommunityCommentSerializer(comments)
+        comment = self.freeCommunityCommentService.readComment(pk)
+        if comment is not None:
+            serializer = FreeCommunityCommentSerializer(comment)
             return Response(serializer.data)
         else:
             return Response({"error": "Comment not found."}, status=status.HTTP_204_NO_CONTENT)
@@ -58,3 +58,14 @@ class FreeCommunityCommentView(viewsets.ViewSet):
     def removeComment(self, request, pk=None):
         self.freeCommunityCommentService.removeComment(pk)
         return Response("댓글 삭제 성공", status=status.HTTP_204_NO_CONTENT)
+
+    def modifyComment(self, request, pk=None):
+        comment = self.freeCommunityCommentService.readComment(pk)
+        serializer = FreeCommunityCommentSerializer(comment, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            updatedComment = self.freeCommunityCommentService.updateComment(pk, serializer.validated_data)
+            return Response(FreeCommunityCommentSerializer(updatedComment).data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

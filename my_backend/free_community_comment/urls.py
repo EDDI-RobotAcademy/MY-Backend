@@ -13,5 +13,6 @@ urlpatterns = [
     path('list-replies', FreeCommunityCommentView.as_view({'post': 'listReplies'}), name='reply-list'),
     path('create', FreeCommunityCommentView.as_view({'post': 'createComment'}), name='create-comment'),
     path('read/<int:pk>', FreeCommunityCommentView.as_view({'get': 'readComment'}), name='comment-read'),
-    path('delete/<int:pk>', FreeCommunityCommentView.as_view({'delete': 'removeComment'}), name='comment-delete')
+    path('delete/<int:pk>', FreeCommunityCommentView.as_view({'delete': 'removeComment'}), name='comment-delete'),
+    path('update/<int:pk>', FreeCommunityCommentView.as_view({'put': 'modifyComment'}), name='comment-update'),
 ]
