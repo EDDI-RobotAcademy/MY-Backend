@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_extensions',
-    'board',
+    'free_community',
     'account',
     'survey',
     'user_analysis',
@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'redis_token',
     'user_profile',
     'custom_strategy_history'
+    'viewCount',
+    'free_community_comment',
 ]
 
 MIDDLEWARE = [
