@@ -16,3 +16,7 @@ class FreeCommunityCommentRepository(ABC):
     @abstractmethod
     def findByCommentId(self, comment_id):
         pass
+
+    @abstractmethod
+    def deleteByCommentId(self, comment_id):
+        pass

@@ -12,5 +12,6 @@ urlpatterns = [
     path('list-comment', FreeCommunityCommentView.as_view({'post': 'listComments'}), name='comment-list'),
     path('list-replies', FreeCommunityCommentView.as_view({'post': 'listReplies'}), name='reply-list'),
     path('create', FreeCommunityCommentView.as_view({'post': 'createComment'}), name='create-comment'),
-    path('read/<int:pk>', FreeCommunityCommentView.as_view({'get': 'readComments'}), name='comment-read'),
+    path('read/<int:pk>', FreeCommunityCommentView.as_view({'get': 'readComment'}), name='comment-read'),
+    path('delete/<int:pk>', FreeCommunityCommentView.as_view({'delete': 'removeComment'}), name='comment-delete')
 ]

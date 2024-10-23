@@ -47,12 +47,14 @@ class FreeCommunityCommentView(viewsets.ViewSet):
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
-    def readComments(self, request, pk=None):
-        comments = self.freeCommunityCommentService.readComments(pk)
+    def readComment(self, request, pk=None):
+        comments = self.freeCommunityCommentService.readComment(pk)
         if comments is not None:
             serializer = FreeCommunityCommentSerializer(comments)
             return Response(serializer.data)
         else:
             return Response({"error": "Comment not found."}, status=status.HTTP_204_NO_CONTENT)
 
-
+    def removeComment(self, request, pk=None):
+        self.freeCommunityCommentService.removeComment(pk)
+        return Response("댓글 삭제 성공", status=status.HTTP_204_NO_CONTENT)

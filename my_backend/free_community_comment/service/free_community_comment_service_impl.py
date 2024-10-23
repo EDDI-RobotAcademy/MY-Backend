@@ -26,5 +26,8 @@ class FreeCommunityCommentServiceImpl(FreeCommunityCommentService):
     def createComment(self, content, freeCommmunityId, accountId, parentId):
         return self.__freeCommunityCommentRepository.create(content, freeCommmunityId, accountId, parentId)
 
-    def readComments(self, commentId):
+    def readComment(self, commentId):
         return self.__freeCommunityCommentRepository.findByCommentId(commentId)
+
+    def removeComment(self, commentId):
+        return self.__freeCommunityCommentRepository.deleteByCommentId(commentId)

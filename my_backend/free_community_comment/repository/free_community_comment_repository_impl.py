@@ -46,3 +46,7 @@ class FreeCommunityCommentRepositoryImpl(FreeCommunityCommentRepository):
 
     def findByCommentId(self, comment_id):
         return FreeCommunityComment.objects.get(commentId=comment_id)
+
+    def deleteByCommentId(self, comment_id):
+        comment = FreeCommunityComment.objects.get(commentId=comment_id)
+        comment.delete()

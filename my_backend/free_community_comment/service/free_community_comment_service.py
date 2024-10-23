@@ -14,5 +14,9 @@ class FreeCommunityCommentService(ABC):
         pass
 
     @abstractmethod
-    def readComments(self, commentId):
+    def readComment(self, commentId):
+        pass
+
+    @abstractmethod
+    def removeComment(self, commentId):
         pass
