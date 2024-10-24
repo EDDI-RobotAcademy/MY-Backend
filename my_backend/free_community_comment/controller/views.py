@@ -74,3 +74,22 @@ class FreeCommunityCommentView(viewsets.ViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def checkAuthority(self, request, pk=None):
+        userToken = request.data.get('userToken')
+        if userToken:
+            accountId = self.redisService.getValueByKey(userToken)
+            try:
+                accountId = int(accountId)
+            except ValueError:
+                accountId = None
+        else:
+            accountId = None
+
+        comment = self.freeCommunityCommentService.readComment(pk)
+
+        is_authorized = comment.account.id == accountId
+        print("comment account 2", comment.account.id)
+        print("accountId 2", accountId)
+
+        return Response({'is_authorized': is_authorized}, status=status.HTTP_200_OK)
+

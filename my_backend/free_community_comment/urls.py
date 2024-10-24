@@ -15,4 +15,5 @@ urlpatterns = [
     path('read/<int:pk>', FreeCommunityCommentView.as_view({'get': 'readComment'}), name='comment-read'),
     path('delete/<int:pk>', FreeCommunityCommentView.as_view({'delete': 'removeComment'}), name='comment-delete'),
     path('update/<int:pk>', FreeCommunityCommentView.as_view({'put': 'modifyComment'}), name='comment-update'),
+    path('check-authority/<int:pk>', FreeCommunityCommentView.as_view({'post': 'checkAuthority'}), name='check-authority'),
 ]
