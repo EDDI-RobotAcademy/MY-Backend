@@ -10,7 +10,7 @@ from user_analysis.entity.user_analysis_request import UserAnalysisRequest
 
 class UserAnalysisAnswer(models.Model):
     id = models.AutoField(primary_key=True)
-    request = models.ForeignKey(UserAnalysisRequest, related_name='answers', on_delete=models.CASCADE())
+    request = models.ForeignKey(UserAnalysisRequest, related_name='answers', on_delete=models.CASCADE)
     question = models.ForeignKey(UserAnalysisQuestion, related_name='answers', on_delete=models.CASCADE)
     answer_text = models.TextField(blank=True, null=True)
     five_score_selection = models.ForeignKey(UserAnalysisFixedFiveScoreSelection, blank=True, null=True, on_delete=models.SET_NULL)

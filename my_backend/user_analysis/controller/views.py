@@ -67,16 +67,18 @@ class UserAnalysisView(viewsets.ViewSet):
 
     def submitUserAnalysisAnswer(self, request):
         try:
-            answers = request.data.get('user_analysis_answer')
-            print(f"answers: {answers}")
             userToken = request.data.get('userToken')
             print(f"userToken: {userToken}")
             if userToken:
-                accountId = self.redisService.getValueByKey(userToken)
+                account_id = self.redisService.getValueByKey(userToken)
             else:
-                accountId = None
+                account_id = None
+            user_analysis_id = request.data.get('user_analysis')
+            print(f"user_analysis_id: ", user_analysis_id)
+            answers = request.data.get('user_analysis_answer')
+            print(f"answers: {answers}")
 
-            self.userAnalysisService.saveAnswer(answers, accountId)
+            self.userAnalysisService.saveAnswer(account_id, user_analysis_id, answers)
 
             return Response(True, status.HTTP_200_OK)
 
