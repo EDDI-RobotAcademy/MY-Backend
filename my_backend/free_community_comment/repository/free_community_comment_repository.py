@@ -10,7 +10,7 @@ class FreeCommunityCommentRepository(ABC):
         pass
 
     @abstractmethod
-    def create(self, content, free_community_id, account_id, parent_id=None):
+    def create(self, content, nickname, free_community_id, account_id, parent_id=None):
         pass
 
     @abstractmethod

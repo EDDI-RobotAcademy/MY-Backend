@@ -26,7 +26,7 @@ class FreeCommunityCommentRepositoryImpl(FreeCommunityCommentRepository):
     def list_replies(self, parent_id):
         return FreeCommunityComment.objects.filter(parent=parent_id).order_by('regDate')
 
-    def create(self, content, free_community_id, account_id, parent_id=None):
+    def create(self, content, nickname, free_community_id, account_id, parent_id=None):
         free_community = FreeCommunity.objects.get(free_communityId=free_community_id)
         if account_id:
             account = Account.objects.get(id=account_id)
@@ -37,6 +37,7 @@ class FreeCommunityCommentRepositoryImpl(FreeCommunityCommentRepository):
 
         free_community_comment = FreeCommunityComment(
             content=content,
+            nickname=nickname,
             free_community=free_community,
             account=account,
             parent=parent_comment
