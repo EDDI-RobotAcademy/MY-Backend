@@ -49,5 +49,22 @@ class KakaoPayServiceImpl(KakaoPayService):
         }
 
         response = requests.post(url, data=params, headers=headers)
-        print("response 출력", url)
+        return response.json()
+
+    def kakaoPayApproveDone(self, tid, pg_token):
+        print("kakaoPayApprove()")
+        url = f"{self.host}/v1/payment/approve"
+        headers = {
+            'Authorization': "KakaoAK " + self.key,
+            'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+        }
+        params = {
+            "cid": self.cid,
+            "tid": tid,
+            "partner_order_id": self.partnerOrderPrefix,
+            "partner_user_id": self.partnerUserId,
+            "pg_token": pg_token,
+        }
+
+        response = requests.post(url, data=params, headers=headers)
         return response.json()
