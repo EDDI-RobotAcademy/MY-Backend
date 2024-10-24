@@ -6,3 +6,7 @@ class KakaoPayService(ABC):
     def kakaoPayReadyAddress(self, amount):
         pass
 
+    @abstractmethod
+    def kakaoPayApproveDone(self, tid, pg_token):
+        pass
+
