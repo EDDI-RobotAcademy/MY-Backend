@@ -89,6 +89,7 @@ KAKAO_PAY = {
     'CID': os.getenv('KAKAO_PAY_CID'),
     'PARTNER_ORDER_PREFIX': os.getenv('KAKAO_PAY_PARTNER_ORDER_PREFIX'),
     'PARTNER_USER_ID': os.getenv('KAKAO_PAY_PARTNER_USER_ID'),
+    'REDIRECT_URI': os.getenv('KAKAO_PAY_REDIRECT_URI'),
     'APPROVAL_URL': os.getenv('KAKAO_PAY_APPROVAL_URL'),
     'FAIL_URL': os.getenv('KAKAO_PAY_FAIL_URL'),
     'CANCEL_URL': os.getenv('KAKAO_PAY_CANCEL_URL'),
