@@ -35,4 +35,5 @@ urlpatterns = [
     path('custom_strategy_history/', include('custom_strategy_history.urls')),
     path('viewCount/', include('viewCount.urls')),
     path('free_community_comment/', include('free_community_comment.urls')),
+    path('tosspayments/', include('tosspayments.urls')),
 ]
