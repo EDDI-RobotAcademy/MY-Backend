@@ -27,9 +27,8 @@ SECRET_KEY = "django-insecure-w4e=!6=#0&j$40w=sp=-9vxe*^5d3)vn*2vm8f-a#%e!8lx#x0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True # True in local test
 
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'), 'v23b3w1mpe.execute-api.ap-northeast-2.amazonaws.com', 'mycooing.com', 'api.mycooing.com'
-                 , 'localhost', '127.0.0.1'] # ip 털림 방지를 위해 이렇게 설정
-
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+TOSS_PAYMENTS_SECRET_KEY = os.getenv('TOSS_PAYMENTS_SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     'viewCount',
     'free_community_comment',
     'ai_request',
+    'tosspayments',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +120,18 @@ CORS_ALLOW_HEADERS = [
 ]
 
 ROOT_URLCONF = "my_backend.urls"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'FORMAT_SUFFIX_KWARG': 'format',
+}
 
 TEMPLATES = [
     {

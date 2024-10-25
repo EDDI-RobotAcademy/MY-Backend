@@ -36,4 +36,5 @@ urlpatterns = [
     path('viewCount/', include('viewCount.urls')),
     path('free_community_comment/', include('free_community_comment.urls')),
     path('ai-request/', include('ai_request.urls')),
+    path('tosspayments/', include('tosspayments.urls')),
 ]
