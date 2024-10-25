@@ -9,6 +9,7 @@ class FreeCommunityComment(models.Model):
     free_community = models.ForeignKey(FreeCommunity, on_delete=models.CASCADE, related_name='free_community_comments')
     account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='free_community_comment_account')
     content = models.TextField()
+    nickname = models.CharField(max_length=50)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
     regDate = models.DateTimeField(auto_now_add=True)
     updDate = models.DateTimeField(auto_now=True)

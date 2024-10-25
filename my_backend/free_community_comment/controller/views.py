@@ -6,6 +6,7 @@ from free_community_comment.entity.models import FreeCommunityComment
 from free_community_comment.serializers import FreeCommunityCommentSerializer
 from free_community_comment.service.free_community_comment_service_impl import FreeCommunityCommentServiceImpl
 from redis_token.service.redis_service_impl import RedisServiceImpl
+from user_profile.service.user_profile_service_impl import UserProfileServiceImpl
 
 
 class FreeCommunityCommentView(viewsets.ViewSet):
@@ -13,6 +14,7 @@ class FreeCommunityCommentView(viewsets.ViewSet):
 
     freeCommunityCommentService = FreeCommunityCommentServiceImpl.getInstance()
     redisService = RedisServiceImpl.getInstance()
+    userProfileService = UserProfileServiceImpl.getInstance()
 
     def listComments(self, request):
         freeCommmunityId = request.data.get('free_community_id')
@@ -35,13 +37,16 @@ class FreeCommunityCommentView(viewsets.ViewSet):
             userToken = data.get('userToken')
             if userToken:
                 accountId = self.redisService.getValueByKey(userToken)
+                nickname = self.userProfileService.getNicknameByAccountId(accountId)
             else:
                 accountId = None
+                nickname = "익명"
 
             print(
-                f"freeCommmunityId: {freeCommmunityId}, parentId: {parentId}, accountId: {accountId}, content: {content}")
+                f"freeCommmunityId: {freeCommmunityId}, parentId: {parentId}, accountId: {accountId}, "
+                f"nickname: {nickname}, content: {content}")
 
-            self.freeCommunityCommentService.createComment(content, freeCommmunityId, accountId, parentId)
+            self.freeCommunityCommentService.createComment(content, nickname, freeCommmunityId, accountId, parentId)
             return Response(True, status.HTTP_200_OK)
 
         except Exception as e:
@@ -68,4 +73,23 @@ class FreeCommunityCommentView(viewsets.ViewSet):
             return Response(FreeCommunityCommentSerializer(updatedComment).data)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def checkAuthority(self, request, pk=None):
+        userToken = request.data.get('userToken')
+        if userToken:
+            accountId = self.redisService.getValueByKey(userToken)
+            try:
+                accountId = int(accountId)
+            except ValueError:
+                accountId = None
+        else:
+            accountId = None
+
+        comment = self.freeCommunityCommentService.readComment(pk)
+
+        is_authorized = comment.account.id == accountId
+        print("comment account 2", comment.account.id)
+        print("accountId 2", accountId)
+
+        return Response({'is_authorized': is_authorized}, status=status.HTTP_200_OK)
 
