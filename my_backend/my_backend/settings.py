@@ -83,18 +83,6 @@ KAKAO = {
     'USERINFO_REQUEST_URI': os.getenv('KAKAO_USERINFO_REQUEST_URI'),
 }
 
-KAKAO_PAY = {
-    'KEY': os.getenv('KAKAO_PAY_KEY'),
-    'HOST': os.getenv('KAKAO_PAY_HOST', 'https://kapi.kakao.com'),
-    'CID': os.getenv('KAKAO_PAY_CID'),
-    'PARTNER_ORDER_PREFIX': os.getenv('KAKAO_PAY_PARTNER_ORDER_PREFIX'),
-    'PARTNER_USER_ID': os.getenv('KAKAO_PAY_PARTNER_USER_ID'),
-    'REDIRECT_URI': os.getenv('KAKAO_PAY_REDIRECT_URI'),
-    'APPROVAL_URL': os.getenv('KAKAO_PAY_APPROVAL_URL'),
-    'FAIL_URL': os.getenv('KAKAO_PAY_FAIL_URL'),
-    'CANCEL_URL': os.getenv('KAKAO_PAY_CANCEL_URL'),
-}
-
 NAVER = {
     'LOGIN_URL': os.getenv('NAVER_LOGIN_URL'),
     'CLIENT_ID': os.getenv('NAVER_CLIENT_ID'),

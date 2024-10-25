@@ -35,5 +35,4 @@ urlpatterns = [
     path('custom_strategy_history/', include('custom_strategy_history.urls')),
     path('viewCount/', include('viewCount.urls')),
     path('free_community_comment/', include('free_community_comment.urls')),
-    path('kakao_pay/', include('kakao_pay.urls')),
 ]
