@@ -1,4 +1,6 @@
+from account.entity.account import Account
 from account.repository.account_repository_impl import AccountRepositoryImpl
+from user_analysis.entity.user_analysis import UserAnalysis
 from user_analysis.entity.user_analysis_fixed_boolean_selection import UserAnalysisFixedBooleanSelection
 from user_analysis.entity.user_analysis_fixed_five_score_selection import UserAnalysisFixedFiveScoreSelection
 from user_analysis.repository.user_analysis_answer_repository_impl import UserAnalysisAnswerRepositoryImpl
@@ -6,6 +8,7 @@ from user_analysis.repository.user_analysis_custom_selection_repository_impl imp
     UserAnalysisCustomSelectionRepositoryImpl
 from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
 from user_analysis.repository.user_analysis_repository_impl import UserAnalysisRepositoryImpl
+from user_analysis.repository.user_analysis_request_repository_impl import UserAnalysisRequestRepositoryImpl
 from user_analysis.service.user_analysis_service import UserAnalysisService
 
 
@@ -19,6 +22,7 @@ class UserAnalysisServiceImpl(UserAnalysisService):
         cls.__instance.__userAnalysisQuestionRepository = UserAnalysisQuestionRepositoryImpl.getInstance()
         cls.__instance.__userAnalysisCustomSelectionRepository = UserAnalysisCustomSelectionRepositoryImpl.getInstance()
         cls.__instance.__userAnalysisAnswerRepository = UserAnalysisAnswerRepositoryImpl.getInstance()
+        cls.__instance.__userAnalysisRequestRepository = UserAnalysisRequestRepositoryImpl.getInstance()
 
         return cls.__instance
 
@@ -60,17 +64,16 @@ class UserAnalysisServiceImpl(UserAnalysisService):
             print(f"Unexpected error while creating selection: {str(e)}")
             raise e
 
-    def saveAnswer(self, answers, account_id):
+    def saveAnswer(self, account_id, user_analysis_id, answers):
         try:
-            for answer in answers:
+            user_analysis_request = self.__userAnalysisRequestRepository.create(account_id, user_analysis_id)
+            questions = self.__userAnalysisQuestionRepository.findUserAnalysisQuestionListByUserAnalysisId(user_analysis_id)
+            for question in questions:
+                question_id = question.id
+                answer_data = answers.get(str(question_id))
 
-                question_id = answer.get('question_id')
-                question = self.__userAnalysisQuestionRepository.findById(question_id)
-                user_analysis_id = question.user_analysis_id
-                answer_data = answer.get('answer_data')
-
-
-                self.__userAnalysisAnswerRepository.saveAnswer(user_analysis_id, question_id, answer_data, account_id)
+                if answer_data is not None:
+                    self.__userAnalysisAnswerRepository.saveAnswer(user_analysis_request, question_id, answer_data)
 
         except Exception as e:
             print('답변 저장중 오류 발생: ', {e})
