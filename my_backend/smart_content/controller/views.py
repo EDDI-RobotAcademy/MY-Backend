@@ -38,6 +38,16 @@ class SmartContentView(viewsets.ViewSet):
 
         return Response(serializer.data)
 
+    def listItems(self, request):
+        try:
+            contentId = request.data.get('content_id')
+            items = self.smartContentService.listItems(contentId)
+            return Response({'items': items})
+        except Exception as e:
+            print('items list 조회 중 에러 발생:', e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 
