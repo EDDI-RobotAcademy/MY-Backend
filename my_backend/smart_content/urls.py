@@ -9,4 +9,6 @@ router.register(r'smart_content', SmartContentView, basename='smart_content')
 urlpatterns = [
     path('', include(router.urls)),
     path('create', SmartContentView.as_view({'post': 'create'}), name='create-smart-content'),
+    path('list', SmartContentView.as_view({'post': 'list'}), name='list-smart-content'),
+    path('list-items', SmartContentView.as_view({'post': 'listItems'}), name='list-smart-content-items'),
 ]

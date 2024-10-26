@@ -3,10 +3,14 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from redis_token.service.redis_service_impl import RedisServiceImpl
+from smart_content.entity.models import SmartContent
+from smart_content.serializers import SmartContentSerializer
 from smart_content.service.smart_content_service_impl import SmartContentServiceImpl
 
 
 class SmartContentView(viewsets.ViewSet):
+    queryset = SmartContent.objects.all()
+
     smartContentService = SmartContentServiceImpl.getInstance()
     redisService = RedisServiceImpl.getInstance()
 
@@ -27,6 +31,23 @@ class SmartContentView(viewsets.ViewSet):
         except Exception as e:
             print('smart content 등록 과정 중 에러 발생:', e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def list(self, request):
+        smartContentList = self.smartContentService.list()
+        serializer = SmartContentSerializer(smartContentList, many=True)
+
+        return Response(serializer.data)
+
+    def listItems(self, request):
+        try:
+            contentId = request.data.get('content_id')
+            items = self.smartContentService.listItems(contentId)
+            return Response({'items': items})
+        except Exception as e:
+            print('items list 조회 중 에러 발생:', e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 

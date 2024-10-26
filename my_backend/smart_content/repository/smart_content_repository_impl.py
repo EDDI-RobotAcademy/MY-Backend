@@ -52,3 +52,35 @@ class SmartContentRepositoryImpl(SmartContentRepository):
                         sequence_number=item['sequence_number']
                     )
         return smart_content
+
+    def list(self):
+        return SmartContent.objects.all().order_by('regDate')
+
+    def listItems(self, contendId):
+        try:
+            smart_content = SmartContent.objects.get(id=contendId)
+
+            texts = SmartText.objects.filter(content=smart_content).order_by('sequence_number')
+            images = SmartImage.objects.filter(content=smart_content).order_by('sequence_number')
+
+            items = []
+
+            for text in texts:
+                items.append({
+                    'type': 'text',
+                    'content': text.text,
+                    'sequence_number': text.sequence_number
+                })
+
+            for image in images:
+                items.append({
+                    'type': 'image',
+                    'image_url': image.image_url,
+                    'sequence_number': image.sequence_number
+                })
+
+            items.sort(key=lambda x: x['sequence_number'])
+
+            return items
+        except SmartContent.DoesNotExist:
+            raise Exception('SmartContent not found')
