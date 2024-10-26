@@ -26,7 +26,6 @@ class UserAnalysisAnswerRepository(ABC):
     def list(self):
         pass
 
-
     @abstractmethod
     def findByRequest(self, request_id):
         pass

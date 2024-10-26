@@ -30,7 +30,7 @@ class UserAnalysisService(ABC):
         pass
 
     @abstractmethod
-    def listAnswer(self):
+    def listAnswer(self, user_analysis_id):
         pass
 
     @abstractmethod

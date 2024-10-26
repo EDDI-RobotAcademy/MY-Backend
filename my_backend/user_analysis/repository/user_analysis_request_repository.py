@@ -13,3 +13,7 @@ class UserAnalysisRequestRepository(ABC):
     @abstractmethod
     def findById(self, request_id):
         pass
+
+    @abstractmethod
+    def findByUserAnalysis(self, user_analysis):
+        pass
