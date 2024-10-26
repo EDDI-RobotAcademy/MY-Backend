@@ -6,6 +6,7 @@ from user_analysis.entity.user_analysis_custom_selection import UserAnalysisCust
 from user_analysis.entity.user_analysis_fixed_boolean_selection import UserAnalysisFixedBooleanSelection
 from user_analysis.entity.user_analysis_fixed_five_score_selection import UserAnalysisFixedFiveScoreSelection
 from user_analysis.entity.user_analysis_question import UserAnalysisQuestion
+from user_analysis.entity.user_analysis_request import UserAnalysisRequest
 
 
 class UserAnalysisAnswerSerializer(serializers.ModelSerializer):
@@ -52,3 +53,11 @@ class UserAnalysisSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAnalysis
         fields = ['id', 'title', 'description']
+
+class UserAnalysisRequestSerializer(serializers.ModelSerializer):
+    user_analysis_title = serializers.CharField(source='user_analysis.title', read_only=True)
+    profile_nickname = serializers.CharField(source='account.user_profile.nickname', read_only=True)
+
+    class Meta:
+        model = UserAnalysisRequest
+        fields = ['id', 'user_analysis_title', 'profile_nickname', 'created_at']

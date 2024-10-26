@@ -27,7 +27,9 @@ SECRET_KEY = "django-insecure-w4e=!6=#0&j$40w=sp=-9vxe*^5d3)vn*2vm8f-a#%e!8lx#x0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True # True in local test
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'), 'v23b3w1mpe.execute-api.ap-northeast-2.amazonaws.com', 'mycooing.com', 'api.mycooing.com'
+                 , 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 TOSS_PAYMENTS_SECRET_KEY = os.getenv('TOSS_PAYMENTS_SECRET_KEY')
 # Application definition
 
