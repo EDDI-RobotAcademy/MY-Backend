@@ -87,5 +87,8 @@ class UserAnalysisAnswerRepositoryImpl(UserAnalysisAnswerRepository):
         summerizedAnswer = UserAnalysisAnswer.objects.filter(user_analysis_id=user_analysis_id, account_id=account_id)
         return summerizedAnswer
 
+    def list(self):
+        return UserAnalysisAnswer.objects.all()
+
     def findByRequest(self, request):
         return UserAnalysisAnswer.objects.filter(request = request)
