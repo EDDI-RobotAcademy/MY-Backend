@@ -34,4 +34,7 @@ class UserAnalysisRequestRepositoryImpl(UserAnalysisRequestRepository):
         else:
             return UserAnalysisRequest.objects.all()
 
+    def findById(self, request_id):
+        return UserAnalysisRequest.objects.get(id=request_id)
+
 

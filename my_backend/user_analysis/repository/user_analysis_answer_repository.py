@@ -21,3 +21,7 @@ class UserAnalysisAnswerRepository(ABC):
     @abstractmethod
     def summarizeAnswerByUserAnalysisIdandAccountId(self, user_analysis_id, account_id):
         pass
+
+    @abstractmethod
+    def findByRequest(self, request_id):
+        pass

@@ -10,16 +10,14 @@ from user_analysis.entity.user_analysis_request import UserAnalysisRequest
 
 
 class UserAnalysisAnswerSerializer(serializers.ModelSerializer):
-    user_analysis_title = serializers.CharField(source='user_analysis.title', read_only=True)
-    profile_nickname = serializers.CharField(source='account.user_profile.nickname', read_only=True)
     question_text = serializers.CharField(source='question.question_text', read_only=True)
     user_analysis_custom_selection_text = serializers.CharField(source='custom_selection.custom_text', read_only=True,
                                                   default=None)
 
     class Meta:
         model = UserAnalysisAnswer
-        fields = ('id', 'user_analysis_title', 'profile_nickname', 'question_text', 'user_analysis_custom_selection_text', 'answer_text',
-                  'boolean_selection', 'five_score_selection', 'response_order', 'created_at')
+        fields = ('id', 'question_text', 'user_analysis_custom_selection_text', 'answer_text',
+                  'boolean_selection', 'five_score_selection')
 
     def to_representation(self, instance):
         # 기본 직렬화 데이터

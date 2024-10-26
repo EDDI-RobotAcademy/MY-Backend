@@ -26,6 +26,10 @@ class UserAnalysisService(ABC):
         pass
 
     @abstractmethod
+    def readRequest(self, request_id):
+        pass
+
+    @abstractmethod
     def listAnswer(self, filter, user_analysis_id=None, question_id=None, account_id=None):
         pass
 
