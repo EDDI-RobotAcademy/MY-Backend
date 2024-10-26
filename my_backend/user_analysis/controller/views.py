@@ -94,6 +94,22 @@ class UserAnalysisView(viewsets.ViewSet):
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
+    def listOwnUserAnalysisRequest(self, request):
+        try:
+            userToken = request.data.get('userToken')
+            print(f"userToken: {userToken}")
+            if userToken:
+                account_id = self.redisService.getValueByKey(userToken)
+            else:
+                account_id = None
+
+            listedRequest = self.userAnalysisService.listOwnRequest(account_id)
+            serializer = UserAnalysisRequestSerializer(listedRequest, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
 
     def listUserAnalysisAnswer(self, request):
         try:

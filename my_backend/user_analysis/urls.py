@@ -13,6 +13,7 @@ urlpatterns = [
     path('create-user-analysis-selection', UserAnalysisView.as_view({'post': 'createUserAnalysisCustomSelection'}), name='create-user-ananlysis-custom-selection'),
     path('submit-answer', UserAnalysisView.as_view({'post': 'submitUserAnalysisAnswer'}), name='submit-user-analysis-answer'),
     path('list-all-request', UserAnalysisView.as_view({'get': 'listAllUserAnalysisRequest'}), name='list-all-user-analysis-request'),
+    path('list-own-request', UserAnalysisView.as_view({'get': 'listOwnUserAnalysisRequest'}), name='list-own-user-analysis-request'),
     path('list-answer', UserAnalysisView.as_view({'post': 'listUserAnalysisAnswer'}), name='list-user-analysis-answer'),
     path('list-question', UserAnalysisView.as_view({'post': 'listUserAnalysisQuestion'}), name='list-user-analysis-question'),
     path('list-selection', UserAnalysisView.as_view({'post': 'listUserAnalysisSelection'}), name='list-user-analysis-selection'),
