@@ -28,8 +28,9 @@ SECRET_KEY = "django-insecure-w4e=!6=#0&j$40w=sp=-9vxe*^5d3)vn*2vm8f-a#%e!8lx#x0
 DEBUG = True # True in local test
 
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'), 'v23b3w1mpe.execute-api.ap-northeast-2.amazonaws.com', 'mycooing.com', 'api.mycooing.com'
-                 , 'localhost', '127.0.0.1'] # ip 털림 방지를 위해 이렇게 설정
-
+                 , 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+TOSS_PAYMENTS_SECRET_KEY = os.getenv('TOSS_PAYMENTS_SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,7 +54,8 @@ INSTALLED_APPS = [
     'custom_strategy_history',
     'viewCount',
     'free_community_comment',
-    'smart_content',
+    'ai_request',
+    'tosspayments',
 ]
 
 MIDDLEWARE = [
@@ -82,18 +84,6 @@ KAKAO = {
     'REDIRECT_URI': os.getenv('KAKAO_REDIRECT_URI'),
     'TOKEN_REQUEST_URI': os.getenv('KAKAO_TOKEN_REQUEST_URI'),
     'USERINFO_REQUEST_URI': os.getenv('KAKAO_USERINFO_REQUEST_URI'),
-}
-
-KAKAO_PAY = {
-    'KEY': os.getenv('KAKAO_PAY_KEY'),
-    'HOST': os.getenv('KAKAO_PAY_HOST', 'https://kapi.kakao.com'),
-    'CID': os.getenv('KAKAO_PAY_CID'),
-    'PARTNER_ORDER_PREFIX': os.getenv('KAKAO_PAY_PARTNER_ORDER_PREFIX'),
-    'PARTNER_USER_ID': os.getenv('KAKAO_PAY_PARTNER_USER_ID'),
-    'REDIRECT_URI': os.getenv('KAKAO_PAY_REDIRECT_URI'),
-    'APPROVAL_URL': os.getenv('KAKAO_PAY_APPROVAL_URL'),
-    'FAIL_URL': os.getenv('KAKAO_PAY_FAIL_URL'),
-    'CANCEL_URL': os.getenv('KAKAO_PAY_CANCEL_URL'),
 }
 
 NAVER = {
@@ -132,6 +122,18 @@ CORS_ALLOW_HEADERS = [
 ]
 
 ROOT_URLCONF = "my_backend.urls"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'FORMAT_SUFFIX_KWARG': 'format',
+}
 
 TEMPLATES = [
     {

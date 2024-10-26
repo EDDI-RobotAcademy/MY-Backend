@@ -14,7 +14,19 @@ class UserAnalysisService(ABC):
         pass
 
     @abstractmethod
-    def saveAnswer(self, answers, account_Id):
+    def saveAnswer(self, account_id, user_analysis_id, answers):
+        pass
+
+    @abstractmethod
+    def listAllRequest(self):
+        pass
+
+    @abstractmethod
+    def listOwnRequest(self, account_id):
+        pass
+
+    @abstractmethod
+    def readRequest(self, request_id):
         pass
 
     @abstractmethod

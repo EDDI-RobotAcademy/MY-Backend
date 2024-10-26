@@ -5,7 +5,7 @@ from redis_token.service.redis_service_impl import RedisServiceImpl
 from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
 from user_analysis.serializers import UserAnalysisAnswerSerializer, UserAnalysisQuestionSerializer, \
     UserAnalysisFixedFiveScoreSelectionSerializer, UserAnalysisFixedBooleanSelectionSerializer, \
-    UserAnalysisCustomSelectionSerializer, UserAnalysisSerializer
+    UserAnalysisCustomSelectionSerializer, UserAnalysisSerializer, UserAnalysisRequestSerializer
 from user_analysis.service.user_analysis_service_impl import UserAnalysisServiceImpl
 
 
@@ -67,21 +67,60 @@ class UserAnalysisView(viewsets.ViewSet):
 
     def submitUserAnalysisAnswer(self, request):
         try:
-            answers = request.data.get('user_analysis_answer')
-            print(f"answers: {answers}")
             userToken = request.data.get('userToken')
             print(f"userToken: {userToken}")
             if userToken:
-                accountId = self.redisService.getValueByKey(userToken)
+                account_id = self.redisService.getValueByKey(userToken)
             else:
-                accountId = None
+                account_id = None
+            user_analysis_id = request.data.get('user_analysis')
+            print(f"user_analysis_id: ", user_analysis_id)
+            answers = request.data.get('user_analysis_answer')
+            print(f"answers: {answers}")
 
-            self.userAnalysisService.saveAnswer(answers, accountId)
+            self.userAnalysisService.saveAnswer(account_id, user_analysis_id, answers)
 
             return Response(True, status.HTTP_200_OK)
 
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listAllUserAnalysisRequest(self, request):
+        try:
+            listedRequest = self.userAnalysisService.listAllRequest()
+            serializer = UserAnalysisRequestSerializer(listedRequest, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listOwnUserAnalysisRequest(self, request):
+        try:
+            userToken = request.data.get('userToken')
+            print(f"userToken: {userToken}")
+            if userToken:
+                account_id = self.redisService.getValueByKey(userToken)
+            else:
+                account_id = None
+
+            listedRequest = self.userAnalysisService.listOwnRequest(account_id)
+            serializer = UserAnalysisRequestSerializer(listedRequest, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def readUserAnalysisRequest(self, request, pk=None):
+        try:
+            listedAnswer = self.userAnalysisService.readRequest(pk)
+            print("listedAnswer: ", listedAnswer)
+            serializer = UserAnalysisAnswerSerializer(listedAnswer, many=True)
+            print("serializer: ", serializer)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
 
     def listUserAnalysisAnswer(self, request):
         try:

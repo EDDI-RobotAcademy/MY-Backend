@@ -30,50 +30,39 @@ class UserAnalysisAnswerRepositoryImpl(UserAnalysisAnswerRepository):
 
         return cls.__instance
 
-    def saveAnswer(self, user_analysis_id, question_id, answer_data, account_id,
-                   UsesrAnalysisFixedBooleanSelection=None):
+    def saveAnswer(self, request, question_id, answer_data):
         try:
             question = self.__userAnalysisQuestionRepository.findById(question_id)
 
-            user_analysis = UserAnalysis.objects.get(id=user_analysis_id)
-            if account_id:
-                account = Account.objects.get(id=account_id)
-            else:
-                account = None
-
             if question.user_analysis_type == 1:  # General
                 answer = UserAnalysisAnswer(
-                    user_analysis=user_analysis,
+                    request=request,
                     question=question,
                     answer_text=answer_data,
-                    account=account
                 )
 
             elif question.user_analysis_type == 2:  # Five Score
                 five_score_selection = UserAnalysisFixedFiveScoreSelection.objects.get(score=answer_data)
                 answer = UserAnalysisAnswer(
-                    user_analysis=user_analysis,
+                    request=request,
                     question=question,
                     five_score_selection=five_score_selection,
-                    account=account
                 )
 
             elif question.user_analysis_type == 3:  # Boolean
                 boolean_selection = UserAnalysisFixedBooleanSelection.objects.get(is_true=answer_data)
                 answer = UserAnalysisAnswer(
-                    user_analysis=user_analysis,
+                    request=request,
                     question=question,
                     boolean_selection=boolean_selection,
-                    account=account
                 )
 
             elif question.user_analysis_type == 4:  # Custom
                 custom_selection = UserAnalysisCustomSelection.objects.get(custom_text=answer_data)
                 answer = UserAnalysisAnswer(
-                    user_analysis=user_analysis,
+                    request=request,
                     question=question,
                     custom_selection=custom_selection,
-                    account=account
                 )
 
             answer.save()
@@ -97,3 +86,6 @@ class UserAnalysisAnswerRepositoryImpl(UserAnalysisAnswerRepository):
     def summarizeAnswerByUserAnalysisIdandAccountId(self, user_analysis_id, account_id):
         summerizedAnswer = UserAnalysisAnswer.objects.filter(user_analysis_id=user_analysis_id, account_id=account_id)
         return summerizedAnswer
+
+    def findByRequest(self, request):
+        return UserAnalysisAnswer.objects.filter(request = request)
