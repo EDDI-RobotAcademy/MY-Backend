@@ -90,16 +90,8 @@ class UserAnalysisServiceImpl(UserAnalysisService):
         answers = self.__userAnalysisAnswerRepository.findByRequest(request)
         return answers
 
-    def listAnswer(self, filter, user_analysis_id=None, question_id=None, account_id=None):
-        if filter == "user_analysis":
-            listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByUserAnalysisId(user_analysis_id)
-        elif filter == "account":
-            listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByAccountId(account_id)
-        elif filter == "question":
-            listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByQuestionId(question_id)
-        elif filter == "user_analysis and account":
-            listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByUserAnalysisIdandAccountId(user_analysis_id, account_id)
-
+    def listAnswer(self):
+        listedAnswer = self.__userAnalysisAnswerRepository.list()
         return listedAnswer
 
     def listQuestions(self, user_analysis_id):

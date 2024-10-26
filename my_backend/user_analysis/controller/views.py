@@ -124,14 +124,7 @@ class UserAnalysisView(viewsets.ViewSet):
 
     def listUserAnalysisAnswer(self, request):
         try:
-            filter = request.data.get('filter')
-            userAnalysisId = request.data.get("user_analysis_Id")
-            questionId = request.data.get("question_Id")
-            accountId = request.data.get("account_Id")
-
-            print(f"filter: {filter}, userAnalysisId: {userAnalysisId}, questionId: {questionId}, accountId: {accountId}")
-
-            listedAnswer = self.userAnalysisService.listAnswer(filter, userAnalysisId, questionId, accountId)
+            listedAnswer = self.userAnalysisService.listAnswer()
             print(listedAnswer)
             serializer = UserAnalysisAnswerSerializer(listedAnswer, many=True)
 
