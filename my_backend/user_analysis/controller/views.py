@@ -5,7 +5,7 @@ from redis_token.service.redis_service_impl import RedisServiceImpl
 from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
 from user_analysis.serializers import UserAnalysisAnswerSerializer, UserAnalysisQuestionSerializer, \
     UserAnalysisFixedFiveScoreSelectionSerializer, UserAnalysisFixedBooleanSelectionSerializer, \
-    UserAnalysisCustomSelectionSerializer, UserAnalysisSerializer
+    UserAnalysisCustomSelectionSerializer, UserAnalysisSerializer, UserAnalysisRequestSerializer
 from user_analysis.service.user_analysis_service_impl import UserAnalysisServiceImpl
 
 
@@ -84,6 +84,16 @@ class UserAnalysisView(viewsets.ViewSet):
 
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listAllUserAnalysisRequest(self, request):
+        try:
+            listedRequest = self.userAnalysisService.listAllRequest()
+            serializer = UserAnalysisRequestSerializer(listedRequest, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
 
     def listUserAnalysisAnswer(self, request):
         try:
