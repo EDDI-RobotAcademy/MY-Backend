@@ -27,3 +27,11 @@ class UserAnalysisRequestRepositoryImpl(UserAnalysisRequestRepository):
         user_analysis_request.save()
 
         return user_analysis_request
+
+    def list(self, account=None):
+        if account:
+            return UserAnalysisRequest.objects.filter(account = account)
+        else:
+            return UserAnalysisRequest.objects.all()
+
+

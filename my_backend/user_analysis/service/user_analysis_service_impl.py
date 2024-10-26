@@ -78,6 +78,13 @@ class UserAnalysisServiceImpl(UserAnalysisService):
         except Exception as e:
             print('답변 저장중 오류 발생: ', {e})
 
+    def listAllRequest(self):
+        return self.__userAnalysisRequestRepository.list()
+
+    def listOwnRequest(self, account_id):
+        account = Account.objects.get(id = account_id)
+        return self.__userAnalysisRequestRepository.list(account)
+
     def listAnswer(self, filter, user_analysis_id=None, question_id=None, account_id=None):
         if filter == "user_analysis":
             listedAnswer = self.__userAnalysisAnswerRepository.summarizeAnswerByUserAnalysisId(user_analysis_id)
