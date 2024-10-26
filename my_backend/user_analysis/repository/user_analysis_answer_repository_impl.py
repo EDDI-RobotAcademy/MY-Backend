@@ -86,3 +86,6 @@ class UserAnalysisAnswerRepositoryImpl(UserAnalysisAnswerRepository):
     def summarizeAnswerByUserAnalysisIdandAccountId(self, user_analysis_id, account_id):
         summerizedAnswer = UserAnalysisAnswer.objects.filter(user_analysis_id=user_analysis_id, account_id=account_id)
         return summerizedAnswer
+
+    def findByRequest(self, request):
+        return UserAnalysisAnswer.objects.filter(request = request)

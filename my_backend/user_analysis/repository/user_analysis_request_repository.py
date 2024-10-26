@@ -9,3 +9,7 @@ class UserAnalysisRequestRepository(ABC):
     @abstractmethod
     def list(self, account=None):
         pass
+
+    @abstractmethod
+    def findById(self, request_id):
+        pass

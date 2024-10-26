@@ -110,6 +110,17 @@ class UserAnalysisView(viewsets.ViewSet):
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
+    def readUserAnalysisRequest(self, request, pk=None):
+        try:
+            listedAnswer = self.userAnalysisService.readRequest(pk)
+            print("listedAnswer: ", listedAnswer)
+            serializer = UserAnalysisAnswerSerializer(listedAnswer, many=True)
+            print("serializer: ", serializer)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
 
     def listUserAnalysisAnswer(self, request):
         try:
