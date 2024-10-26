@@ -90,9 +90,17 @@ class UserAnalysisServiceImpl(UserAnalysisService):
         answers = self.__userAnalysisAnswerRepository.findByRequest(request)
         return answers
 
-    def listAnswer(self):
-        listedAnswer = self.__userAnalysisAnswerRepository.list()
-        return listedAnswer
+    def listAnswer(self, user_analysis_id):
+        user_analysis = self.__userAnalysisRepository.findById(user_analysis_id)
+        print("user_analysis: ", user_analysis)
+        user_analysis_requests = self.__userAnalysisRequestRepository.findByUserAnalysis(user_analysis)
+        print("user_analysis_request: ", user_analysis_requests)
+
+        all_answers = []
+        for user_analysis_request in user_analysis_requests:
+            listedAnswer = self.__userAnalysisAnswerRepository.findByRequest(user_analysis_request)
+            all_answers.extend(listedAnswer)
+        return all_answers
 
     def listQuestions(self, user_analysis_id):
         questions = self.__userAnalysisQuestionRepository.findUserAnalysisQuestionListByUserAnalysisId(user_analysis_id)

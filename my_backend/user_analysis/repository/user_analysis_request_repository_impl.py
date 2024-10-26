@@ -37,4 +37,7 @@ class UserAnalysisRequestRepositoryImpl(UserAnalysisRequestRepository):
     def findById(self, request_id):
         return UserAnalysisRequest.objects.get(id=request_id)
 
+    def findByUserAnalysis(self, user_analysis):
+        return UserAnalysisRequest.objects.filter(user_analysis = user_analysis)
+
 

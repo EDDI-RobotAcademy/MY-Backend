@@ -124,7 +124,9 @@ class UserAnalysisView(viewsets.ViewSet):
 
     def listUserAnalysisAnswer(self, request):
         try:
-            listedAnswer = self.userAnalysisService.listAnswer()
+            user_analysis_id = request.data.get('user_analysis_id')
+            print("user_analysis_id: ", user_analysis_id)
+            listedAnswer = self.userAnalysisService.listAnswer(user_analysis_id)
             print(listedAnswer)
             serializer = UserAnalysisAnswerSerializer(listedAnswer, many=True)
 
