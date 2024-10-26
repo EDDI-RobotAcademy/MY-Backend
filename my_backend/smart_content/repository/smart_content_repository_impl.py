@@ -52,3 +52,6 @@ class SmartContentRepositoryImpl(SmartContentRepository):
                         sequence_number=item['sequence_number']
                     )
         return smart_content
+
+    def list(self):
+        return SmartContent.objects.all().order_by('regDate')
