@@ -38,4 +38,5 @@ urlpatterns = [
     path('kakao_pay/', include('kakao_pay.urls')),
     path('ai-request/', include('ai_request.urls')),
     path('tosspayments/', include('tosspayments.urls')),
+    path('smart_content/', include('smart_content.urls')),
 ]

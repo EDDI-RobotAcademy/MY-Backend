@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'free_community_comment',
     'ai_request',
     'tosspayments',
+    'smart_content',
 ]
 
 MIDDLEWARE = [
