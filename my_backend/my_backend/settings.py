@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'custom_strategy_history',
     'viewCount',
     'free_community_comment',
+    'smart_content',
 ]
 
 MIDDLEWARE = [
