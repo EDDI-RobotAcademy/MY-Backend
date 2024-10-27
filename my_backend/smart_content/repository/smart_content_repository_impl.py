@@ -56,9 +56,9 @@ class SmartContentRepositoryImpl(SmartContentRepository):
     def list(self):
         return SmartContent.objects.all().order_by('regDate')
 
-    def listItems(self, contendId):
+    def listItems(self, contentId):
         try:
-            smart_content = SmartContent.objects.get(id=contendId)
+            smart_content = SmartContent.objects.get(id=contentId)
 
             texts = SmartText.objects.filter(content=smart_content).order_by('sequence_number')
             images = SmartImage.objects.filter(content=smart_content).order_by('sequence_number')

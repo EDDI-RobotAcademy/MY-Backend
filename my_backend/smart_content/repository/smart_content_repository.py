@@ -10,5 +10,5 @@ class SmartContentRepository(ABC):
         pass
 
     @abstractmethod
-    def listItems(self, contendId):
+    def listItems(self, contentId):
         pass
