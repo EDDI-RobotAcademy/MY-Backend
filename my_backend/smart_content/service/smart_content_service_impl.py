@@ -17,8 +17,8 @@ class SmartContentServiceImpl(SmartContentService):
             cls.__instance = cls()
         return cls.__instance
 
-    def create(self, title, content_type, items, accountId):
-        return self.__smartContentRepository.create(title, content_type, items, accountId)
+    def create(self, title, content_type, items, nickname, accountId):
+        return self.__smartContentRepository.create(title, content_type, items, nickname, accountId)
 
     def list(self):
         return self.__smartContentRepository.list()

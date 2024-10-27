@@ -6,6 +6,7 @@ from redis_token.service.redis_service_impl import RedisServiceImpl
 from smart_content.entity.models import SmartContent
 from smart_content.serializers import SmartContentSerializer
 from smart_content.service.smart_content_service_impl import SmartContentServiceImpl
+from user_profile.service.user_profile_service_impl import UserProfileServiceImpl
 
 
 class SmartContentView(viewsets.ViewSet):
@@ -13,6 +14,7 @@ class SmartContentView(viewsets.ViewSet):
 
     smartContentService = SmartContentServiceImpl.getInstance()
     redisService = RedisServiceImpl.getInstance()
+    userProfileService = UserProfileServiceImpl.getInstance()
 
     def create(self, request):
         try:
@@ -23,10 +25,12 @@ class SmartContentView(viewsets.ViewSet):
             userToken = data.get('userToken')
             if userToken:
                 accountId = self.redisService.getValueByKey(userToken)
+                nickname = self.userProfileService.getNicknameByAccountId(accountId)
+
             else:
                 accountId = None
 
-            smart_content = self.smartContentService.create(title, content_type, items, accountId)
+            smart_content = self.smartContentService.create(title, content_type, items, nickname, accountId)
             return Response({'smart content 등록 성공'}, status=status.HTTP_201_CREATED)
         except Exception as e:
             print('smart content 등록 과정 중 에러 발생:', e)

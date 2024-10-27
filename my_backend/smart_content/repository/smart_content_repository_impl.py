@@ -21,7 +21,7 @@ class SmartContentRepositoryImpl(SmartContentRepository):
 
         return cls.__instance
 
-    def create(self, title, content_type, items, accountId):
+    def create(self, title, content_type, items, nickname, accountId):
         try:
             if accountId:
                 account = Account.objects.get(id=accountId)
@@ -31,6 +31,7 @@ class SmartContentRepositoryImpl(SmartContentRepository):
             smart_content = SmartContent(
                 title=title,
                 content_type=content_type,
+                nickname=nickname,
                 account=account
             )
             smart_content.save()

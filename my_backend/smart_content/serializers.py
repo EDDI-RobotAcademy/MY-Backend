@@ -7,7 +7,7 @@ from smart_content.entity.smart_text import SmartText
 class SmartContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = SmartContent
-        fields = ['id', 'title', 'content_type', 'account', 'regDate', 'updDate']
+        fields = ['id', 'title', 'content_type', 'nickname', 'account', 'regDate', 'updDate']
         read_only_fields = ['regDate', 'updDate']
 
 class SmartTextSerializer(serializers.ModelSerializer):
