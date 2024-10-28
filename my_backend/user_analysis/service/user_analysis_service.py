@@ -44,3 +44,7 @@ class UserAnalysisService(ABC):
     @abstractmethod
     def listUserAnalysis(self):
         pass
+
+    @abstractmethod
+    def getAnswer(self, request_id):
+        pass

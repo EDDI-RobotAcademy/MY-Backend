@@ -182,3 +182,9 @@ class UserAnalysisView(viewsets.ViewSet):
         userAnalysisList = self.userAnalysisService.listUserAnalysis()
         serializer = UserAnalysisSerializer(userAnalysisList, many=True)
         return Response(serializer.data)
+
+    def getAnswerData(self, request):
+        request_id = request.data.get('request_id')
+        answerdata = self.userAnalysisService.getAnswer(request_id)
+        print(answerdata)
+        return Response(answerdata)
