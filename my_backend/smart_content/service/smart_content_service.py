@@ -10,6 +10,10 @@ class SmartContentService(ABC):
         pass
 
     @abstractmethod
+    def listByAccountId(self, accountId):
+        pass
+
+    @abstractmethod
     def listItems(self, contentId):
         pass
 
