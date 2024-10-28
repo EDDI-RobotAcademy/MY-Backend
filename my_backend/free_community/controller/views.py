@@ -27,19 +27,26 @@ class FreeCommunityView(viewsets.ViewSet):
         return Response(serializer.data)
 
     def listByTitle(self, request):
-        title = request.data.get('title')
+        print (request)
+        title = request.data.get('query')
+        if not title:
+            return Response({"error": "Query parameter 'query' is missing."}, status=status.HTTP_400_BAD_REQUEST)
         free_communityList = self.free_communityService.listByTitle(title)
         serializer = FreeCommunitySerializer(free_communityList, many=True)
         return Response(serializer.data)
 
     def listByContent(self, request):
-        content = request.data.get('content')
+        content = request.data.get('query')
+        if not content:
+            return Response({"error": "Query parameter 'query' is missing."}, status=status.HTTP_400_BAD_REQUEST)
         free_communityList = self.free_communityService.listByContent(content)
         serializer = FreeCommunitySerializer(free_communityList, many=True)
         return Response(serializer.data)
 
     def listByNickname(self, request):
-        nickname = request.data.get('nickname')
+        nickname = request.data.get('query')
+        if not nickname:
+            return Response({"error": "Query parameter 'query' is missing."}, status=status.HTTP_400_BAD_REQUEST)
         free_communityList = self.free_communityService.listByNickname(nickname)
         serializer = FreeCommunitySerializer(free_communityList, many=True)
         return Response(serializer.data)
