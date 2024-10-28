@@ -1,5 +1,7 @@
 from smart_content.repository.smart_content_repository_impl import SmartContentRepositoryImpl
 from smart_content.service.smart_content_service import SmartContentService
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 
 class SmartContentServiceImpl(SmartContentService):
@@ -20,8 +22,19 @@ class SmartContentServiceImpl(SmartContentService):
     def create(self, title, content_type, items, nickname, accountId):
         return self.__smartContentRepository.create(title, content_type, items, nickname, accountId)
 
-    def list(self):
-        return self.__smartContentRepository.list()
+    def list(self, page_number=1, items_per_page=9):
+        smartContentList = self.__smartContentRepository.list()
+        paginator = Paginator(smartContentList, items_per_page)
+
+        try:
+            page_obj = paginator.page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            return []
+
+        return page_obj.object_list
+
 
     def listByAccountId(self, accountId):
         return self.__smartContentRepository.findByAccountId(accountId)
