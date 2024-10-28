@@ -2,7 +2,7 @@ from abc import ABC,abstractmethod
 
 class SmartContentRepository(ABC):
     @abstractmethod
-    def create(self, title, content_type, items, accountId):
+    def create(self, title, content_type, items, nickname, accountId):
         pass
 
     @abstractmethod
@@ -10,5 +10,5 @@ class SmartContentRepository(ABC):
         pass
 
     @abstractmethod
-    def listItems(self, contendId):
+    def listItems(self, contentId):
         pass

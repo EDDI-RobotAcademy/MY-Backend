@@ -26,3 +26,7 @@ class UserProfileService(ABC):
     @abstractmethod
     def getUserProfileByNickname(self, nickname):
         pass
+
+    @abstractmethod
+    def getNicknameByAccountId(self, account_id):
+        pass

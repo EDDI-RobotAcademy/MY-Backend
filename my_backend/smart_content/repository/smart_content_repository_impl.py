@@ -21,7 +21,7 @@ class SmartContentRepositoryImpl(SmartContentRepository):
 
         return cls.__instance
 
-    def create(self, title, content_type, items, accountId):
+    def create(self, title, content_type, items, nickname, accountId):
         try:
             if accountId:
                 account = Account.objects.get(id=accountId)
@@ -31,6 +31,7 @@ class SmartContentRepositoryImpl(SmartContentRepository):
             smart_content = SmartContent(
                 title=title,
                 content_type=content_type,
+                nickname=nickname,
                 account=account
             )
             smart_content.save()
@@ -56,9 +57,9 @@ class SmartContentRepositoryImpl(SmartContentRepository):
     def list(self):
         return SmartContent.objects.all().order_by('regDate')
 
-    def listItems(self, contendId):
+    def listItems(self, contentId):
         try:
-            smart_content = SmartContent.objects.get(id=contendId)
+            smart_content = SmartContent.objects.get(id=contentId)
 
             texts = SmartText.objects.filter(content=smart_content).order_by('sequence_number')
             images = SmartImage.objects.filter(content=smart_content).order_by('sequence_number')

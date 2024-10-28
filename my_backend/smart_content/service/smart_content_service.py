@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class SmartContentService(ABC):
     @abstractmethod
-    def create(self, title, content_type, items, accountId):
+    def create(self, title, content_type, items, nickname, accountId):
         pass
 
     @abstractmethod
