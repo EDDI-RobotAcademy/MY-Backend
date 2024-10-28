@@ -12,3 +12,7 @@ class SmartContentRepository(ABC):
     @abstractmethod
     def listItems(self, contentId):
         pass
+
+    @abstractmethod
+    def findByContentId(self, contentId):
+        pass

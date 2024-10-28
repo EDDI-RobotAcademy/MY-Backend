@@ -12,3 +12,7 @@ class SmartContentService(ABC):
     @abstractmethod
     def listItems(self, contentId):
         pass
+
+    @abstractmethod
+    def read(self, contentId):
+        pass

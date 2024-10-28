@@ -25,3 +25,6 @@ class SmartContentServiceImpl(SmartContentService):
 
     def listItems(self, contentId):
         return self.__smartContentRepository.listItems(contentId)
+
+    def read(self, contentId):
+        return self.__smartContentRepository.findByContentId(contentId)
