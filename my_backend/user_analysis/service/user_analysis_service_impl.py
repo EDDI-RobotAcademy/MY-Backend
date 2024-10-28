@@ -82,6 +82,8 @@ class UserAnalysisServiceImpl(UserAnalysisService):
                 if answer_data is not None:
                     self.__userAnalysisAnswerRepository.saveAnswer(user_analysis_request, question_id, answer_data)
 
+            return user_analysis_request
+
         except Exception as e:
             print('답변 저장중 오류 발생: ', {e})
 

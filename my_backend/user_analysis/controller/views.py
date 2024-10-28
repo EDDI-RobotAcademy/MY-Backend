@@ -78,9 +78,12 @@ class UserAnalysisView(viewsets.ViewSet):
             answers = request.data.get('user_analysis_answer')
             print(f"answers: {answers}")
 
-            self.userAnalysisService.saveAnswer(account_id, user_analysis_id, answers)
+            user_analysis_request = self.userAnalysisService.saveAnswer(account_id, user_analysis_id, answers)
+            print("user_analysis_request: ", user_analysis_request)
+            serializer = UserAnalysisRequestSerializer(user_analysis_request, many=False)
+            print("serializer: ", serializer)
 
-            return Response(True, status.HTTP_200_OK)
+            return Response(serializer.data, status.HTTP_200_OK)
 
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
