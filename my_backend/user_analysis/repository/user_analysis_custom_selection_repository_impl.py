@@ -35,3 +35,7 @@ class UserAnalysisCustomSelectionRepositoryImpl(UserAnalysisCustomSelectionRepos
 
     def findUserAnalysisCustomSelectionListByQuestionId(self, question_id):
         return UserAnalysisCustomSelection.objects.filter(question_id=question_id)
+
+    def getCustomTextById(self, custom_selection_id):
+        selection = UserAnalysisCustomSelection.objects.get(id = custom_selection_id)
+        return selection.custom_text

@@ -6,6 +6,10 @@ from user_analysis.entity.user_analysis_fixed_five_score_selection import UserAn
 from user_analysis.repository.user_analysis_answer_repository_impl import UserAnalysisAnswerRepositoryImpl
 from user_analysis.repository.user_analysis_custom_selection_repository_impl import \
     UserAnalysisCustomSelectionRepositoryImpl
+from user_analysis.repository.user_analysis_fixed_boolean_selection_repository_impl import \
+    UserAnalysisFixedBooleanSelectionRepositoryImpl
+from user_analysis.repository.user_analysis_fixed_five_score_selection_repository_impl import \
+    UserAnalysisFixedFiveScoreSelectionRepositoryImpl
 from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
 from user_analysis.repository.user_analysis_repository_impl import UserAnalysisRepositoryImpl
 from user_analysis.repository.user_analysis_request_repository_impl import UserAnalysisRequestRepositoryImpl
@@ -23,6 +27,9 @@ class UserAnalysisServiceImpl(UserAnalysisService):
         cls.__instance.__userAnalysisCustomSelectionRepository = UserAnalysisCustomSelectionRepositoryImpl.getInstance()
         cls.__instance.__userAnalysisAnswerRepository = UserAnalysisAnswerRepositoryImpl.getInstance()
         cls.__instance.__userAnalysisRequestRepository = UserAnalysisRequestRepositoryImpl.getInstance()
+        cls.__instance.__userAnalysisFixedBooleanSelectionRepository = UserAnalysisFixedBooleanSelectionRepositoryImpl.getInstance()
+        cls.__instance.__userAnalysisFixedFiveScoreSelectionRepository = UserAnalysisFixedFiveScoreSelectionRepositoryImpl.getInstance()
+
 
         return cls.__instance
 
@@ -75,6 +82,8 @@ class UserAnalysisServiceImpl(UserAnalysisService):
                 if answer_data is not None:
                     self.__userAnalysisAnswerRepository.saveAnswer(user_analysis_request, question_id, answer_data)
 
+            return user_analysis_request
+
         except Exception as e:
             print('답변 저장중 오류 발생: ', {e})
 
@@ -122,3 +131,25 @@ class UserAnalysisServiceImpl(UserAnalysisService):
 
     def listUserAnalysis(self):
         return self.__userAnalysisRepository.list()
+
+    def getAnswer(self, request_id):
+        request = self.__userAnalysisRequestRepository.findById(request_id)
+        answers = self.__userAnalysisAnswerRepository.findByRequest(request)
+
+        answer_count = answers.count()
+        data = [None] * answer_count
+
+        for answer in answers:
+            index = answer.question_id - 1
+            if answer.custom_selection_id:
+                data[index] = self.__userAnalysisCustomSelectionRepository.getCustomTextById(answer.custom_selection_id)
+            elif answer.boolean_selection_id:
+                data[index] = self.__userAnalysisFixedBooleanSelectionRepository.getBooleanValueById(
+                    answer.boolean_selection_id)
+            elif answer.five_score_selection_id:
+                data[index] = self.__userAnalysisFixedFiveScoreSelectionRepository.getScoreById(
+                    answer.five_score_selection_id)
+            elif answer.answer_text:
+                data[index] = answer.answer_text
+
+        return data
