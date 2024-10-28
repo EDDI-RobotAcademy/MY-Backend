@@ -42,6 +42,22 @@ class SmartContentView(viewsets.ViewSet):
 
         return Response(serializer.data)
 
+    def listByAccountId(self, request):
+        try:
+            userToken = request.data.get('userToken')
+            if userToken:
+                accountId = self.redisService.getValueByKey(userToken)
+
+            else:
+                accountId = None
+
+            smartContentList = self.smartContentService.listByAccountId(accountId)
+            serializer = SmartContentSerializer(smartContentList, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print('accountId로 smart content list 출력 중 에러 발생:', e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
     def listItems(self, request):
         try:
             contentId = request.data.get('content_id')

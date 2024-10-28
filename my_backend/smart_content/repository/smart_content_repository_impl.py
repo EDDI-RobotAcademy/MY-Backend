@@ -88,3 +88,6 @@ class SmartContentRepositoryImpl(SmartContentRepository):
 
     def findByContentId(self, contentId):
         return SmartContent.objects.get(id=contentId)
+
+    def findByAccountId(self, accountId):
+        return SmartContent.objects.filter(account_id=accountId).order_by('regDate')
