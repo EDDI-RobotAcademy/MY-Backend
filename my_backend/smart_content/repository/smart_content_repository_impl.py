@@ -85,3 +85,6 @@ class SmartContentRepositoryImpl(SmartContentRepository):
             return items
         except SmartContent.DoesNotExist:
             raise Exception('SmartContent not found')
+
+    def findByContentId(self, contentId):
+        return SmartContent.objects.get(id=contentId)

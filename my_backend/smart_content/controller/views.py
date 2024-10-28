@@ -46,10 +46,19 @@ class SmartContentView(viewsets.ViewSet):
         try:
             contentId = request.data.get('content_id')
             items = self.smartContentService.listItems(contentId)
+            print(contentId, items)
             return Response({'items': items})
         except Exception as e:
             print('items list 조회 중 에러 발생:', e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def read(self, request, pk=None):
+        smartContent = self.smartContentService.read(pk)
+        if smartContent is not None:
+            serializer = SmartContentSerializer(smartContent)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Comment not found."}, status=status.HTTP_204_NO_CONTENT)
 
 
 
