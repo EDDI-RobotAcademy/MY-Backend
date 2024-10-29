@@ -38,4 +38,5 @@ urlpatterns = [
     path('ai_request/', include('ai_request.urls')),
     path('tosspayments/', include('tosspayments.urls')),
     path('smart_content/', include('smart_content.urls')),
+    path('growth_blog/', include('growth_blog.urls')),
 ]

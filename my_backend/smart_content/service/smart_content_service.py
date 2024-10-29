@@ -20,3 +20,7 @@ class SmartContentService(ABC):
     @abstractmethod
     def read(self, contentId):
         pass
+
+    @abstractmethod
+    def updateSmartContentNickname(self, accountId, newNickname):
+        pass
