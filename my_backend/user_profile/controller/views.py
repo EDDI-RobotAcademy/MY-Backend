@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from redis_token.service.redis_service_impl import RedisServiceImpl
+from smart_content.service.smart_content_service_impl import SmartContentServiceImpl
 from user_profile.entity.user_profile import UserProfile
 from user_profile.serializers import UserProfileSerializer
 from user_profile.service.user_profile_service_impl import UserProfileServiceImpl
@@ -12,6 +13,7 @@ class UserProfileView(viewsets.ViewSet):
     queryset = UserProfile.objects.all()
     userProfileService = UserProfileServiceImpl.getInstance()
     redisService = RedisServiceImpl.getInstance()
+    smartContentService = SmartContentServiceImpl.getInstance()
 
     def checkEmailDuplication(self, request):
         print("checkEmailDuplication()")
@@ -56,6 +58,7 @@ class UserProfileView(viewsets.ViewSet):
                 return Response({'error': '중복된 닉네임입니다.'}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 updatedProfile = self.userProfileService.changeNickname(accountId, newNickname)
+                updateSmartContent = self.smartContentService.updateSmartContentNickname(accountId, newNickname)
 
                 return Response({
                     'nickname': updatedProfile.nickname, 'message': '닉네임 변경 성공'
