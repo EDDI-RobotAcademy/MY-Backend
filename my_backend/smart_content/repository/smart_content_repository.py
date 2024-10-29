@@ -20,3 +20,7 @@ class SmartContentRepository(ABC):
     @abstractmethod
     def findByAccountId(self, accountId):
         pass
+
+    @abstractmethod
+    def updateNickname(self, smartContent, newNickname):
+        pass

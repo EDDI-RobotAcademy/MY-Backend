@@ -91,3 +91,7 @@ class SmartContentRepositoryImpl(SmartContentRepository):
 
     def findByAccountId(self, accountId):
         return SmartContent.objects.filter(account_id=accountId).order_by('regDate')
+
+    def updateNickname(self, smartContent, newNickname):
+        smartContent.nickname = newNickname
+        smartContent.save()

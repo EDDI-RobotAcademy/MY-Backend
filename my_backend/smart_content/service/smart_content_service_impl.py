@@ -54,3 +54,11 @@ class SmartContentServiceImpl(SmartContentService):
 
     def read(self, contentId):
         return self.__smartContentRepository.findByContentId(contentId)
+
+    def updateSmartContentNickname(self, accountId, newNickname):
+        try:
+            smartContent = self.__smartContentRepository.findByAccountId(accountId)
+            for content in smartContent:
+                self.__smartContentRepository.updateNickname(content, newNickname)
+        except Exception as e:
+            print('smart content 닉네임 업데이트 중 에러 발생:', e)
