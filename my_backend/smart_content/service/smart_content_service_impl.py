@@ -35,9 +35,19 @@ class SmartContentServiceImpl(SmartContentService):
 
         return page_obj.object_list
 
+    def listByAccountId(self, accountId, page_number=1, items_per_page=6):
+        smartContentList = self.__smartContentRepository.findByAccountId(accountId)
 
-    def listByAccountId(self, accountId):
-        return self.__smartContentRepository.findByAccountId(accountId)
+        paginator = Paginator(smartContentList, items_per_page)
+
+        try:
+            page_obj = paginator.page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            return []
+
+        return page_obj.object_list
 
     def listItems(self, contentId):
         return self.__smartContentRepository.listItems(contentId)

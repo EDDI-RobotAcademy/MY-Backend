@@ -57,7 +57,14 @@ class SmartContentView(viewsets.ViewSet):
             else:
                 accountId = None
 
-            smartContentList = self.smartContentService.listByAccountId(accountId)
+            page_number = request.data.get('page', 1)
+            items_per_page = request.data.get('page_size', 6)
+
+            smartContentList = self.smartContentService.listByAccountId(
+                accountId,
+                page_number=int(page_number),
+                items_per_page=int(items_per_page)
+            )
             serializer = SmartContentSerializer(smartContentList, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:

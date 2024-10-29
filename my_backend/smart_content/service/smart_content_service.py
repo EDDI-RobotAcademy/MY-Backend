@@ -6,11 +6,11 @@ class SmartContentService(ABC):
         pass
 
     @abstractmethod
-    def list(self):
+    def list(self, page_number=1, items_per_page=6):
         pass
 
     @abstractmethod
-    def listByAccountId(self, accountId):
+    def listByAccountId(self, accountId, page_number=1, items_per_page=6):
         pass
 
     @abstractmethod
