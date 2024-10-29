@@ -21,7 +21,7 @@ class UserAnalysisRequestRepositoryImpl(UserAnalysisRequestRepository):
         return cls.__instance
 
     def create(self, account_id, user_analysis_id):
-        account = Account.objects.get(id = account_id)
+        account = Account.objects.get(id = account_id) if account_id is not None else None
         user_analysis = UserAnalysis.objects.get(id = user_analysis_id)
         user_analysis_request = UserAnalysisRequest(account=account, user_analysis=user_analysis)
         user_analysis_request.save()
