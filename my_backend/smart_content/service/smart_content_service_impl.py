@@ -22,7 +22,7 @@ class SmartContentServiceImpl(SmartContentService):
     def create(self, title, content_type, items, nickname, accountId):
         return self.__smartContentRepository.create(title, content_type, items, nickname, accountId)
 
-    def list(self, page_number=1, items_per_page=9):
+    def list(self, page_number=1, items_per_page=6):
         smartContentList = self.__smartContentRepository.list()
         paginator = Paginator(smartContentList, items_per_page)
 

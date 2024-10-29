@@ -39,7 +39,7 @@ class SmartContentView(viewsets.ViewSet):
     def list(self, request):
         # 페이지 번호와 페이지당 항목 수 가져오기
         page_number = request.data.get('page', 1)
-        items_per_page = request.data.get('page_size', 9)
+        items_per_page = request.data.get('page_size', 6)
 
         # 서비스에 페이지 번호와 항목 수 전달
         smartContentList = self.smartContentService.list(page_number=int(page_number),
