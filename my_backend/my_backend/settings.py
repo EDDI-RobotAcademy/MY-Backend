@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'ai_request',
     'tosspayments',
     'smart_content',
+    'growth_blog',
 ]
 
 MIDDLEWARE = [
