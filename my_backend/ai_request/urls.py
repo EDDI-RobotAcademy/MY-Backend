@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from ai_request.controller.views import AiRequestView
 
 router = DefaultRouter()
-router.register(r'ai_request', AiRequestView, basename='ai-request')
+router.register(r'ai_request', AiRequestView, basename='ai_request')
 
 urlpatterns = [
     path('', include(router.urls)),

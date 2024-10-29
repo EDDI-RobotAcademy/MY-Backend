@@ -89,8 +89,20 @@ class SmartContentView(viewsets.ViewSet):
         else:
             return Response({"error": "Comment not found."}, status=status.HTTP_204_NO_CONTENT)
 
+    def listByNickname(self, request):
+        print("listByNickname 접근")
+        try:
+            nickname = request.data.get('nickname')
+            if nickname:
+                userProfile = self.userProfileService.getUserProfileByNickname(nickname)
+            else:
+                userProfile = None
+            account_id = userProfile.account.id
+            print("어카운트 id 입니다", account_id)
 
-
-
-
-
+            smartContentList = self.smartContentService.listByAccountId(account_id)
+            serializer = SmartContentSerializer(smartContentList, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print('nickname으로 smart content list 출력 중 에러 발생:', e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
