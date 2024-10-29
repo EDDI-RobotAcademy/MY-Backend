@@ -13,4 +13,5 @@ urlpatterns = [
     path('list-items', SmartContentView.as_view({'post': 'listItems'}), name='list-smart-content-items'),
     path('read/<int:pk>', SmartContentView.as_view({'get': 'read'}), name='read-smart-content'),
     path('list-my-content', SmartContentView.as_view({'post': 'listByAccountId'}), name='list-my-content'),
+    path('list-user-content', SmartContentView.as_view({'post': 'listByNickname'}), name='list-user-content'),
 ]
