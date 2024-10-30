@@ -33,6 +33,8 @@ ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'), 'v23b3w1mpe.execute-api.ap-northeas
 TOSS_PAYMENTS_SECRET_KEY = os.getenv('TOSS_PAYMENTS_SECRET_KEY')
 # Application definition
 
+AI_BASE_URL = os.getenv("AI_BASE_URL")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

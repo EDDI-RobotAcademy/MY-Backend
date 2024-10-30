@@ -81,7 +81,7 @@ class GrowthBlogView(viewsets.ViewSet):
             print('팔로우 관계 등록 중 에러 발생:', e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    def followingByNickname(self, request):
+    def followListByNickname(self, request):
         print("followingByNickname 접근")
         try:
             nickname = request.data.get('nickname')
@@ -92,12 +92,10 @@ class GrowthBlogView(viewsets.ViewSet):
 
             if userProfile:
                 account_id = userProfile.account.id
-                print("어카운트 id 입니다", account_id)
 
                 growth_blog = growth_list.objects.get(account__id=account_id)
-                following = growth_blog.following
 
-                return Response({'following': following}, status=status.HTTP_200_OK)
+                return Response({'growth_blog': growth_blog}, status=status.HTTP_200_OK)
             else:
                 return Response({'error': '유효하지 않은 nickname입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -105,4 +103,57 @@ class GrowthBlogView(viewsets.ViewSet):
             return Response({'error': '팔로잉 정보가 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             print('nickname으로 smart content list 출력 중 에러 발생:', e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def getFollowInfo(self, request):
+        try:
+            nickname = request.data.get('nickname')
+            userToken = request.data.get('userToken')
+
+            if userToken:
+                account_id = self.redisService.getValueByKey(userToken)
+                if not account_id:
+                    return Response({'error': '유효하지 않은 토큰입니다.'}, status=status.HTTP_401_UNAUTHORIZED)
+            elif nickname:
+                userProfile = self.userProfileService.getUserProfileByNickname(nickname)
+                if not userProfile:
+                    return Response({'error': '유효하지 않은 닉네임입니다.'}, status=status.HTTP_400_BAD_REQUEST)
+                account_id = userProfile.account.id
+            else:
+                return Response({'error': '닉네임 또는 토큰이 필요합니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                my_growth_blog = growth_list.objects.get(account_id=account_id)
+
+                following_list = my_growth_blog.following.split(',') if my_growth_blog.following else []
+                followers_list = my_growth_blog.followers.split(',') if my_growth_blog.followers else []
+
+                following_list = list(filter(None, following_list))
+                followers_list = list(filter(None, followers_list))
+
+                following_count = len(following_list)
+                followers_count = len(followers_list)
+
+                return Response({
+                    'following': following_list,
+                    'followers': followers_list,
+                    'following_count': following_count,
+                    'followers_count': followers_count
+                }, status=status.HTTP_200_OK)
+
+            except growth_list.DoesNotExist:
+                my_growth_blog = growth_list.objects.create(
+                    account_id=account_id,
+                    following='',
+                    followers=''
+                )
+                return Response({
+                    'following': [],
+                    'followers': [],
+                    'following_count': 0,
+                    'followers_count': 0
+                }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            print('팔로우 정보 조회 중 에러 발생:', e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
