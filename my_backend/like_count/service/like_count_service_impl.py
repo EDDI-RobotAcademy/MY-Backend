@@ -19,3 +19,6 @@ class LikeCountServiceImpl(LikeCountService):
 
     def toggleLike(self, accountId, contentId):
         return self.__likeCountRepository.toggleLike(accountId, contentId)
+
+    def getLikeCount(self, contentId):
+        return self.__likeCountRepository.getLikeCount(contentId)

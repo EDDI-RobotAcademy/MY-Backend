@@ -32,3 +32,6 @@ class LikeCountRepositoryImpl(LikeCountRepository):
             return False
         return True
 
+    def getLikeCount(self, contentId):
+        return LikeCount.objects.filter(smart_content_id=contentId).count()
+
