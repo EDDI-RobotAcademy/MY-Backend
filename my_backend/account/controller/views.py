@@ -63,3 +63,22 @@ class AccountView(viewsets.ViewSet):
 
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def checkAccountLoginType(self, request):
+        try:
+            userToken = request.data.get('userToken')
+            print(f"userToken: {userToken}")
+            if userToken:
+                accountId = self.redisService.getValueByKey(userToken)
+            else:
+                accountId = None
+
+            account = self.accountService.findAccountById(accountId)
+            serializer = AccountSerializer(account)
+            loginType = serializer.data.get('loginType')
+            print(f"loginType: {loginType}")
+
+            return Response(loginType, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
