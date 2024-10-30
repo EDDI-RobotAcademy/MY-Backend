@@ -8,6 +8,7 @@ router.register(r'growth_blog', GrowthBlogView, basename='growth_blog')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('following', GrowthBlogView.as_view({'post': 'followingByNickname'}), name='following'),
+    path('following', GrowthBlogView.as_view({'post': 'followListByNickname'}), name='following'),
     path('registerSocial', GrowthBlogView.as_view({'post': 'registerFollowingAndFollowers'}), name='registerSocial'),
+    path('getFollowInfo', GrowthBlogView.as_view({'post': 'getFollowInfo'}), name='getFollowInfo'),
 ]
