@@ -28,3 +28,12 @@ class LikeCountView(viewsets.ViewSet):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
 
+    def getLikeCount(self, request):
+        try:
+            contentId = request.data.get('content_id')
+            likeCount = self.likeCountService.getLikeCount(contentId)
+
+            return Response({'likeCount': likeCount}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
+

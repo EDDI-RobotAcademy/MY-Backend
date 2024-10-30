@@ -9,4 +9,5 @@ router.register(r'like_count', LikeCountView, basename='like_count')
 urlpatterns = [
     path('', include(router.urls)),
     path('toggle-like', LikeCountView.as_view({'post': 'toggleLike'}), name='toggle-like'),
+    path('count-like', LikeCountView.as_view({'post': 'getLikeCount'}), name='count-like'),
 ]
