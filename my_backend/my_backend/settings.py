@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'tosspayments',
     'smart_content',
     'growth_blog',
+    'like_count',
 ]
 
 MIDDLEWARE = [
