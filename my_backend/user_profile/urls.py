@@ -21,4 +21,6 @@ urlpatterns = [
     path('change-nickname', UserProfileView.as_view({'put': 'changeNickname'}), name='change-nickname'),
     path('get-self-profile', UserProfileView.as_view({'post': 'getUserProfileByAccountId'}), name='get-self-profile'),
     path('get-profile', UserProfileView.as_view({'post': 'getUserProfileByNickname'}), name='get-profile'),
+    path('nickname-by-accountid', UserProfileView.as_view({'post': 'getUserByAccountId'}), name='nickname-by-accountid'),
+
 ]
