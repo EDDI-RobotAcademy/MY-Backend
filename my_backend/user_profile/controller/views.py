@@ -23,7 +23,7 @@ class UserProfileView(viewsets.ViewSet):
             isDuplicate = self.userProfileService.checkEmailDuplication(email)
 
             return Response({'isDuplicate': isDuplicate, 'message': 'Email이 이미 존재' \
-                             if isDuplicate else 'Email 사용 가능'}, status=status.HTTP_200_OK)
+                if isDuplicate else 'Email 사용 가능'}, status=status.HTTP_200_OK)
         except Exception as e:
             print("이메일 중복 체크 중 에러 발생:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -37,7 +37,7 @@ class UserProfileView(viewsets.ViewSet):
             isDuplicate = self.userProfileService.checkNicknameDuplication(nickname)
 
             return Response({'isDuplicate': isDuplicate, 'message': 'Nickname이 이미 존재' \
-                             if isDuplicate else 'Nickname 사용 가능'}, status=status.HTTP_200_OK)
+                if isDuplicate else 'Nickname 사용 가능'}, status=status.HTTP_200_OK)
         except Exception as e:
             print("닉네임 중복 체크 중 에러 발생:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -100,6 +100,29 @@ class UserProfileView(viewsets.ViewSet):
             print("닉네임으로 프로필 조회 중 에러 발생:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+    def getUserByAccountId(self, request):
+        try:
+            print("접근")
+            account_ids = request.data.get('accountIds', [])  # 배열로 받기
 
+            if not account_ids:
+                return Response({'error': 'No account IDs provided'},
+                                status=status.HTTP_400_BAD_REQUEST)
 
+            user_profiles = []
+            for account_id in account_ids:
+                user_profile = self.userProfileService.getUserProfileByAccountId(account_id)
+                if user_profile:
+                    serializer = UserProfileSerializer(user_profile)
+                    user_profiles.append(serializer.data)
+                else:
+                    user_profiles.append({
+                        'accountId': account_id,
+                        'nickname': f'Unknown User ({account_id})'
+                    })
 
+            return Response(user_profiles, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            print("getUserByAccountId 중 에러 발생:", e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
