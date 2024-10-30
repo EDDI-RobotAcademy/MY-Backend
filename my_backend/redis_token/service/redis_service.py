@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class RedisService(ABC):
     @abstractmethod
-    def storeAccessToken(self, account_id, access_token):
+    def storeAccessToken(self, userToken, user_data):
         pass
 
     @abstractmethod
