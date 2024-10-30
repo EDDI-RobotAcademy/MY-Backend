@@ -99,7 +99,7 @@ class UserAnalysisView(viewsets.ViewSet):
 
     def listOwnUserAnalysisRequest(self, request):
         try:
-            userToken = request.data.get('userToken')
+            userToken = request.query_params.get('userToken')
             print(f"userToken: {userToken}")
             if userToken:
                 account_id = self.redisService.getValueByKey(userToken)
