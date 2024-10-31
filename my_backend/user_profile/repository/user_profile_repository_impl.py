@@ -64,3 +64,8 @@ class UserProfileRepositoryImpl(UserProfileRepository):
         user_profile.nickname = new_nickname
         user_profile.save()
         return user_profile
+
+    def updateMembership(self, user_profile, new_membership):
+        user_profile.membership = new_membership
+        user_profile.save()
+        return user_profile

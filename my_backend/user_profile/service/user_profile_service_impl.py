@@ -48,3 +48,11 @@ class UserProfileServiceImpl(UserProfileService):
     def getNicknameByAccountId(self, account_id):
         user_profile = self.__userProfileRepository.findByAccountId(account_id)
         return user_profile.nickname if user_profile else None
+
+    def changeMembership(self, account_id, new_membership):
+        user_profile = self.__userProfileRepository.findByAccountId(account_id)
+        print(f"찾은 사용자 프로필: {user_profile}")
+
+        updated_membership = self.__userProfileRepository.updateMembership(user_profile, new_membership)
+        print(f"멤버쉽 업데이트 성공: {updated_membership.membership}")
+        return updated_membership
