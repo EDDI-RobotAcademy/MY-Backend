@@ -21,9 +21,9 @@ class AccountServiceImpl(AccountService):
         return cls.__instance
 
 
-    def registerAccount(self, loginType, roleType, name, nickname, email):
+    def registerAccount(self, loginType, roleType, name, nickname, email, membership):
         account = self.__accountRepository.create(loginType, roleType)
-        return self.__userProfileRepository.create(name, nickname, email, account)
+        return self.__userProfileRepository.create(name, nickname, email, membership, account)
 
     def findAccountById(self, account_id):
         return self.__accountRepository.findById(account_id)
