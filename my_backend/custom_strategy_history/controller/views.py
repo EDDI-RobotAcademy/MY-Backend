@@ -14,21 +14,13 @@ class CustomStrategyHistoryView(viewsets.ViewSet):
 
     def saveCustomStrategyResult(self, request):
         try:
-            request_data = json.loads(request.data)
-            userToken = request_data.get("userToken")
-            aiResult = request_data.get("aiResult")
-            print(f"userToken: {userToken}, aiResult: {aiResult}")
+            data = json.loads(request.data)
+            userToken = data.get("userToken")
+            request_id = data.get("request_id")
+            aiResult = data.get("aiResult")
+            print(f"userToken: {userToken}, request_id: {request_id} aiResult: {aiResult}")
 
-            if userToken:
-                accountId = self.redisService.getValueByKey(userToken)
-                print(f"accountId: {accountId}")
-            else:
-                accountId = None
-
-            if accountId:
-                self.customStrategyHistoryService.saveStrategyData(accountId, aiResult)
-            else:
-                print(f"userToken 부합하는 accountId가 존재하지 않습니다.")
+            self.customStrategyHistoryService.saveStrategyData(request_id, aiResult)
 
             return Response({'message': '전략 저장 성공'}, status=status.HTTP_200_OK)
         except Exception as e:

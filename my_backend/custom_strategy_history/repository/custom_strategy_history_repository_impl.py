@@ -1,6 +1,7 @@
 from account.entity.account import Account
 from custom_strategy_history.entity.custom_strategy_history import CustomStrategyHistory
 from custom_strategy_history.repository.custom_strategy_history_repository import CustomStrategyHistoryRepository
+from user_analysis.entity.user_analysis_request import UserAnalysisRequest
 
 
 class CustomStrategyHistoryRepositoryImpl(CustomStrategyHistoryRepository):
@@ -19,11 +20,11 @@ class CustomStrategyHistoryRepositoryImpl(CustomStrategyHistoryRepository):
 
         return cls.__instance
 
-    def addToStrategyHistory(self, accountId, aiResult):
+    def addToStrategyHistory(self, request_id, aiResult):
         try:
-            account = Account.objects.get(id=int(accountId))
+            request = UserAnalysisRequest.objects.get(id = request_id)
             customStrategyHistory = CustomStrategyHistory(
-                account=account,
+                request=request,
                 strategy_result=aiResult
             )
             customStrategyHistory.save()
