@@ -15,17 +15,15 @@ class AiRequestRepositoryImpl(AiRequestRepository):
             cls.__instance = cls()
         return cls.__instance
 
-    def aiRequest(self, userToken, command, request_id, data):
+    def aiRequest(self, command, data):
         endpoint = "/request-ai-command"
 
         payload = {
-            "userToken": userToken,
             "command": command,
-            "request_id": request_id,
             "data": data
         }
 
-        print(f"userToken: {userToken}, command: {command}, request_id: {request_id}, data: {data}")
+        print(f"command: {command}, data: {data}")
 
         response = HttpRequestInstance.post(endpoint, data=payload)
 

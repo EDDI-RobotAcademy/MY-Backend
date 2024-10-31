@@ -17,9 +17,9 @@ class AiRequestServiceImpl(AiRequestService):
             cls.__instance = cls()
         return cls.__instance
 
-    def aiRequestToFastAPI(self, userToken, command, request_id, data):
+    def aiRequestToFastAPI(self, command, data):
         try:
-            return self.__aiRequestRepository.aiRequest(userToken, command, request_id, data)
+            return self.__aiRequestRepository.aiRequest(command, data)
         except Exception as e:
             print('Error sending request to FastAPI:', e)
             raise e
