@@ -18,8 +18,8 @@ class CustomStrategyHistoryServiceImpl(CustomStrategyHistoryService):
 
         return cls.__instance
 
-    def saveStrategyData(self, accountId, aiResult):
-        added_strategy = self.__customStrategyHistoryRepository.addToStrategyHistory(accountId, aiResult)
+    def saveStrategyData(self, request_id, aiResult):
+        added_strategy = self.__customStrategyHistoryRepository.addToStrategyHistory(request_id, aiResult)
         print(f"전략 저장 완료 => strategy id: {added_strategy.id}")
 
         return added_strategy
