@@ -58,7 +58,6 @@ class UserProfileView(viewsets.ViewSet):
                 return Response({'error': '중복된 닉네임입니다.'}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 updatedProfile = self.userProfileService.changeNickname(accountId, newNickname)
-                updateSmartContent = self.smartContentService.updateSmartContentNickname(accountId, newNickname)
 
                 return Response({
                     'nickname': updatedProfile.nickname, 'message': '닉네임 변경 성공'
@@ -125,4 +124,23 @@ class UserProfileView(viewsets.ViewSet):
 
         except Exception as e:
             print("getUserByAccountId 중 에러 발생:", e)
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def changeMembership(self, request):
+        try:
+            userToken = request.data.get('userToken')
+
+            if not userToken:
+                return Response({'error': 'userToken'}, status=status.HTTP_400_BAD_REQUEST)
+
+            accountId = self.redisService.getValueByKey(userToken)
+
+            updatedMembership = self.userProfileService.changeMembership(accountId, "프리미엄")
+
+            return Response({
+                'nickname': updatedMembership.nickname, 'message': '멤버쉽 변경 성공'
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            print("멤버쉽 변경 중 에러 발생:", e)  # 여기서 들여쓰기를 추가했습니다.
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
