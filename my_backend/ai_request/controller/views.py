@@ -21,8 +21,10 @@ class AiRequestView(viewsets.ViewSet):
         request_id = data.get('request_id')
 
         data = self.userAnalysisService.getAnswer(request_id)
+        data.append(userToken)
+        data.append(request_id)
 
-        requestComplete = self.aiRequestService.aiRequestToFastAPI(userToken, command, request_id, data)
+        requestComplete = self.aiRequestService.aiRequestToFastAPI(command, data)
 
         # 추후 account 별 구독 유형 확인해서 구분하는 작업 필요
         # subscription_type = serializer.data.get('roleType') # 임시로 roleType으로 지정 -> 추후 변경 필요
