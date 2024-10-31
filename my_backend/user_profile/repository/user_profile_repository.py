@@ -15,7 +15,7 @@ class UserProfileRepository(ABC):
         pass
 
     @abstractmethod
-    def create(self, name, nickname, email, account):
+    def create(self, name, nickname, email, membership, account):
         pass
 
     @abstractmethod
