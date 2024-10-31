@@ -100,7 +100,14 @@ class SmartContentView(viewsets.ViewSet):
             account_id = userProfile.account.id
             print("어카운트 id 입니다", account_id)
 
-            smartContentList = self.smartContentService.listByAccountId(account_id)
+            page_number = request.data.get('page', 1)
+            items_per_page = request.data.get('page_size', 6)
+
+            smartContentList = self.smartContentService.listByAccountId(
+                account_id,
+                page_number=int(page_number),
+                items_per_page=int(items_per_page)
+            )
             serializer = SmartContentSerializer(smartContentList, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
