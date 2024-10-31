@@ -36,7 +36,8 @@ class AccountView(viewsets.ViewSet):
                 roleType='NORMAL',
                 email=email,
                 name=name,
-                nickname=nickname
+                nickname=nickname,
+                membership='베이직',
             )
 
             serializer = AccountSerializer(account)
