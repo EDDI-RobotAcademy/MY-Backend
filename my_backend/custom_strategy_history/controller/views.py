@@ -14,10 +14,10 @@ class CustomStrategyHistoryView(viewsets.ViewSet):
 
     def saveCustomStrategyResult(self, request):
         try:
-            data = json.loads(request.data)
+            data = request.data
             userToken = data.get("userToken")
             request_id = data.get("request_id")
-            aiResult = data.get("aiResult")
+            aiResult = data.get("generatedText")
             print(f"userToken: {userToken}, request_id: {request_id} aiResult: {aiResult}")
 
             self.customStrategyHistoryService.saveStrategyData(request_id, aiResult)
