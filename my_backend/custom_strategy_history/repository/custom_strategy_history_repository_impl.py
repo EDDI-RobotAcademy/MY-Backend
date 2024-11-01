@@ -33,3 +33,13 @@ class CustomStrategyHistoryRepositoryImpl(CustomStrategyHistoryRepository):
             print("해당 Account가 존재하지 않습니다.")
 
         return customStrategyHistory
+
+    def read(self, request_id):
+        try:
+            request = UserAnalysisRequest.objects.get(id = request_id)
+            customStrategy = CustomStrategyHistory.objects.get(request = request)
+
+            return customStrategy
+
+        except request_id.DoesNotExist:
+            print("해당 요청결과가 존재하지 않습니다.")

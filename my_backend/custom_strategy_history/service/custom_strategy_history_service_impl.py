@@ -24,3 +24,7 @@ class CustomStrategyHistoryServiceImpl(CustomStrategyHistoryService):
 
         return added_strategy
 
+    def readStrategyData(self, request_id):
+        strategy = self.__customStrategyHistoryRepository.read(request_id)
+        return strategy
+
