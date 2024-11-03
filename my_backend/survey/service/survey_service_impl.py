@@ -70,7 +70,7 @@ class SurveyServiceImpl(SurveyService):
                 answer_data = answer.get('answer_data')
 
 
-                self.__surveyAnswerRepository.saveAnswer(survey_id, question_id, answer_data, account_id)
+                self.__surveyAnswerRepository.saveAnswer(survey_id, question, answer_data, account_id)
 
         except Exception as e:
             print('답변 저장중 오류 발생: ', {e})
