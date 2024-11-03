@@ -31,11 +31,10 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
         return cls.__instance
 
 
-    def saveAnswer(self, survey_id, question_id, answer_data, account_id):
+    def saveAnswer(self, survey_id, question, answer_data, account_id):
         # if not isinstance(question_id, SurveyQuestion):
         #     raise ValueError("Question must be an instance of SurveyQuestion")
         try:
-            question = self.__surveyQuestionRepository.findById(question_id)
 
             survey = Survey.objects.get(id = survey_id)
             print(f"account_id_1 : {account_id}")
@@ -74,7 +73,7 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                 
             elif question.survey_type == 4:  # Custom
                 if answer_data:
-                    custom_selection = SurveyCustomSelection.objects.get(custom_text=answer_data)
+                    custom_selection = SurveyCustomSelection.objects.get(question = question, custom_text=answer_data)
                 else:
                     custom_selection = None
 
