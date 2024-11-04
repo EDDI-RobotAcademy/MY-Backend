@@ -30,9 +30,8 @@ class UserAnalysisAnswerRepositoryImpl(UserAnalysisAnswerRepository):
 
         return cls.__instance
 
-    def saveAnswer(self, request, question_id, answer_data):
+    def saveAnswer(self, request, question, answer_data):
         try:
-            question = self.__userAnalysisQuestionRepository.findById(question_id)
 
             if question.user_analysis_type == 1:  # General
                 answer = UserAnalysisAnswer(
@@ -58,7 +57,7 @@ class UserAnalysisAnswerRepositoryImpl(UserAnalysisAnswerRepository):
                 )
 
             elif question.user_analysis_type == 4:  # Custom
-                custom_selection = UserAnalysisCustomSelection.objects.get(custom_text=answer_data)
+                custom_selection = UserAnalysisCustomSelection.objects.get(question = question, custom_text=answer_data)
                 answer = UserAnalysisAnswer(
                     request=request,
                     question=question,

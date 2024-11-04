@@ -20,10 +20,14 @@ class UserAnalysisRequestRepositoryImpl(UserAnalysisRequestRepository):
 
         return cls.__instance
 
-    def create(self, account_id, user_analysis_id):
+    def create(self, account_id, user_analysis_id, guest_identifier=None):
         account = Account.objects.get(id = account_id) if account_id is not None else None
         user_analysis = UserAnalysis.objects.get(id = user_analysis_id)
-        user_analysis_request = UserAnalysisRequest(account=account, user_analysis=user_analysis)
+        user_analysis_request = UserAnalysisRequest(
+            account=account,
+            user_analysis=user_analysis,
+            guest_identifier=guest_identifier if account_id is None else None
+        )
         user_analysis_request.save()
 
         return user_analysis_request
@@ -39,5 +43,12 @@ class UserAnalysisRequestRepositoryImpl(UserAnalysisRequestRepository):
 
     def findByUserAnalysis(self, user_analysis):
         return UserAnalysisRequest.objects.filter(user_analysis = user_analysis)
+
+    def findLatestByAccount(self, account_id):
+        account = Account.objects.get(id = account_id)
+        return UserAnalysisRequest.objects.filter(account = account).order_by('-created_at').first()
+
+    def findLatestByIdentifier(self, identifier):
+        return UserAnalysisRequest.objects.filter(guest_identifier = identifier).order_by('-created_at').first()
 
 

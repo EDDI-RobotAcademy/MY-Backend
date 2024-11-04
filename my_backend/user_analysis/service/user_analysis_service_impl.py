@@ -71,16 +71,18 @@ class UserAnalysisServiceImpl(UserAnalysisService):
             print(f"Unexpected error while creating selection: {str(e)}")
             raise e
 
-    def saveAnswer(self, account_id, user_analysis_id, answers):
+    def saveAnswer(self, account_id, user_analysis_id, answers, guest_identifier=None):
+        print("account_id: ", account_id, "user_analysis_id: ", user_analysis_id, "guest_identifier: ",
+              guest_identifier)
         try:
-            user_analysis_request = self.__userAnalysisRequestRepository.create(account_id, user_analysis_id)
+            user_analysis_request = self.__userAnalysisRequestRepository.create(account_id, user_analysis_id, guest_identifier)
             questions = self.__userAnalysisQuestionRepository.findUserAnalysisQuestionListByUserAnalysisId(user_analysis_id)
             for question in questions:
                 question_id = question.id
                 answer_data = answers.get(str(question_id))
 
                 if answer_data is not None:
-                    self.__userAnalysisAnswerRepository.saveAnswer(user_analysis_request, question_id, answer_data)
+                    self.__userAnalysisAnswerRepository.saveAnswer(user_analysis_request, question, answer_data)
 
             return user_analysis_request
 

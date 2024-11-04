@@ -5,6 +5,7 @@ from account.serilaizers import AccountSerializer
 from account.service.account_service_impl import AccountServiceImpl
 from ai_request.service.ai_request_service_impl import AiRequestServiceImpl
 from redis_token.service.redis_service_impl import RedisServiceImpl
+from user_analysis.repository.user_analysis_request_repository_impl import UserAnalysisRequestRepositoryImpl
 from user_analysis.service.user_analysis_service_impl import UserAnalysisServiceImpl
 
 
@@ -13,16 +14,41 @@ class AiRequestView(viewsets.ViewSet):
     accountService = AccountServiceImpl.getInstance()
     aiRequestService = AiRequestServiceImpl.getInstance()
     userAnalysisService = UserAnalysisServiceImpl.getInstance()
+    userAnalysisRequestRepository = UserAnalysisRequestRepositoryImpl.getInstance()
 
     def aiRequestToFastAPI(self, request):
-        data = request.data
-        userToken = data.get('userToken')
-        command = data.get('command')
-        request_id = data.get('request_id')
+        command = request.data.get('command')
+        userToken = request.data.get('userToken')
 
-        data = self.userAnalysisService.getAnswer(request_id)
+        if userToken:
+            user_identifier = self.redisService.getValueByKey(userToken)
+            print("user_identifier: ", user_identifier)
+
+            # account_id가 int 타입인 경우 회원, str 타입인 경우 비회원
+            if isinstance(user_identifier, int):
+                account_id = user_identifier
+                guest_identifier = None
+            else:
+                account_id = None
+                guest_identifier = user_identifier  # 비회원의 경우 IP 주소
+        else:
+            account_id = None
+            guest_identifier = None
+
+        if account_id is not None:
+            # 회원일 경우 findLatestByAccount 호출
+            user_analysis_request = self.userAnalysisRequestRepository.findLatestByAccount(account_id)
+        else:
+            # 비회원일 경우 findLatestByIdentifier 호출
+            user_analysis_request = self.userAnalysisRequestRepository.findLatestByIdentifier(guest_identifier)
+
+        if not user_analysis_request:
+            return Response({"error": "No analysis request found for the user."}, status=status.HTTP_404_NOT_FOUND)
+
+
+        data = self.userAnalysisService.getAnswer(user_analysis_request.id)
         data.append(userToken)
-        data.append(request_id)
+        data.append(user_analysis_request.id)
 
         requestComplete = self.aiRequestService.aiRequestToFastAPI(command, data)
 

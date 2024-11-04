@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class UserAnalysisAnswerRepository(ABC):
 
     @abstractmethod
-    def saveAnswer(self, question_id, answer_data):
+    def saveAnswer(self, request, question, answer_data):
         pass
 
     @abstractmethod

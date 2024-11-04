@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class UserAnalysisRequestRepository(ABC):
 
     @abstractmethod
-    def create(self, account_id, user_analysis_id):
+    def create(self, account_id, user_analysis_id, guest_identifier=None):
         pass
 
     @abstractmethod
@@ -16,4 +16,13 @@ class UserAnalysisRequestRepository(ABC):
 
     @abstractmethod
     def findByUserAnalysis(self, user_analysis):
+        pass
+
+
+    @abstractmethod
+    def findLatestByAccount(self, account_id):
+        pass
+
+    @abstractmethod
+    def findLatestByIdentifier(self, identifier):
         pass

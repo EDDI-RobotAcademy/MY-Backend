@@ -12,3 +12,7 @@ class RedisService(ABC):
     @abstractmethod
     def deleteKey(self, key):
         pass
+
+    @abstractmethod
+    def getUserIdentifier(self, userToken):
+        pass
