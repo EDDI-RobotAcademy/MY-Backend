@@ -40,4 +40,5 @@ urlpatterns = [
     path('smart_content/', include('smart_content.urls')),
     path('growth_blog/', include('growth_blog.urls')),
     path('like_count/', include('like_count.urls')),
+    path('keyword_search/', include('keyword_search.urls')),
 ]

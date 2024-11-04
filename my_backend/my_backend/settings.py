@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'smart_content',
     'growth_blog',
     'like_count',
+    'keyword_search',
 ]
 
 MIDDLEWARE = [
@@ -97,7 +98,9 @@ NAVER = {
     'REDIRECT_URI': os.getenv('NAVER_REDIRECT_URL'),
     'CLIENT_SECRET': os.getenv('NAVER_CLIENT_SECRET'),
     'TOKEN_REQUEST_URI': os.getenv('NAVER_TOKEN_REQUEST_URI'),
-    'USERINFO_REQUEST_URI': os.getenv('NAVER_USERINFO_REQUEST_URI')
+    'USERINFO_REQUEST_URI': os.getenv('NAVER_USERINFO_REQUEST_URI'),
+    'TREND_CLIENT_ID': os.getenv('NAVER_TREND_CLIENT_ID'),
+    'TREND_CLIENT_SECRET': os.getenv('NAVER_TREND_CLIENT_SECRET'),
 }
 
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
