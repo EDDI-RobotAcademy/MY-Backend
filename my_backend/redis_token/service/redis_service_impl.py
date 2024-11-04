@@ -35,9 +35,11 @@ class RedisServiceImpl(RedisService):
                 if isinstance(data, str) and (data.startswith('{') and data.endswith('}')):
                     try:
                         user_data = json.loads(data)  # JSON 형식으로 파싱
-                        if user_data.get('account_id'):
+                        print("user_data: ", user_data)
+                        user_type = user_data["user_type"]
+                        if user_type == "member":
                             return user_data['account_id']  # 회원의 경우 account_id 반환
-                        elif user_data.get('identifier'):
+                        elif user_type == "guest":
                             return user_data['identifier']  # 비회원의 경우 identifier(IP) 반환
                     except json.JSONDecodeError:
                         print("JSON 디코딩 에러 발생")
@@ -58,3 +60,20 @@ class RedisServiceImpl(RedisService):
         except Exception as e:
             print("redis key 삭제 중 에러 발생:", e)
             raise e
+
+    def getUserIdentifier(self, userToken):
+        try:
+            user_data = self.getValueByKey(userToken)
+            if isinstance(user_data, dict):
+                user_type = user_data.get('user_type')
+                if user_type == 'member':
+                    return user_data.get('account_id')
+                elif user_type == 'guest':
+                    return user_data.get('identifier')
+            else:
+                print("Error: user_data가 dict 형식이 아님. user_data:", user_data)
+
+            return None
+        except Exception as e:
+            print("Error retrieving user identifier:", e)
+            return None
