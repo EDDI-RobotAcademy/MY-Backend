@@ -9,6 +9,7 @@ class UserAnalysisRequest(models.Model):
     user_analysis = models.ForeignKey(UserAnalysis, related_name='user_analysis_requests', on_delete=models.CASCADE)
     account = models.ForeignKey(Account, related_name='user_analysis_requests', on_delete=models.CASCADE, null=True,
                                 default=None)
+    guest_identifier = models.CharField(max_length=255, null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
