@@ -21,6 +21,13 @@ class UserAnalysisRequestRepositoryImpl(UserAnalysisRequestRepository):
         return cls.__instance
 
     def create(self, account_id, user_analysis_id, guest_identifier=None):
+        # 비회원일 경우 동일한 guest_identifier로 요청이 존재하는지 확인
+        if guest_identifier is not None:
+            existing_request = UserAnalysisRequest.objects.filter(guest_identifier=guest_identifier).order_by(
+                '-created_at').first()
+            if existing_request:
+                # 기존 요청이 있다면 새로 생성하지 않고 반환
+                return "duplicate_request"
         account = Account.objects.get(id = account_id) if account_id is not None else None
         user_analysis = UserAnalysis.objects.get(id = user_analysis_id)
         user_analysis_request = UserAnalysisRequest(
@@ -50,5 +57,3 @@ class UserAnalysisRequestRepositoryImpl(UserAnalysisRequestRepository):
 
     def findLatestByIdentifier(self, identifier):
         return UserAnalysisRequest.objects.filter(guest_identifier = identifier).order_by('-created_at').first()
-
-

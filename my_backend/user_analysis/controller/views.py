@@ -98,6 +98,15 @@ class UserAnalysisView(viewsets.ViewSet):
                 answers=answers,
                 guest_identifier=guest_identifier
             )
+
+            # 중복 요청인 경우 (user_analysis_request가 None 반환)
+            if user_analysis_request is None:
+                return Response(
+                    {"error": "비회원의 경우 최초 1회만 요청이 가능합니다."},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+            # 새로 생성된 요청이 있는 경우
             print("user_analysis_request: ", user_analysis_request.id)
 
             serializer = UserAnalysisRequestSerializer(user_analysis_request, many=False)
