@@ -76,6 +76,11 @@ class UserAnalysisServiceImpl(UserAnalysisService):
               guest_identifier)
         try:
             user_analysis_request = self.__userAnalysisRequestRepository.create(account_id, user_analysis_id, guest_identifier)
+
+            if user_analysis_request == "duplicate_request":
+                print("기존 비회원 요청이 존재하므로 추가 작업을 생략합니다.")
+                return None
+
             questions = self.__userAnalysisQuestionRepository.findUserAnalysisQuestionListByUserAnalysisId(user_analysis_id)
             for question in questions:
                 question_id = question.id
