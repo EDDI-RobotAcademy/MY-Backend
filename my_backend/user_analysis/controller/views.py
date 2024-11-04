@@ -69,17 +69,37 @@ class UserAnalysisView(viewsets.ViewSet):
         try:
             userToken = request.data.get('userToken')
             print(f"userToken: {userToken}")
+
             if userToken:
-                account_id = self.redisService.getValueByKey(userToken)
+                user_identifier = self.redisService.getValueByKey(userToken)
+                print("user_identifier: ", user_identifier)
+
+                if isinstance(user_identifier, int):
+                    account_id = user_identifier  # 회원의 경우 account_id
+                    guest_identifier = None
+                elif isinstance(user_identifier, str):
+                    account_id = None
+                    guest_identifier = user_identifier  # 비회원의 경우 IP 주소 (identifier)
+                else:
+                    account_id = None
+                    guest_identifier = None
             else:
                 account_id = None
+                guest_identifier = None
+
             user_analysis_id = request.data.get('user_analysis')
             print(f"user_analysis_id: ", user_analysis_id)
             answers = request.data.get('user_analysis_answer')
             print(f"answers: {answers}")
 
-            user_analysis_request = self.userAnalysisService.saveAnswer(account_id, user_analysis_id, answers)
-            print("user_analysis_request: ", user_analysis_request)
+            user_analysis_request = self.userAnalysisService.saveAnswer(
+                account_id=account_id,
+                user_analysis_id=user_analysis_id,
+                answers=answers,
+                guest_identifier=guest_identifier
+            )
+            print("user_analysis_request: ", user_analysis_request.id)
+
             serializer = UserAnalysisRequestSerializer(user_analysis_request, many=False)
             print("serializer: ", serializer)
 

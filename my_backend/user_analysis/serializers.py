@@ -54,8 +54,13 @@ class UserAnalysisSerializer(serializers.ModelSerializer):
 
 class UserAnalysisRequestSerializer(serializers.ModelSerializer):
     user_analysis_title = serializers.CharField(source='user_analysis.title', read_only=True)
-    profile_nickname = serializers.CharField(source='account.user_profile.nickname', read_only=True)
+    profile_nickname = serializers.SerializerMethodField()
 
     class Meta:
         model = UserAnalysisRequest
         fields = ['id', 'user_analysis_title', 'profile_nickname', 'created_at']
+
+    def get_profile_nickname(self, obj):
+        if obj.account:
+            return obj.account.user_profile.nickname  # 회원일 경우 닉네임 반환
+        return "Guest"  # 비회원일 경우 기본 값 반환
