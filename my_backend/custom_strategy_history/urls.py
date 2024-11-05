@@ -9,5 +9,6 @@ router.register(r'custom_strategy_history', CustomStrategyHistoryView, basename=
 urlpatterns = [
     path('', include(router.urls)),
     path('save', CustomStrategyHistoryView.as_view({'post': 'saveCustomStrategyResult'}), name='save-custom-strategy-result'),
-    path('read', CustomStrategyHistoryView.as_view({'post': 'readCustomStrategyResult'}), name='read-custom-strategy-result'),
+    path('read-latest', CustomStrategyHistoryView.as_view({'post': 'readLatestCustomStrategyResult'}), name='read-latest-custom-strategy-result'),
+    path('read/<int:pk>', CustomStrategyHistoryView.as_view({'post': 'readCustomStrategyResult'}), name='read-custom-strategy'),
 ]
