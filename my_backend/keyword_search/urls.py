@@ -11,4 +11,5 @@ urlpatterns = [
     path('datalab',
          KeywordSearchView.as_view({'post': 'datalab_api'}),
          name='datalab'),
+    path('get-hot-topic', KeywordSearchView.as_view({'get':'getHotTopic'}), name='get-hot-topic')
 ]

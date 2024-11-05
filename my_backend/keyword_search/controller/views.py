@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
+from pytrends.request import TrendReq
 
 from django.conf import settings
 import requests
@@ -399,3 +400,17 @@ class KeywordSearchView(viewsets.ViewSet):
         except Exception as e:
             print(f"[ERROR] Error in low hours: {str(e)}")
             return []
+
+    def getHotTopic(self, request):
+        try:
+            pytrends = TrendReq(hl='ko-KR', tz=540)
+            topics = pytrends.trending_searches(pn='south_korea')
+
+            topics_dict = {str(index): topic for index, topic in enumerate(topics[0].tolist(), start=1)}
+            return Response(topics_dict, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(f"[ERROR] Error in getHotTopic: {str(e)}")
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
