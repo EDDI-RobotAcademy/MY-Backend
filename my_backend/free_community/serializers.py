@@ -11,7 +11,7 @@ class FreeCommunitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FreeCommunity
-        fields = ['free_communityId', 'category_name', 'categoryFreeCommunityId', 'profile_nickname', 'title', 'content', 'contentImage', 'regDate', 'updDate']
+        fields = ['free_communityId', 'category_name', 'categoryFreeCommunityId', 'profile_nickname', 'title', 'content', 'contentImage', 'is_notice', 'regDate', 'updDate']
         read_only_fields = ['free_communityId', 'regDate', 'updDate', 'categoryFreeCommunityId']
 
     def validate_category_id(self, value):

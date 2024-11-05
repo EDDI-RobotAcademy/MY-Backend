@@ -20,4 +20,5 @@ urlpatterns = [
     path('delete/<int:pk>', FreeCommunityView.as_view({'delete': 'removeFreeCommunity'}), name='free_community-remove'),
     path('modify/<int:pk>', FreeCommunityView.as_view({'put': 'modifyFreeCommunity'}), name='free_community-modify'),
     path('check-authority/<int:pk>', FreeCommunityView.as_view({'post': 'checkAuthority'}), name='check-authority'),
+    path('list-notices', FreeCommunityView.as_view({'get': 'listNotices'}), name='list-notices'),
 ]
