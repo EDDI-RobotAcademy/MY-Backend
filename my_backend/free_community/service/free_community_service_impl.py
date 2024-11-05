@@ -25,8 +25,8 @@ class FreeCommunityServiceImpl(FreeCommunityService):
     def createCategory(self, name):
         return self.__free_communityRepository.create_category(name)
 
-    def createFreeCommunity(self, categoryId, title, accountId, content, contentImage):
-        return self.__free_communityRepository.create(categoryId, title, accountId, content, contentImage)
+    def createFreeCommunity(self, categoryId, title, accountId, content, contentImage, is_notice=False):
+        return self.__free_communityRepository.create(categoryId, title, accountId, content, contentImage, is_notice)
 
     def readFreeCommunity(self, free_communityId):
         return self.__free_communityRepository.findByFreeCommunityId(free_communityId)
@@ -59,6 +59,9 @@ class FreeCommunityServiceImpl(FreeCommunityService):
                 free_communitys.extend(account_free_communitys)
 
             return free_communitys
+
+    def getNotices(self):
+        return self.__free_communityRepository.listNotices()
 
 
 

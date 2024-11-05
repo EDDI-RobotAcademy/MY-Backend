@@ -28,7 +28,7 @@ class FreeCommunityRepositoryImpl(FreeCommunityRepository):
         category.save()
         return category
 
-    def create(self, categoryId, title, accountId, content, contentImage):
+    def create(self, categoryId, title, accountId, content, contentImage, is_notice=False):
         if accountId:
             account = Account.objects.get(id=accountId)
         else:
@@ -40,7 +40,8 @@ class FreeCommunityRepositoryImpl(FreeCommunityRepository):
             title = title,
             account = account,
             content = content,
-            contentImage = contentImage
+            contentImage = contentImage,
+            is_notice=is_notice
         )
         free_community.save()
         return free_community
@@ -73,3 +74,6 @@ class FreeCommunityRepositoryImpl(FreeCommunityRepository):
 
     def listFreeCommunityByAccount(self, account):
         return FreeCommunity.objects.filter(account=account)
+
+    def listNotices(self):
+        return FreeCommunity.objects.filter(is_notice=True).order_by('-regDate').values()

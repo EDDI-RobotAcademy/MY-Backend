@@ -64,11 +64,12 @@ class FreeCommunityView(viewsets.ViewSet):
                 accountId = None
             content = data.get('content')
             contentImage = data.get('contentImage')
+            is_notice = data.get('is_notice', False)
 
             print(
-                f"categoryId: {categoryId}, title: {title}, accountId: {accountId}, content: {content}, contentImage: {contentImage}")
+                f"categoryId: {categoryId}, title: {title}, accountId: {accountId}, content: {content}, contentImage: {contentImage}, is_notice: {is_notice}")
 
-            self.free_communityService.createFreeCommunity(categoryId, title, accountId, content, contentImage)
+            self.free_communityService.createFreeCommunity(categoryId, title, accountId, content, contentImage, is_notice)
             return Response(True, status.HTTP_200_OK)
 
         except Exception as e:
@@ -91,6 +92,13 @@ class FreeCommunityView(viewsets.ViewSet):
         service = FreeCommunityServiceImpl()
         categories = service.get_all_categories()
         return Response(categories)
+
+    def listNotices(self, request):
+        try:
+            notices = self.free_communityService.getNotices()
+            return Response(notices, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def readFreeCommunity(self, request, pk=None):
         free_community = self.free_communityService.readFreeCommunity(pk)

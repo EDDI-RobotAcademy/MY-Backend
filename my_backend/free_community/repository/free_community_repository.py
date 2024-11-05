@@ -10,7 +10,7 @@ class FreeCommunityRepository(ABC):
         pass
 
     @abstractmethod
-    def create(self, categoryId, title, accountId, content, contentImage):
+    def create(self, categoryId, title, accountId, content, contentImage, is_notice=False):
         pass
 
     @abstractmethod
@@ -43,4 +43,8 @@ class FreeCommunityRepository(ABC):
 
     @abstractmethod
     def listFreeCommunityByAccount(self, accounts):
+        pass
+
+    @abstractmethod
+    def listNotices(self):
         pass

@@ -9,7 +9,7 @@ class FreeCommunityService(ABC):
         pass
 
     @abstractmethod
-    def createFreeCommunity(self, categoryId, title, accountId, content, contentImage):
+    def createFreeCommunity(self, categoryId, title, accountId, content, contentImage, is_notice=False):
         pass
 
     @abstractmethod
@@ -42,4 +42,8 @@ class FreeCommunityService(ABC):
 
     @abstractmethod
     def listByNickname(self, nickname):
+        pass
+
+    @abstractmethod
+    def getNotices(self):
         pass
