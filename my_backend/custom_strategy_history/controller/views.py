@@ -33,7 +33,7 @@ class CustomStrategyHistoryView(viewsets.ViewSet):
             print(f"에러 발생: {str(e)}")
             return Response({'error': f'전략 저장 실패: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def readCustomStrategyResult(self, request):
+    def readLatestCustomStrategyResult(self, request):
         try:
             data = request.data
             if isinstance(data, str):
@@ -77,6 +77,18 @@ class CustomStrategyHistoryView(viewsets.ViewSet):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except CustomStrategyHistory.DoesNotExist:
                 return Response({'error': '전략을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(f"에러 발생: {e}")
+            return Response({'error': f'전략 조회 실패: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def readCustomStrategyResult(self, request, pk=None):
+
+        try:
+            strategy = self.customStrategyHistoryService.readStrategyData(pk)
+            serializer = CustomStrategyHistorySerializer(strategy, many=False)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except CustomStrategyHistory.DoesNotExist:
+            return Response({'error': '전략을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             print(f"에러 발생: {e}")
             return Response({'error': f'전략 조회 실패: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
