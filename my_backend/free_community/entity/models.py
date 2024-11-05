@@ -12,6 +12,7 @@ class FreeCommunity(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True, related_name='free_community_account')
     content = models.TextField()
     contentImage = models.CharField(max_length=100, null=True)
+    is_notice = models.BooleanField(default=False)
     regDate = models.DateTimeField(auto_now_add=True)
     updDate = models.DateTimeField(auto_now=True)
 
