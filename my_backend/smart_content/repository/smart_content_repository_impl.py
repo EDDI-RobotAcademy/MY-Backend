@@ -55,7 +55,7 @@ class SmartContentRepositoryImpl(SmartContentRepository):
         return smart_content
 
     def list(self):
-        return SmartContent.objects.all().order_by('regDate')
+        return SmartContent.objects.all().order_by('-regDate')
 
     def listItems(self, contentId):
         try:
