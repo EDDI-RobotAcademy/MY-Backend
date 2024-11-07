@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from account.serilaizers import ProfileSerializer
+from user_profile.serializers import UserProfileSerializer
 from survey.entity.survey_custom_selection import SurveyCustomSelection
 from survey.entity.survey_fixed_boolean_selection import SurveyFixedBooleanSelection
 from survey.entity.survey_fixed_five_score_selection import SurveyFixedFiveScoreSelection
@@ -11,9 +11,9 @@ from survey.entity.survey_question import SurveyQuestion
 
 class SurveyAnswerSerializer(serializers.ModelSerializer):
     survey_title = serializers.CharField(source='survey.title', read_only=True)
-    profile_nickname = serializers.CharField(source='account.profile.nickname', read_only=True)
+    profile_nickname = serializers.CharField(source='account.user_profile.nickname', read_only=True)
     question_text = serializers.CharField(source='question.question_text', read_only=True)
-    survey_custom_selection_text = serializers.CharField(source='survey_custom_selection.custom_text', read_only=True,
+    survey_custom_selection_text = serializers.CharField(source='custom_selection.custom_text', read_only=True,
                                                   default=None)
 
     class Meta:
@@ -32,7 +32,7 @@ class SurveyQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SurveyQuestion
-        fields = ('id', 'question_text', 'survey_type')
+        fields = ('id', 'question_text', 'survey_type', 'is_essential')
 
 class SurveyFixedFiveScoreSelectionSerializer(serializers.ModelSerializer):
     class Meta:

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from redis_token.service.redis_service_impl import RedisServiceImpl
 from survey.entity.survey_fixed_boolean_selection import SurveyFixedBooleanSelection
 from survey.entity.survey_fixed_five_score_selection import SurveyFixedFiveScoreSelection
 from survey.entity.survey import Survey
@@ -19,6 +20,7 @@ from survey.service.survey_service_impl import SurveyServiceImpl
 class SurveyView(viewsets.ViewSet):
     surveyService = SurveyServiceImpl.getInstance()
     surveyQuestionRepository = SurveyQuestionRepositoryImpl.getInstance()
+    redisService = RedisServiceImpl.getInstance()
 
     def createSurvey(self, request):
         data = request.data
@@ -37,12 +39,13 @@ class SurveyView(viewsets.ViewSet):
         survey_id = data.get('survey')
         question_text = data.get('question')
         survey_type = data.get('survey_type')
+        is_essential = data.get('is_essential')
 
         if not survey_id or not question_text:
             return Response({"error": "설문 ID와 질문 내용이 필요합니다"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            question = self.surveyService.createSurveyQuestion(survey_id, question_text, survey_type)
+            question = self.surveyService.createSurveyQuestion(survey_id, question_text, survey_type, is_essential)
             return Response({"success": "질문이 추가되었습니다", "questionId": f"{question.id}"}, status=status.HTTP_200_OK)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_404_NOT_FOUND)
@@ -73,8 +76,13 @@ class SurveyView(viewsets.ViewSet):
     def submitSurveyAnswer(self, request):
         try:
             answers = request.data.get('survey_answer')
-            accountId = request.data.get('account_id')
-            print(f"answers: {answers}, accountId : {accountId}")
+            print(f"answers: {answers}")
+            userToken = request.data.get('userToken')
+            print(f"userToken: {userToken}")
+            if userToken:
+                accountId = self.redisService.getValueByKey(userToken)
+            else:
+                accountId = None
 
             self.surveyService.saveAnswer(answers, accountId)
 
@@ -94,7 +102,7 @@ class SurveyView(viewsets.ViewSet):
             print(f"filter: {filter}, surveyId: {surveyId}, questionId: {questionId}, accountId: {accountId}")
 
             listedAnswer = self.surveyService.listAnswer(filter, surveyId, questionId, accountId)
-            print(listedAnswer)
+
             serializer = SurveyAnswerSerializer(listedAnswer, many=True)
 
             return Response(serializer.data, status.HTTP_200_OK)
@@ -111,7 +119,6 @@ class SurveyView(viewsets.ViewSet):
             listedQuestions = self.surveyService.listQuestions(surveyId)
 
             serializer = SurveyQuestionSerializer(listedQuestions, many=True)
-            print(serializer)
 
             return Response(serializer.data, status.HTTP_200_OK)
 

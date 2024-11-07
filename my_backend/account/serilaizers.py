@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from account.entity.account import Account
-from account.entity.profile import Profile
+from account.entity.account_role_type import AccountRoleType
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -11,8 +11,3 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ['id', 'loginType', 'roleType']
-
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['email', 'nickname']

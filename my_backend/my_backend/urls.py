@@ -21,7 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     # Django 관리자 사이트에 대한 URL
     path("admin/", admin.site.urls),
-    path('board/', include('board.urls')),
+    path('free_community/', include('free_community.urls')),
     path('account/', include('account.urls')),
     path('kakao_oauth/', include('kakao_oauth.urls')),
     path('google_oauth/', include('google_oauth.urls')),
@@ -29,5 +29,16 @@ urlpatterns = [
     path('survey/', include('survey.urls')),
     path('user_analysis/', include('user_analysis.urls')),
     path('subscription/', include('subscription.urls')),
+    path('purchase/', include('purchase.urls')),
     path('redis_token/', include('redis_token.urls')),
+    path('user_profile/', include('user_profile.urls')),
+    path('custom_strategy_history/', include('custom_strategy_history.urls')),
+    path('viewCount/', include('viewCount.urls')),
+    path('free_community_comment/', include('free_community_comment.urls')),
+    path('ai_request/', include('ai_request.urls')),
+    path('tosspayments/', include('tosspayments.urls')),
+    path('smart_content/', include('smart_content.urls')),
+    path('growth_blog/', include('growth_blog.urls')),
+    path('like_count/', include('like_count.urls')),
+    path('keyword_search/', include('keyword_search.urls')),
 ]

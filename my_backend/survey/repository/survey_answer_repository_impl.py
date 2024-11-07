@@ -31,17 +31,19 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
         return cls.__instance
 
 
-    def saveAnswer(self, survey_id, question_id, answer_data, account_id):
+    def saveAnswer(self, survey_id, question, answer_data, account_id):
         # if not isinstance(question_id, SurveyQuestion):
         #     raise ValueError("Question must be an instance of SurveyQuestion")
         try:
-            question = self.__surveyQuestionRepository.findById(question_id)
 
             survey = Survey.objects.get(id = survey_id)
-            if account_id == True:
+            print(f"account_id_1 : {account_id}")
+            if account_id:
+                print(f"account_id_2 : {account_id}")
                 account = Account.objects.get(id=account_id)
+                print(f"account: {account}")
             else:
-                account = account_id
+                account = None
 
             if question.survey_type == 1: # General
                 answer = SurveyAnswer(
@@ -70,7 +72,11 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
                 )
                 
             elif question.survey_type == 4:  # Custom
-                custom_selection = SurveyCustomSelection.objects.get(custom_text=answer_data)
+                if answer_data:
+                    custom_selection = SurveyCustomSelection.objects.get(question = question, custom_text=answer_data)
+                else:
+                    custom_selection = None
+
                 answer = SurveyAnswer(
                     survey=survey,
                     question=question,
@@ -89,14 +95,14 @@ class SurveyAnswerRepositoryImpl(SurveyAnswerRepository):
         summerizedAnswer = SurveyAnswer.objects.filter(survey_id=survey_id)
         return summerizedAnswer
 
-    def summerizeAnswerByQuestionId(self, question_id):
+    def summarizeAnswerByQuestionId(self, question_id):
         summerizedAnswer = SurveyAnswer.objects.filter(question_id=question_id)
         return summerizedAnswer
 
-    def summerizeAnswerByAccountId(self, account_id):
+    def summarizeAnswerByAccountId(self, account_id):
         summerizedAnswer = SurveyAnswer.objects.filter(account_id=account_id)
         return summerizedAnswer
 
-    def summerizeAnswerBySurveyIdandAccountId(self, survey_id, account_id):
+    def summarizeAnswerBySurveyIdandAccountId(self, survey_id, account_id):
         summerizedAnswer = SurveyAnswer.objects.filter(survey_id=survey_id, account_id=account_id)
         return summerizedAnswer

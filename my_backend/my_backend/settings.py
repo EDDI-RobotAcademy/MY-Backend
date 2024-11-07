@@ -27,9 +27,13 @@ SECRET_KEY = "django-insecure-w4e=!6=#0&j$40w=sp=-9vxe*^5d3)vn*2vm8f-a#%e!8lx#x0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True # True in local test
 
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'), 'mycooing.com', 'localhost', '127.0.0.1'] # ip 털림 방지를 위해 이렇게 설정
-
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS'), 'v23b3w1mpe.execute-api.ap-northeast-2.amazonaws.com', 'mycooing.com', 'api.mycooing.com'
+                 , 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
+TOSS_PAYMENTS_SECRET_KEY = os.getenv('TOSS_PAYMENTS_SECRET_KEY')
 # Application definition
+
+AI_BASE_URL = os.getenv("AI_BASE_URL")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -41,12 +45,23 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_extensions',
-    'board',
+    'free_community',
     'account',
     'survey',
     'user_analysis',
     'subscription',
+    'purchase',
     'redis_token',
+    'user_profile',
+    'custom_strategy_history',
+    'viewCount',
+    'free_community_comment',
+    'ai_request',
+    'tosspayments',
+    'smart_content',
+    'growth_blog',
+    'like_count',
+    'keyword_search',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +98,9 @@ NAVER = {
     'REDIRECT_URI': os.getenv('NAVER_REDIRECT_URL'),
     'CLIENT_SECRET': os.getenv('NAVER_CLIENT_SECRET'),
     'TOKEN_REQUEST_URI': os.getenv('NAVER_TOKEN_REQUEST_URI'),
-    'USERINFO_REQUEST_URI': os.getenv('NAVER_USERINFO_REQUEST_URI')
+    'USERINFO_REQUEST_URI': os.getenv('NAVER_USERINFO_REQUEST_URI'),
+    'TREND_CLIENT_ID': os.getenv('NAVER_TREND_CLIENT_ID'),
+    'TREND_CLIENT_SECRET': os.getenv('NAVER_TREND_CLIENT_SECRET'),
 }
 
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
@@ -114,6 +131,18 @@ CORS_ALLOW_HEADERS = [
 
 ROOT_URLCONF = "my_backend.urls"
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
+    'FORMAT_SUFFIX_KWARG': 'format',
+}
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -143,6 +172,9 @@ DATABASES = {
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': os.getenv('DATABASE_HOST'),
         'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4'
+        },
     }
 }
 
@@ -189,7 +221,7 @@ TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

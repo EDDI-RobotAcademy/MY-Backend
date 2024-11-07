@@ -1,16 +1,18 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from redis_token.service.redis_service_impl import RedisServiceImpl
 from user_analysis.repository.user_analysis_question_repository_impl import UserAnalysisQuestionRepositoryImpl
 from user_analysis.serializers import UserAnalysisAnswerSerializer, UserAnalysisQuestionSerializer, \
     UserAnalysisFixedFiveScoreSelectionSerializer, UserAnalysisFixedBooleanSelectionSerializer, \
-    UserAnalysisCustomSelectionSerializer, UserAnalysisSerializer
+    UserAnalysisCustomSelectionSerializer, UserAnalysisSerializer, UserAnalysisRequestSerializer
 from user_analysis.service.user_analysis_service_impl import UserAnalysisServiceImpl
 
 
 class UserAnalysisView(viewsets.ViewSet):
     userAnalysisService = UserAnalysisServiceImpl.getInstance()
     userAnalysisQuestionRepository = UserAnalysisQuestionRepositoryImpl.getInstance()
+    redisService = RedisServiceImpl.getInstance()
 
     def createUserAnalysis(self, request):
         data = request.data
@@ -65,27 +67,98 @@ class UserAnalysisView(viewsets.ViewSet):
 
     def submitUserAnalysisAnswer(self, request):
         try:
+            userToken = request.data.get('userToken')
+            print(f"userToken: {userToken}")
+
+            if userToken:
+                user_identifier = self.redisService.getValueByKey(userToken)
+                print("user_identifier: ", user_identifier)
+
+                if isinstance(user_identifier, int):
+                    account_id = user_identifier  # 회원의 경우 account_id
+                    guest_identifier = None
+                elif isinstance(user_identifier, str):
+                    account_id = None
+                    guest_identifier = user_identifier  # 비회원의 경우 IP 주소 (identifier)
+                else:
+                    account_id = None
+                    guest_identifier = None
+            else:
+                account_id = None
+                guest_identifier = None
+
+            user_analysis_id = request.data.get('user_analysis')
+            print(f"user_analysis_id: ", user_analysis_id)
             answers = request.data.get('user_analysis_answer')
-            accountId = request.data.get('account_id')
-            print(f"answers: {answers}, accountId : {accountId}")
+            print(f"answers: {answers}")
 
-            self.userAnalysisService.saveAnswer(answers, accountId)
+            user_analysis_request = self.userAnalysisService.saveAnswer(
+                account_id=account_id,
+                user_analysis_id=user_analysis_id,
+                answers=answers,
+                guest_identifier=guest_identifier
+            )
 
-            return Response(True, status.HTTP_200_OK)
+            # 중복 요청인 경우 (user_analysis_request가 None 반환)
+            if user_analysis_request is None:
+                return Response(
+                    {"error": "비회원의 경우 최초 1회만 요청이 가능합니다."},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+            # 새로 생성된 요청이 있는 경우
+            print("user_analysis_request: ", user_analysis_request.id)
+
+            serializer = UserAnalysisRequestSerializer(user_analysis_request, many=False)
+            print("serializer: ", serializer)
+
+            return Response(serializer.data, status.HTTP_200_OK)
 
         except Exception as e:
             return Response(False, status.HTTP_400_BAD_REQUEST)
 
+    def listAllUserAnalysisRequest(self, request):
+        try:
+            listedRequest = self.userAnalysisService.listAllRequest()
+            serializer = UserAnalysisRequestSerializer(listedRequest, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def listOwnUserAnalysisRequest(self, request):
+        try:
+            userToken = request.query_params.get('userToken')
+            print(f"userToken: {userToken}")
+            if userToken:
+                account_id = self.redisService.getValueByKey(userToken)
+            else:
+                account_id = None
+
+            listedRequest = self.userAnalysisService.listOwnRequest(account_id)
+            serializer = UserAnalysisRequestSerializer(listedRequest, many=True)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+    def readUserAnalysisRequest(self, request, pk=None):
+        try:
+            listedAnswer = self.userAnalysisService.readRequest(pk)
+            print("listedAnswer: ", listedAnswer)
+            serializer = UserAnalysisAnswerSerializer(listedAnswer, many=True)
+            print("serializer: ", serializer)
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(False, status.HTTP_400_BAD_REQUEST)
+
+
     def listUserAnalysisAnswer(self, request):
         try:
-            filter = request.data.get('filter')
-            userAnalysisId = request.data.get("user_analysis_Id")
-            questionId = request.data.get("question_Id")
-            accountId = request.data.get("account_Id")
-
-            print(f"filter: {filter}, userAnalysisId: {userAnalysisId}, questionId: {questionId}, accountId: {accountId}")
-
-            listedAnswer = self.userAnalysisService.listAnswer(filter, userAnalysisId, questionId, accountId)
+            user_analysis_id = request.data.get('user_analysis_id')
+            print("user_analysis_id: ", user_analysis_id)
+            listedAnswer = self.userAnalysisService.listAnswer(user_analysis_id)
             print(listedAnswer)
             serializer = UserAnalysisAnswerSerializer(listedAnswer, many=True)
 
@@ -141,3 +214,9 @@ class UserAnalysisView(viewsets.ViewSet):
         userAnalysisList = self.userAnalysisService.listUserAnalysis()
         serializer = UserAnalysisSerializer(userAnalysisList, many=True)
         return Response(serializer.data)
+
+    def getAnswerData(self, request):
+        request_id = request.data.get('request_id')
+        answerdata = self.userAnalysisService.getAnswer(request_id)
+        print(answerdata)
+        return Response(answerdata)

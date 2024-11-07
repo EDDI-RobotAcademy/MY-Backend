@@ -6,7 +6,7 @@ class SurveyService(ABC):
         pass
 
     @abstractmethod
-    def createSurveyQuestion(self, survey_id, question_text, survey_type):
+    def createSurveyQuestion(self, survey_id, question_text, survey_type, is_essential):
         pass
 
     @abstractmethod

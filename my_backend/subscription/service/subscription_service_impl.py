@@ -22,8 +22,15 @@ class SubscriptionServiceImpl(SubscriptionService):
     def list(self):
         return self.__subscriptionRepository.list()
 
-    def create(self, name, type, price):
-        return self.__subscriptionRepository.create(name, type, price)
+    def create(self, name, type, brief_description, description, price):
+        return self.__subscriptionRepository.create(name, type, brief_description, description, price)
 
     def read(self, subscriptionId):
         return self.__subscriptionRepository.findById(subscriptionId)
+
+    def removeSubscription(self, subscriptionId):
+        return self.__subscriptionRepository.deleteById(subscriptionId)
+
+    def updateSubscription(self, subscriptionId, subscriptionData):
+        subscription = self.__subscriptionRepository.findById(subscriptionId)
+        return self.__subscriptionRepository.update(subscription, subscriptionData)

@@ -1,6 +1,6 @@
 from account.repository.account_repository_impl import AccountRepositoryImpl
-from account.repository.profile_repository_impl import ProfileRepositoryImpl
 from account.service.account_service import AccountService
+from user_profile.repository.user_profile_repository_impl import UserProfileRepositoryImpl
 
 
 class AccountServiceImpl(AccountService):
@@ -9,9 +9,8 @@ class AccountServiceImpl(AccountService):
     def __new__(cls):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
-            cls.__instance.__profileRepository = ProfileRepositoryImpl.getInstance()
             cls.__instance.__accountRepository = AccountRepositoryImpl.getInstance()
-
+            cls.__instance.__userProfileRepository = UserProfileRepositoryImpl.getInstance()
         return cls.__instance
 
     @classmethod
@@ -21,19 +20,10 @@ class AccountServiceImpl(AccountService):
 
         return cls.__instance
 
-    def checkEmailDuplication(self, email):
-        profile = self.__profileRepository.findByEmail(email)
-        return profile is not None
 
-    def checkNicknameDuplication(self, nickname):
-        profile = self.__profileRepository.findByNickname(nickname)
-        return profile is not None
-
-    def registerAccount(self, loginType, roleType, nickname, email):
+    def registerAccount(self, loginType, roleType, name, nickname, email, membership):
         account = self.__accountRepository.create(loginType, roleType)
-        return self.__profileRepository.create(nickname, email, account)
+        return self.__userProfileRepository.create(name, nickname, email, membership, account)
 
-    def findAccountByEmail(self, email):
-        return self.__profileRepository.findByEmail(email)
-
-
+    def findAccountById(self, account_id):
+        return self.__accountRepository.findById(account_id)

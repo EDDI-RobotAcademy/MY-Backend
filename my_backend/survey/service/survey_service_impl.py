@@ -37,12 +37,12 @@ class SurveyServiceImpl(SurveyService):
             print('Error creating order:', e)
             raise e
 
-    def createSurveyQuestion(self, survey_id, question_text, survey_type):
+    def createSurveyQuestion(self, survey_id, question_text, survey_type, is_essential):
         survey = self.__surveyRepository.findById(survey_id)
         if survey is None:
             raise ValueError("Survey not found")
 
-        return self.__surveyQuestionRepository.create(survey, question_text, survey_type)
+        return self.__surveyQuestionRepository.create(survey, question_text, survey_type, is_essential)
 
     def createSurveyCustomSelection(self, question_id, custom_text):
         try:
@@ -70,7 +70,7 @@ class SurveyServiceImpl(SurveyService):
                 answer_data = answer.get('answer_data')
 
 
-                self.__surveyAnswerRepository.saveAnswer(survey_id, question_id, answer_data, account_id)
+                self.__surveyAnswerRepository.saveAnswer(survey_id, question, answer_data, account_id)
 
         except Exception as e:
             print('답변 저장중 오류 발생: ', {e})
@@ -79,11 +79,11 @@ class SurveyServiceImpl(SurveyService):
         if filter == "survey":
             listedAnswer = self.__surveyAnswerRepository.summarizeAnswerBySurveyId(survey_id)
         elif filter == "account":
-            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerByAccountId(account_id)
+            listedAnswer = self.__surveyAnswerRepository.summarizeAnswerByAccountId(account_id)
         elif filter == "question":
-            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerByQuestionId(question_id)
+            listedAnswer = self.__surveyAnswerRepository.summarizeAnswerByQuestionId(question_id)
         elif filter == "survey and account":
-            listedAnswer = self.__surveyAnswerRepository.summerizeAnswerBySurveyIdandAccountId(survey_id, account_id)
+            listedAnswer = self.__surveyAnswerRepository.summarizeAnswerBySurveyIdandAccountId(survey_id, account_id)
 
         return listedAnswer
 

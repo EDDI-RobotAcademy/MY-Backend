@@ -14,11 +14,23 @@ class UserAnalysisService(ABC):
         pass
 
     @abstractmethod
-    def saveAnswer(self, answers, account_Id):
+    def saveAnswer(self, account_id, user_analysis_id, answers, guest_identifier=None):
         pass
 
     @abstractmethod
-    def listAnswer(self, filter, user_analysis_id=None, question_id=None, account_id=None):
+    def listAllRequest(self):
+        pass
+
+    @abstractmethod
+    def listOwnRequest(self, account_id):
+        pass
+
+    @abstractmethod
+    def readRequest(self, request_id):
+        pass
+
+    @abstractmethod
+    def listAnswer(self, user_analysis_id):
         pass
 
     @abstractmethod
@@ -31,4 +43,8 @@ class UserAnalysisService(ABC):
 
     @abstractmethod
     def listUserAnalysis(self):
+        pass
+
+    @abstractmethod
+    def getAnswer(self, request_id):
         pass

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class UserAnalysisAnswerRepository(ABC):
 
     @abstractmethod
-    def saveAnswer(self, user_analysis_id, question_id, answer_data, account_id):
+    def saveAnswer(self, request, question, answer_data):
         pass
 
     @abstractmethod
@@ -11,13 +11,21 @@ class UserAnalysisAnswerRepository(ABC):
         pass
 
     @abstractmethod
-    def summerizeAnswerByQuestionId(self, question_id):
+    def summarizeAnswerByQuestionId(self, question_id):
         pass
 
     @abstractmethod
-    def summerizeAnswerByAccountId(self, account_id):
+    def summarizeAnswerByAccountId(self, account_id):
         pass
 
     @abstractmethod
-    def summerizeAnswerByUserAnalysisIdandAccountId(self, user_analysis_id, account_id):
+    def summarizeAnswerByUserAnalysisIdandAccountId(self, user_analysis_id, account_id):
+        pass
+
+    @abstractmethod
+    def list(self):
+        pass
+
+    @abstractmethod
+    def findByRequest(self, request_id):
         pass

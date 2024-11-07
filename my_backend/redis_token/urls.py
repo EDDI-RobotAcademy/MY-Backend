@@ -7,6 +7,7 @@ router.register(r'redis_token', RedisTokenView, basename='redis_token')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('redis-access-token', RedisTokenView.as_view({'post': 'redisAccessToken'}), name='redis-access-token'),
-    path('logout', RedisTokenView.as_view({'post': 'dropRedisTokenForLogout'}), name='drop-redis-token-for-logout')
+    path('create-member-token', RedisTokenView.as_view({'post': 'createMemberToken'}), name='redis-access-token'),
+    path('logout', RedisTokenView.as_view({'post': 'dropRedisTokenForLogout'}), name='drop-redis-token-for-logout'),
+    path('create-guest-token', RedisTokenView.as_view({'post': 'createGuestToken'}), name='create-guest-token'),
 ]
